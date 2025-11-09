@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+
+<style>
+.zoom-buttons {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    z-index: 1000;
+}
+.mode-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+button {
+    font-size: .9em;
+    font-weight: 555;
+    background-image: radial-gradient( circle farthest-corner at 22.4% 21.7%, rgba(4,189,228,1) 0%, rgba(2,83,185,1) 100.2% );
+}
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+body.dark-mode, a:link.dark-mode, a:visited.dark-mode {
+    background-color: #000000;
+    color: #ffffff;
+}
+body {
+    padding: .7em;
+    font-weight: 600;
+    text-align: center;
+    text-transform: full-size-kana;
+}
+a:link, a:visited {
+    color: black;
+    text-decoration: overline dashed;
+    text-decoration-thickness: 1px;
+}
+a:hover {
+    text-decoration: wavy underline;
+    text-decoration-thickness: 1px;
+}
+input {
+    padding: .7em;
+    font-size: 1em;
+    font-weight: bold;
+    background-image: radial-gradient( circle farthest-corner at 22.4% 21.7%, rgba(4,189,228,1) 0%, rgba(2,83,185,1) 100.2% );
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: .5em;
+    padding: .5em;
+}
+.col {
+    padding: .7em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.col:hover {
+    text-transform: full-width;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    font-size: 1.1em;
+    overflow: clip;
+    margin: -1em;
+    margin-top: -.1em;
+}
+.navigation-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+    padding: .5em;
+    background-image: linear-gradient(to right, #33001b, #C70039);
+    border-color: #ff0084;
+    border: #ff0084;
+    border-style: dotted; 
+    }
+.navigation {
+    padding: .5em;
+    min-width: 150px;
+    cursor: pointer;
+    color: blue;
+    text-transform: full-width;
+    text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+    text-shadow: .5px .5px 1px gray, 0 0 .1em silver, 0 0 0.1em green;
+    background-color: rgba(111, 111, 111, 0.5);
+}
+.navigation:hover {
+    text-decoration: dashed underline;
+    text-transform: full-width;
+    text-shadow: 1px 1px 2px blue, 0 0 1em red, 0 0 0.2em red;
+    text-shadow: .5px .5px 1px red, 0 0 .5em silver, 0 0 0.1em orange;
+    border-color: rgba( 255, 151, 0 , .5);
+    border-style: double;
+    margin: -3px;
+    background-color: rgba( 97, 0, 255 , 0.6 );
+}
+</style>
+    
+</head>
+<body>
+<div class="buttons-container">
+<div class="mode-toggle">
+    <button id="mode-toggle">🌙 / ☀️</button>
+</div>
+<div class="zoom-buttons">
+    <button id="zoom-out">-</button>
+    <button id="zoom-in">+</button>
+</div>
+</div>
+<div class="navigation-container">
+<div class="navigation" onclick="showTagSection('All Names')">All Names</div><div class="navigation" onclick="showTagSection('4C')">4C</div><div class="navigation" onclick="showTagSection('4L')">4L</div><div class="navigation" onclick="showTagSection('5D')">5D</div><div class="navigation" onclick="showTagSection('5L')">5L</div><div class="navigation" onclick="showTagSection('6D')">6D</div><div class="navigation" onclick="showTagSection('PUNY_ALT')">PUNY_ALT</div><div class="navigation" onclick="showTagSection('PUNY_IDNA')">PUNY_IDNA</div><div class="navigation" onclick="showTagSection('PUNY_INVALID')">PUNY_INVALID</div>
+</div>
+<div class="content">
+    <input type="text" id="search-input" placeholder="Search...">
+    <div id="all-names" class="tag-section"><h2>All Names</h2><div class="grid"><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/chilis">chilis</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/genome">genome</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/beltandroadinitiative">beltandroadinitiative</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/t33l">t33l</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/net_0">net_0</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--45q11cm41a"> 八卦掌 (xn--45q11cm41a)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cayk">cayk</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xnip">xnip</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/qauk">qauk</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/gayr">gayr</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/agrifoods">agrifoods</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/amazynft">amazynft</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/sunft">sunft</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/anonymo">anonymo</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/1357924680">1357924680</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--e1apa9c"> ныне (xn--e1apa9c)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--m3d"> ዞ (xn--m3d)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/youranon">youranon</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--4dbhbca4b"> הלוואה (xn--4dbhbca4b)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--os5bog"> 융자 (xn--os5bog)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--h4h7l"> ♾☠ (xn--h4h7l)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/nzrd">nzrd</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/rekk">rekk</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/owaz">owaz</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/taol">taol</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/hugd">hugd</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xnyc">xnyc</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cumn">cumn</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xpwn">xpwn</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/vegx">vegx</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--zlv572c"> 暗網 (xn--zlv572c)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/poiz">poiz</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xefe">xefe</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/rspi">rspi</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xppe">xppe</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/sniperz">sniperz</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/ppxe">ppxe</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/johh">johh</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/pezs">pezs</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/pezx">pezx</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/tvez">tvez</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/tugd">tugd</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/fractl">fractl</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/shiq">shiq</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/shht">shht</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/plsplz">plsplz</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/limitedition">limitedition</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/ietv">ietv</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cleanft">cleanft</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/abau">abau</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/mawf">mawf</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--sprr0j"> 壽司 (xn--sprr0j)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--e1afbog"> имени (xn--e1afbog)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/yphy">yphy</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--hz1a"> 蔥 (xn--hz1a)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/yhtio">yhtio</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--n77hma03l"> 🇯🇵🏍 (xn--n77hma03l)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--g77hwa54o"> 🇨🇳🐴 (xn--g77hwa54o)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--7hvv09b"> 简易 (xn--7hvv09b)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/fidgetoys">fidgetoys</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/yzar">yzar</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/peze">peze</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/888cn">888cn</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/china8888">china8888</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h8b"> 👑👲 (xn--2p8h8b)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8hec"> 👑👳 (xn--2p8hec)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h9b"> 👳👑 (xn--2p8h9b)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/bluf">bluf</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/wawn">wawn</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/captainaustralia">captainaustralia</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h7b"> 👲👑 (xn--2p8h7b)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/ent4u">ent4u</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/ent4me">ent4me</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/yogita">yogita</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/caym">caym</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cayp">cayp</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/byud">byud</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/byuk">byuk</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/byup">byup</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/01km">01km</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/aud1">aud1</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/monkeybiz">monkeybiz</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--wgbp0bxbdv"> عُمَرْ (xn--wgbp0bxbdv)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--mgbup0cj"> القرض (xn--mgbup0cj)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/surfista">surfista</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--s1y"> 眛 (xn--s1y)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--qg8hf2c"> 😍🌊 (xn--qg8hf2c)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--qg8hg2c"> 🌊😍 (xn--qg8hg2c)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/vacc">vacc</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/ovaz">ovaz</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/askd">askd</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--g77ha6ab282g"> 🇨🇳🤝🇨🇳 (xn--g77ha6ab282g)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/apes3d">apes3d</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/g00gl3">g00gl3</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--8ov0180g"> 🧧有 (xn--8ov0180g)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/damns">damns</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--1t8h1k"> 🖊📜 (xn--1t8h1k)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2me"> ᕤ (xn--2me)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/lookool">lookool</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--g77hqab0b"> 🇱🇺🇨🇰 (xn--g77hqab0b)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--j77heac4b"> 🇫🇮🇸🇭 (xn--j77heac4b)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/aguadecoco">aguadecoco</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/whaleeagle">whaleeagle</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/babyapeboatclub">babyapeboatclub</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/alleth">alleth</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/eggswallet">eggswallet</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/fitbitus">fitbitus</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/forexchair">forexchair</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/maindao">maindao</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--w77hd07v"> 🔭🇺🇸 (xn--w77hd07v)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--og8hq0a"> 🌈💰 (xn--og8hq0a)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/asapp">asapp</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/calldoc">calldoc</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/karmabet">karmabet</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/predictai">predictai</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/fijet">fijet</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--11bug7bu8bwg8ang"> स्केटबोर्ड (xn--11bug7bu8bwg8ang)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/seisan">seisan</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/ryougae">ryougae</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/kippu">kippu</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/fancyus">fancyus</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/anyist">anyist</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/pampsuisse">pampsuisse</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/addresso">addresso</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--e77hibw7p"> 🖕🇦🇺 (xn--e77hibw7p)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--e77hiby7p"> 🇦🇺🖕 (xn--e77hiby7p)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/freedex">freedex</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/apeapp">apeapp</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/releasenft">releasenft</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/privacy1st">privacy1st</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/goldenen">goldenen</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/fuhren">fuhren</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/mehrere">mehrere</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/thebillionairenextdoor">thebillionairenextdoor</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/anonone">anonone</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/eazycasino">eazycasino</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cryptotraderaus">cryptotraderaus</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/digitalgateway">digitalgateway</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/myagency">myagency</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/defitheodds">defitheodds</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--cw8hc"> 🔬🔭 (xn--cw8hc)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/itr8">itr8</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/geotic">geotic</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/notcrypto">notcrypto</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cryptopoor">cryptopoor</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/pyphone">pyphone</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--art-p70a"> ₿art (xn--art-p70a)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--dz8hf0d"> 🤙🖖 (xn--dz8hf0d)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--np8hcg"> 👂👃👅 (xn--np8hcg)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/car-repair">car-repair</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cryptoco">cryptoco</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/internationalisation">internationalisation</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/denationalised">denationalised</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/digitised">digitised</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--h4h2510o"> ☠👑 (xn--h4h2510o)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--5p9hga"> 🤝🤠 (xn--5p9hga)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h4c"> 👑💀 (xn--2p8h4c)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h3c"> 💀👑 (xn--2p8h3c)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/goodkarma">goodkarma</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/nftegg">nftegg</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/runningofthebulls">runningofthebulls</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/kitschdorf">kitschdorf</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--1ugaa826ezk4ztm2kta04i813aha"> 🧑🏼❤️💋🧑🏾 (xn--1ugaa826ezk4ztm2kta04i813aha)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/hellomoon">hellomoon</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/canadiannaturalresources">canadiannaturalresources</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/badkarma">badkarma</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/superdomain">superdomain</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/azuca">azuca</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/izehsbtbqo">izehsbtbqo</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--9g8hit"> 🌝👑 (xn--9g8hit)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/sentrycrypto">sentrycrypto</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--mn8ha450b"> 🤝🏻🏻 (xn--mn8ha450b)</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/linuxdev">linuxdev</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/handshaketothemoon">handshaketothemoon</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/hashrunes">hashrunes</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/earnosethroat">earnosethroat</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/0754942169">0754942169</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/24680">24680</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/13572468">13572468</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/19700101">19700101</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/700101">700101</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/010170">010170</a></div><div class="col" data-tags="All Names"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/01011970">01011970</a></div></div></div><div id="4c" class="tag-section"><h2>4C</h2><div class="grid"><div class="col" data-tags="4C"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/t33l">t33l</a></div><div class="col" data-tags="4C"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/01km">01km</a></div><div class="col" data-tags="4C"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/aud1">aud1</a></div><div class="col" data-tags="4C"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/itr8">itr8</a></div></div></div><div id="4l" class="tag-section"><h2>4L</h2><div class="grid"><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cayk">cayk</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xnip">xnip</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/qauk">qauk</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/gayr">gayr</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/nzrd">nzrd</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/rekk">rekk</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/owaz">owaz</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/taol">taol</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/hugd">hugd</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xnyc">xnyc</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cumn">cumn</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xpwn">xpwn</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/vegx">vegx</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/poiz">poiz</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xefe">xefe</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/rspi">rspi</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/xppe">xppe</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/ppxe">ppxe</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/johh">johh</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/pezs">pezs</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/pezx">pezx</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/tvez">tvez</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/tugd">tugd</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/shiq">shiq</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/shht">shht</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/ietv">ietv</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/abau">abau</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/mawf">mawf</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/yphy">yphy</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/yzar">yzar</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/peze">peze</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/bluf">bluf</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/wawn">wawn</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/caym">caym</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/cayp">cayp</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/byud">byud</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/byuk">byuk</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/byup">byup</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/vacc">vacc</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/ovaz">ovaz</a></div><div class="col" data-tags="4L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/askd">askd</a></div></div></div><div id="5d" class="tag-section"><h2>5D</h2><div class="grid"><div class="col" data-tags="5D"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/24680">24680</a></div></div></div><div id="5l" class="tag-section"><h2>5L</h2><div class="grid"><div class="col" data-tags="5L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/sunft">sunft</a></div><div class="col" data-tags="5L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/yhtio">yhtio</a></div><div class="col" data-tags="5L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/damns">damns</a></div><div class="col" data-tags="5L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/asapp">asapp</a></div><div class="col" data-tags="5L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/fijet">fijet</a></div><div class="col" data-tags="5L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/kippu">kippu</a></div><div class="col" data-tags="5L"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/azuca">azuca</a></div></div></div><div id="6d" class="tag-section"><h2>6D</h2><div class="grid"><div class="col" data-tags="6D"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/700101">700101</a></div><div class="col" data-tags="6D"><a target="_blank" rel="noreferrer" href="https://www.namebase.io/domains/010170">010170</a></div></div></div><div id="puny_alt" class="tag-section"><h2>PUNY_ALT</h2><div class="grid"><div class="col" data-tags="PUNY_ALT"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--wgbp0bxbdv"> عُمَرْ (xn--wgbp0bxbdv)</a></div><div class="col" data-tags="PUNY_ALT"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--1ugaa826ezk4ztm2kta04i813aha"> 🧑🏼❤️💋🧑🏾 (xn--1ugaa826ezk4ztm2kta04i813aha)</a></div></div></div><div id="puny_idna" class="tag-section"><h2>PUNY_IDNA</h2><div class="grid"><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--45q11cm41a"> 八卦掌 (xn--45q11cm41a)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--e1apa9c"> ныне (xn--e1apa9c)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--m3d"> ዞ (xn--m3d)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--4dbhbca4b"> הלוואה (xn--4dbhbca4b)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--os5bog"> 융자 (xn--os5bog)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--h4h7l"> ♾☠ (xn--h4h7l)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--zlv572c"> 暗網 (xn--zlv572c)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--sprr0j"> 壽司 (xn--sprr0j)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--e1afbog"> имени (xn--e1afbog)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--hz1a"> 蔥 (xn--hz1a)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--n77hma03l"> 🇯🇵🏍 (xn--n77hma03l)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--g77hwa54o"> 🇨🇳🐴 (xn--g77hwa54o)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--7hvv09b"> 简易 (xn--7hvv09b)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h8b"> 👑👲 (xn--2p8h8b)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8hec"> 👑👳 (xn--2p8hec)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h9b"> 👳👑 (xn--2p8h9b)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h7b"> 👲👑 (xn--2p8h7b)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--mgbup0cj"> القرض (xn--mgbup0cj)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--s1y"> 眛 (xn--s1y)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--qg8hf2c"> 😍🌊 (xn--qg8hf2c)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--qg8hg2c"> 🌊😍 (xn--qg8hg2c)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--g77ha6ab282g"> 🇨🇳🤝🇨🇳 (xn--g77ha6ab282g)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--8ov0180g"> 🧧有 (xn--8ov0180g)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--1t8h1k"> 🖊📜 (xn--1t8h1k)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2me"> ᕤ (xn--2me)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--g77hqab0b"> 🇱🇺🇨🇰 (xn--g77hqab0b)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--j77heac4b"> 🇫🇮🇸🇭 (xn--j77heac4b)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--w77hd07v"> 🔭🇺🇸 (xn--w77hd07v)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--og8hq0a"> 🌈💰 (xn--og8hq0a)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--11bug7bu8bwg8ang"> स्केटबोर्ड (xn--11bug7bu8bwg8ang)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--e77hibw7p"> 🖕🇦🇺 (xn--e77hibw7p)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--e77hiby7p"> 🇦🇺🖕 (xn--e77hiby7p)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--cw8hc"> 🔬🔭 (xn--cw8hc)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--art-p70a"> ₿art (xn--art-p70a)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--dz8hf0d"> 🤙🖖 (xn--dz8hf0d)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--np8hcg"> 👂👃👅 (xn--np8hcg)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--h4h2510o"> ☠👑 (xn--h4h2510o)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--5p9hga"> 🤝🤠 (xn--5p9hga)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h4c"> 👑💀 (xn--2p8h4c)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--2p8h3c"> 💀👑 (xn--2p8h3c)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--9g8hit"> 🌝👑 (xn--9g8hit)</a></div><div class="col" data-tags="PUNY_IDNA"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--mn8ha450b"> 🤝🏻🏻 (xn--mn8ha450b)</a></div></div></div><div id="puny_invalid" class="tag-section"><h2>PUNY_INVALID</h2><div class="grid"><div class="col" data-tags="PUNY_INVALID"><a target="_blank" rel="noreferrer" class="" href="https://www.namebase.io/domains/xn--1ugaa826ezk4ztm2kta04i813aha"> 🧑🏼❤️💋🧑🏾 (xn--1ugaa826ezk4ztm2kta04i813aha)</a></div></div></div>
+</div>
+
+<script>
+let darkMode = true;
+const prefersLightMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+if (prefersLightMode) {
+    toggleDarkMode();
+}
+function toggleDarkMode() {
+    darkMode = !darkMode;
+    document.body.classList.toggle("dark-mode");
+    const links = document.querySelectorAll('a');
+    links.forEach((link) => {
+        if (darkMode) {
+            link.classList.add('dark-mode');
+        } else {
+            link.classList.remove('dark-mode');
+        }
+    });
+}
+const modeToggle = document.getElementById('mode-toggle');
+modeToggle.addEventListener('click', toggleDarkMode);
+document.getElementById("zoom-in").addEventListener("click", function() {
+    document.body.style.fontSize = parseInt(window.getComputedStyle(document.body).fontSize) + 3 + "px";
+});
+document.getElementById("zoom-out").addEventListener("click", function() {
+    document.body.style.fontSize = parseInt(window.getComputedStyle(document.body).fontSize) - 3 + "px";
+});
+function showTagSection(tag) {
+    var sectionId = tag.toLowerCase().replace(' ', '-');
+    var section = document.getElementById(sectionId);
+    if (section) {
+        var sections = document.getElementsByClassName('tag-section');
+        for (var i = 0; i < sections.length; i++) {
+            sections[i].style.display = "none";
+        }
+        section.style.display = "block";
+    }
+}
+function shuffleNames() {
+    var tagSections = document.querySelectorAll('.tag-section');
+    tagSections.forEach(function (section) {
+        var names = Array.from(section.querySelectorAll('.col'));
+        var currentIndex = names.length, randomIndex;
+        while (currentIndex > 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [names[currentIndex], names[randomIndex]] = [names[randomIndex], names[currentIndex]];
+        }
+        var grid = section.querySelector('.grid');
+        grid.innerHTML = '';
+        names.forEach(function (name) {
+            grid.appendChild(name);
+        });
+    });
+}
+function searchNames() {
+    var input = document.getElementById('search-input');
+    if (input) {
+        var filter = input.value.toLowerCase();
+        var names = document.getElementsByClassName('col');
+        for (var i = 0; i < names.length; i++) {
+            var name = names[i].innerText.toLowerCase();
+            if (name.includes(filter)) {
+                names[i].style.display = "block";
+            } else {
+                names[i].style.display = "none";
+            }
+        }
+    }
+}
+var searchInput = document.getElementById('search-input');
+if (searchInput) {
+    searchInput.addEventListener('keyup', function() {
+        searchNames();
+    });
+}
+showTagSection('All Names');
+shuffleNames();
+function getRandomColor() {
+    let color = Math.floor(Math.random() * 16777215).toString(16);
+    while (color.length < 6) {
+        color = '0' + color;
+    }
+    return '#' + color;
+}
+const links = document.querySelectorAll('a');
+links.forEach((link) => {
+    const randomColor = getRandomColor();
+    link.style.textDecorationColor = randomColor;
+    if (darkMode) {
+        document.body.classList.add("dark-mode");
+        link.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove("dark-mode");
+        link.classList.remove('dark-mode');
+    }
+});
+window.addEventListener('DOMContentLoaded', () => {
+    const addTooltipToNames = () => {
+        const cols = document.querySelectorAll('.col');
+        cols.forEach(col => {
+            col.setAttribute('title', col.textContent.trim());
+        });
+    };
+
+    addTooltipToNames();
+});
+    </script>
+    
+    <div id="footer" style="text-align:center">
+        <br>
+      <p>
+                      <!-- HNSau link.. --> <a href="https://hns.au"
+                      target="_blank"> <img src="../imgs/hnsau_blak-H-trans-bak+gg-centre_60x60.webp" alt="Handshake Australia"
+                        height="50" width="50"> </a> <br>
+                      <br>
+                      <!-- HNSau Discord link.. -->       
+                      <a href="https://discord.gg/uKV5yKyBHG"
+                        target="_blank"><img src="../imgs/MaxPixel.Logo-Discord-6062232.CC0.png"
+                          alt="Handshake Australia Community Discord" height="20" width="20"></a>
+                              
+                      <!-- tiMaxal Discord link..
+                      <a href="https://discordapp.com/users/823447722215473163" target="_blank"><img src="imgs/MaxPixel.Logo-Discord-6062232.CC0.png" alt="h4ndsh4k@Discord" height="20" width="20"></a><span>&nbsp;</span> -->
+                      
+                      <!-- h4ndsh4k Facebook link..  <a href="https://www.facebook.com/h4ndsh4k/"
+                      target="_blank"> <img src="imgs/fb-web.svg" alt="h4ndsh4k@fb.com"
+                      height="20" width="20"></a> <span>&nbsp;</span> -->
+                      
+                      <!-- HNSau Facebook link.. --> <a href="https://www.facebook.com/people/HNS-AU/100086556653400/"
+                      target="_blank"> <img src="../imgs/fb-web.svg" alt="HNSau@fb.com"
+                      height="20" width="20"></a> <span>&nbsp;</span>
+      
+                  <!-- h4ndsh4k Twitter link.. --> <a href="https://twitter.com/tiMaxal"
+                    target="_blank"> <img src="../imgs/Twitter.svg" alt="@tiMaxal"
+                      height="20" width="20"> </a> <br>
+                      </p>
+        </div>
+        <div id="credits"
+             style="text-align: center;
+              background:blue; 
+              margin-left: auto; 
+              margin-right: auto; 
+              width:50%;">
+          <h6>[a <a href="https://timax.au/" target="_blank">tiMaxal</a> enterprises offering]</h6>
+          Thanks to <a href="https://github.com/i1li/punytag" target="_blank">i1li</a> for 'punytag'
+            <br> + 'pagemaker' to create this :)
+      </div>
+      
+    </body>
+</body>
+</html>
+    
