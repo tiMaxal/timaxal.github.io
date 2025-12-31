@@ -11,8 +11,8 @@ const path = require('path');
 
 // File paths
 const MENU_MD = path.join(__dirname, 'menu.md');
-const SITE_NAV_JS = path.join(__dirname, 'site-nav.js');
-const FOOTER_LOADER_JS = path.join(__dirname, 'footer-loader.js');
+const SITE_NAV_JS = path.join(__dirname, '..', 'site-helpers', 'site-nav.js');
+const FOOTER_LOADER_JS = path.join(__dirname, '..', 'site-helpers', 'footer-loader.js');
 
 /**
  * Parse menu.md and convert to navigation structure
@@ -117,7 +117,11 @@ function createSiteNav() {
     
     // Determine depth by counting parent directories
     // Check which folder we're in by looking at the path structure
-    if (currentPath.includes('/software/')) {
+    if (currentPath.includes('/site-helpers/')) {
+      // We're in /site-helpers/ folder (1 level deep)
+      const prefix = '../';
+      return buildNav(prefix);
+    } else if (currentPath.includes('/software/')) {
       // We're in /software/ folder (1 level deep)
       const prefix = '../';
       return buildNav(prefix);

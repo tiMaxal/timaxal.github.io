@@ -11,7 +11,11 @@ function createSiteNav() {
     
     // Determine depth by counting parent directories
     // Check which folder we're in by looking at the path structure
-    if (currentPath.includes('/software/')) {
+    if (currentPath.includes('/site-helpers/')) {
+      // We're in /site-helpers/ folder (1 level deep)
+      const prefix = '../';
+      return buildNav(prefix);
+    } else if (currentPath.includes('/software/')) {
       // We're in /software/ folder (1 level deep)
       const prefix = '../';
       return buildNav(prefix);
@@ -94,7 +98,7 @@ function buildNav(prefix) {
         <div class="nav-category">
           <h4>Utilities</h4>
           <div class="nav-submenu">
-            <a href="${prefix}site-map.html">Site Map</a>
+            <a href="${prefix}site-helpers/site-map.html">Site Map</a>
           </div>
         </div>
         

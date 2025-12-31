@@ -25,6 +25,7 @@ function loadFooter() {
     // Check for 1-level deep folders
     else if (pathLower.includes('/aboutlife/') || 
              pathLower.includes('/sellhns/') || 
+             pathLower.includes('/site-helpers/') || 
              pathLower.includes('/software/') || 
              pathLower.includes('/varhns/')) {
       depth = 1;

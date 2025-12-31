@@ -57,5 +57,5 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 
 ## Utilities
 
-- [Site Map](./site-map.html)
+- [Site Map](./site-helpers/site-map.html)
   Complete list of all pages on this site

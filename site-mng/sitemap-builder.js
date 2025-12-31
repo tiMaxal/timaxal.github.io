@@ -11,8 +11,8 @@ const path = require('path');
 
 // File paths
 const SITE_MD = path.join(__dirname, 'site.md');
-const SITEMAP_XML = path.join(__dirname, 'sitemap.xml');
-const SITEMAP_HTML = path.join(__dirname, 'site-map.html');
+const SITEMAP_XML = path.join(__dirname, '..', 'site-helpers', 'sitemap.xml');
+const SITEMAP_HTML = path.join(__dirname, '..', 'site-helpers', 'site-map.html');
 
 let baseUrl = 'https://timax.al';
 
@@ -139,7 +139,7 @@ function generateSitemapHtml(pages) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site Map - tiMaxal Hub</title>
-    <link rel="stylesheet" href="site-nav.css">
+    <link rel="stylesheet" href="site-nav.css?v=2">
     <style>
         * {
             margin: 0;
@@ -279,9 +279,9 @@ function generateSitemapHtml(pages) {
             border-top: 2px solid currentColor;
         }
     </style>
-    <script src="theme-switcher.js"></script>
-    <script src="footer-loader.js"></script>
-    <script src="site-nav.js"></script>
+    <script src="theme-switcher.js?v=2"></script>
+    <script src="footer-loader.js?v=2"></script>
+    <script src="site-nav.js?v=2"></script>
 </head>
 <body>
     <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
@@ -300,8 +300,14 @@ function generateSitemapHtml(pages) {
 `;
     
     for (const page of sectionPages) {
+      // Since site-map.html is in site-helpers/, prepend ../ to relative paths
+      let adjustedPath = page.path;
+      if (adjustedPath.startsWith('./')) {
+        adjustedPath = '../' + adjustedPath.substring(2);
+      }
+      
       html += `            <li>
-                <a href="${page.path}">${page.title}</a>
+                <a href="${adjustedPath}">${page.title}</a>
             </li>
 `;
     }

@@ -37,4 +37,4 @@ Base URL: https://timax.al
 - [HNS Sell - Alternate Page](./sellhns/nb-sell.html) | 0.7 | weekly
 
 ### Utilities
-- [Site Map](./site-map.html) | 0.5 | monthly
+- [Site Map](./site-helpers/site-map.html) | 0.5 | monthly

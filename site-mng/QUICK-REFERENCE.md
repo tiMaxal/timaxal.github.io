@@ -3,27 +3,27 @@
 ## 🚀 Quick Updates
 
 ### Add a New Page
-1. Copy `template.html` and rename it
+1. Copy `site-mng/template.html` and rename it in appropriate folder
 2. Edit the content (look for ✏️ comments)
 3. Adjust file paths if in a subfolder (. or .. or ../..)
-4. Add to `menu.md` (if it should appear in navigation)
-5. Add to `site.md` (to include in sitemap)
-6. Run: `build-site.bat` (or both builder scripts)
+4. Add to `site-mng/menu.md` (if it should appear in navigation)
+5. Add to `site-mng/site.md` (to include in sitemap)
+6. Run: `site-mng/build-site.bat` (or both builder scripts)
 
 ### Update Menu
-1. Open `menu.md`
+1. Open `site-mng/menu.md`
 2. Edit the text
-3. Run: `node menu-builder.js`
+3. Run: `cd site-mng; node menu-builder.js`
    (This rebuilds both site-nav.js AND footer-loader.js)
 
 ### Update Sitemap  
-1. Open `site.md`
+1. Open `site-mng/site.md`
 2. Edit the text
-3. Run: `node sitemap-builder.js`
+3. Run: `cd site-mng; node sitemap-builder.js`
 
 ### Update Both
-Double-click: `build-site.bat`
-OR run: `node menu-builder.js; node sitemap-builder.js`
+Double-click: `site-mng/build-site.bat`
+OR run: `cd site-mng; node menu-builder.js; node sitemap-builder.js`
 
 ---
 
@@ -86,7 +86,7 @@ These are auto-generated:
 
 ## ✏️ DO Edit These Files
 
-Source files:
+Source files (in `/site-mng/`):
 - `menu.md` → controls navigation menu
 - `site.md` → controls sitemap
 
@@ -94,8 +94,8 @@ Source files:
 
 ## 🆘 Help
 
-See full documentation: `SITE-MANAGEMENT.md`
-See what was fixed: `FIXES-SUMMARY.md`
+See full documentation: `site-mng/SITE-MANAGEMENT.md`
+See what was fixed: `site-mng/FIXES-SUMMARY.md`
 
 ---
 

@@ -31,7 +31,7 @@ Open `menu.md` in any text editor and make your changes:
 - `- [Text](path)` creates a menu link
 - Add `{external}` for external links: `- [Text](https://url.com) {external}`
 - Indent with 2 spaces for sub-items: `  - [Sub Item](path)`
-- Add description on the next line (no dash)
+- Add description on the next line (no dash, but prefix with spaces)
 
 ### 2. Run the Builder Script
 
