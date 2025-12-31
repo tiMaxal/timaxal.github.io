@@ -6,6 +6,68 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Image Gallery</title>
         <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            
+            body {
+                background-color: #ccffff;
+                color: #3404f4;
+                font-family: Arial, Helvetica, sans-serif;
+                padding: 20px;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+            
+            body.dark-theme {
+                background-color: #003366;
+                color: #99ddff;
+            }
+            
+            body.black-theme {
+                background-color: #000000;
+                color: #ffffff;
+            }
+            
+            a:link { color: #0000ee; }
+            a:visited { color: #551a8b; }
+            a:hover, a:active { color: #ee0000; }
+            
+            body.dark-theme a:link { color: #66bbff; }
+            body.dark-theme a:visited { color: #9988ff; }
+            body.dark-theme a:hover { color: #99ddff; }
+            
+            body.black-theme a:link { color: #66bbff; }
+            body.black-theme a:visited { color: #9999ff; }
+            body.black-theme a:hover { color: #ffffff; }
+            
+            .theme-switcher {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                background-color: rgba(52, 4, 244, 0.8);
+                color: white;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 0.9em;
+                font-weight: bold;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s ease;
+                z-index: 1000;
+            }
+            
+            .theme-switcher:hover { transform: scale(1.05); }
+            
+            body.dark-theme .theme-switcher {
+                background-color: rgba(153, 221, 255, 0.8);
+                color: #003366;
+            }
+            
+            body.black-theme .theme-switcher {
+                background-color: rgba(255, 255, 255, 0.8);
+                color: #000000;
+            }
+            
             /* CSS for image gallery */
             .album {
                 margin-bottom: 20px;
@@ -24,26 +86,40 @@
                 width: 100%;
                 height: auto;
                 cursor: pointer;
+                border: 2px solid transparent;
+                transition: all 0.3s ease;
             }
-
-            /* Custom styles */
-            body {
-                background-color: #ccffff;
-                color: #3404f4;
-                font-family: Arial, Helvetica, sans-serif;
+            .thumbnail:hover {
+                border-color: currentColor;
+                transform: scale(1.05);
             }
-            a:link {
-                color: #0000ee;
+            
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding-top: 30px;
+                border-top: 2px solid currentColor;
             }
-            a:visited {
-                color: #551a8b;
+            .footer img {
+                margin: 10px 5px;
+                transition: transform 0.3s ease;
             }
-            a:hover, a:active {
-                color: #ee0000;
+            .footer img:hover {
+                transform: scale(1.1);
+            }
+            .footer h6 {
+                margin-top: 20px;
+                font-size: 0.9em;
+                opacity: 0.8;
             }
         </style>
+        <link rel="stylesheet" href="../../site-nav.css">
+        <script src="../../theme-switcher.js"></script>
+        <script src="../../footer-loader.js"></script>
+        <script src="../../site-nav.js"></script>
     </head>
     <body>
+        <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
         
         <p>Free Wallpapers <BR>
             &nbsp;[ acknowledgement would be nice if used publicly  :)  timaxal(at)outlook ]</p>
@@ -70,27 +146,7 @@
         <p>&nbsp; free to use <a href="cc0img.html">Creative Commons Zero images</a>
         
     <br><br>
-    <div align="center">
-        <p>
-            <!-- HNSau link.. --> <a href="https://hns.au" target="_blank"> <img src="../../imgs/hnsau_blak-H-trans-bak+gg-centre_60x60.webp"
-                alt="Handshake Australia" height="50" width="50"> </a> <br>
-            <br>
-            <!-- HNSau Discord link.. --> <a href="https://discord.gg/uKV5yKyBHG" target="_blank"><img
-                src="../../imgs/MaxPixel.Logo-Discord-6062232.CC0.png" alt="Handshake Australia Community Discord"
-                height="20" width="20"></a>
-            <!-- tiMaxal Discord link..
-                <a href="https://discordapp.com/users/823447722215473163" target="_blank"><img src="imgs/MaxPixel.Logo-Discord-6062232.CC0.png" alt="h4ndsh4k@Discord" height="20" width="20"></a><span>&nbsp;</span> -->
-            <!-- h4ndsh4k Facebook link..  <a href="https://www.facebook.com/h4ndsh4k/"
-                target="_blank"> <img src="imgs/fb-web.svg" alt="h4ndsh4k@fb.com"            height="20" width="20"></a> <span>&nbsp;</span> -->
-            <!-- HNSau Facebook link.. --> <a href="https://www.facebook.com/people/HNS-AU/100086556653400/"
-                target="_blank"> <img src="../../imgs/fb-web.svg" alt="HNSau@fb.com" height="20"
-                width="20"></a> <span>&nbsp;</span>
-            <!-- h4ndsh4k Twitter link.. --> <a href="https://twitter.com/tiMaxal"
-                target="_blank"> <img src="../../imgs/Twitter.svg" alt="@tiMaxal" height="20"
-                width="20"> </a> <br>
-        </p>
-        <h6>[a <a href="https://timax.au/" target="_blank">tiMaxal</a> enterprises offering]</h6>
-    </div>
+    <div id="footer-container"></div>
     
     </body>
     </html>

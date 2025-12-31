@@ -1,102 +1,231 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<title>AboutLife</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><META content="exercise,qigong,meditation,philosophy,stretch,stretching,AboutLife,holistic,lifestyle,guidance,poetry,ebook" name=keywords><META content="This is a no frills presentation comprising several articles which may be of benefit to physical wellbeing and hopefully will stimulate the mind.  Holistic Lifestyle Guidance - AboutLife." name=description><META content="tiMaxal" name=author><META  HTTP-EQUIV="EXPIRES"  CONTENT="Fri, 25 Mar 2022 23:59:59 GMT">
-		<!-- adapted from holigu.html by tdwm 2010 -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<META content="exercise,qigong,meditation,philosophy,stretch,stretching,AboutLife,holistic,lifestyle,guidance,poetry,ebook" name=keywords>
+	<META content="This is a no frills presentation comprising several articles which may be of benefit to physical wellbeing and hopefully will stimulate the mind.  Holistic Lifestyle Guidance - AboutLife." name=description>
+	<META content="tiMaxal" name=author>
+	<META  HTTP-EQUIV="EXPIRES"  CONTENT="Fri, 25 Mar 2022 23:59:59 GMT">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body {
+			background-color: #ccffff;
+			color: #3404f4;
+			font-family: Arial, Helvetica, sans-serif;
+			line-height: 1.6;
+			padding: 20px;
+			transition: background-color 0.3s ease, color 0.3s ease;
+		}
+		body.dark-theme {
+			background-color: #003366;
+			color: #99ddff;
+		}
+		body.black-theme {
+			background-color: #000000;
+			color: #ffffff;
+		}
+		a:link { color: #0000ee; }
+		a:visited { color: #551a8b; }
+		a:active { color: #ee0000; }
+		a:hover { 
+			color: #3404f4;
+			text-decoration: underline;
+		}
+		body.dark-theme a:link { color: #66bbff; }
+		body.dark-theme a:visited { color: #9988ff; }
+		body.dark-theme a:hover { color: #99ddff; }
+		body.black-theme a:link { color: #66bbff; }
+		body.black-theme a:visited { color: #9999ff; }
+		body.black-theme a:hover { color: #ffffff; }
+		.theme-switcher {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			padding: 10px 20px;
+			background-color: rgba(52, 4, 244, 0.8);
+			color: white;
+			border: none;
+			border-radius: 20px;
+			cursor: pointer;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 0.9em;
+			font-weight: bold;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+			transition: all 0.3s ease;
+			z-index: 1000;
+		}
+		.theme-switcher:hover {
+			transform: scale(1.05);
+		}
+		body.dark-theme .theme-switcher {
+			background-color: rgba(153, 221, 255, 0.8);
+			color: #003366;
+		}
+		body.black-theme .theme-switcher {
+			background-color: rgba(255, 255, 255, 0.8);
+			color: #000000;
+		}
+		.footer {
+			text-align: center;
+			margin-top: 50px;
+			padding: 30px 20px;
+			border-top: 2px solid currentColor;
+		}
+		.footer p {
+			margin: 10px 0;
+		}
+		.footer img {
+			margin: 0 10px;
+			vertical-align: middle;
+		}
+		.footer h6 {
+			margin-top: 20px;
+			font-size: 0.9em;
+		}
+		.container {
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 30px;
+		}
+		.nav-menu {
+			text-align: center;
+			margin: 20px 0;
+			padding: 15px;
+			background-color: rgba(52, 4, 244, 0.08);
+			border-radius: 8px;
+		}
+		body.dark-theme .nav-menu {
+			background-color: rgba(153, 221, 255, 0.1);
+		}
+		body.black-theme .nav-menu {
+			background-color: rgba(255, 255, 255, 0.08);
+		}
+		.nav-menu a {
+			margin: 0 8px;
+			text-decoration: none;
+			font-weight: 500;
+		}
+		.header {
+			text-align: center;
+			margin: 40px 0;
+			padding: 30px;
+			background-color: rgba(52, 4, 244, 0.05);
+			border-radius: 10px;
+		}
+		body.dark-theme .header {
+			background-color: rgba(153, 221, 255, 0.08);
+		}
+		body.black-theme .header {
+			background-color: rgba(255, 255, 255, 0.05);
+		}
+		h1, h2, h3, h4, h5, h6 {
+			margin: 20px 0 10px 0;
+		}
+		h1 { font-size: 2.5em; }
+		h2 { font-size: 2em; }
+		h3 { font-size: 1.5em; }
+		p {
+			margin: 10px 0;
+		}
+		.section {
+			margin: 30px 0;
+			padding: 20px;
+			background-color: rgba(52, 4, 244, 0.05);
+			border-radius: 8px;
+		}
+		body.dark-theme .section {
+			background-color: rgba(153, 221, 255, 0.08);
+		}
+		body.black-theme .section {
+			background-color: rgba(255, 255, 255, 0.05);
+		}
+		li {
+			margin-left: 40px;
+			margin-bottom: 8px;
+		}
+		.center {
+			text-align: center;
+		}
+		.disclaimer {
+			background-color: rgba(255, 255, 200, 0.3);
+			padding: 20px;
+			border-radius: 8px;
+			margin: 30px 0;
+			border-left: 4px solid currentColor;
+		}
+		body.dark-theme .disclaimer {
+			background-color: rgba(153, 221, 255, 0.15);
+		}
+		body.black-theme .disclaimer {
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+	</style>
+	<link rel="stylesheet" href="../site-nav.css">
+	<script src="../theme-switcher.js"></script>
+	<script src="../footer-loader.js"></script>
+	<script src="../site-nav.js"></script>
 </head>
-<body alink="#FF0000" bgcolor="#BDEDFF" link="#000000" text="#0000A0" vlink="#808080">
-<p>&nbsp;
-<p>&nbsp;
-<p>&nbsp;
-<p>&nbsp;
-<p><br />
-<a name="t"> </a></p>
-</p>
-</p>
-</p>
-</p>	
+<body>
+<button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
+<div class="container">
+	<div class="nav-menu">
+		<a name="t"> </a><a href="#contact">Contact</a> <a href="#fibopat">Game</a> <a href="#herbs">Herbs</a> <a href="#t">Home</a> <a href="#iso">Isometrics</a> <a href="#kinesio">Kinesiology</a> <a href="#kinetics">Kinetics</a> <a href="#medit">Meditation</a> <a href="#philo">Philosophy</a> <a href="#psych">Psychology</a> <a href="#qigong">Qigong</a> <a href="#stretch">Stretching</a>
+	</div>
 
-<p align="center"><a name="t"> </a><a href="#contact">Contact</a> <a href="#fibopat">Game</a> <a href="#herbs">Herbs</a> <a href="#t">Home</a> <a href="#iso">Isometrics</a> <a href="#kinesio">Kinesiology</a> <a href="#kinetics">Kinetics</a> <a href="#medit">Meditation</a> <a href="#philo">Philosophy</a> <a href="#psych">Psychology</a> <a href="#qigong">Qigong</a> <a href="#stretch">Stretching</a></p>
+	<div class="header">
+		<h1><u>AboutLife</u></h1>
+		<p><strong>While the new dW3b is about gaining an independence,<br>
+		it infers taking a degree of responsibility also.</strong></p>
+		<p><strong>Such is the truth with one's own Health, too ..<br>
+		the [often ancient] knowledge here presented<br>
+		in this new space can enable that strength.</strong></p>
+		<h3><u>( Holistic Lifestyle Guidance )</u></h3>
+		<p>Welcome to AboutLife;</p>
+		<p><strong>a no frills presentation comprising several articles<br>
+		which may be of benefit to physical wellbeing and<br>
+		hopefully will stimulate the mind.</strong></p>
+		<p>Please enjoy ..</p>
+	</div>
 
-<p><br />
-<introduction>
-<h1>&nbsp;</h1>
+	<div class="section">
+		<h2><b><u>Contents</u></b></h2>
+		<p><b><u>Exercise-</u></b></p>
+		<li><a href="#kinesio">Kinesiology:</a></li>
+		<li><a href="#stretch">Stretching:</a></li>
+		<li><a href="#iso">Isometrics:</a></li>
+		<li><a href="#kinetics">Kinetics:</a></li>
+		<li><a href="#qigong">Qigong:</a></li>
+		<br>
+		<p><b><u>Relaxation-</u></b></p>
+		<li>Card <a href="#fibopat">game:</a></li>
+		<li><a href="#medit">Meditation:</a></li>
+		<br>
+		<p><b><u>Other-</u></b></p>
+		<li><a href="#herbs">Herbs</a></li>
+		<li><a href="#philo">Philosophy:</a></li>
+		<li><a href="#psych">Psychology:</a></li>
+		<br>
+		<p class="center">(<a href="#contact">Contact</a>)</p>
+	</div>
 
-<p align="center"><b><u><font size="7">AboutLife </font></u></b></p>
+	<div class="disclaimer center">
+		<p>While all due diligence has been given in the preparation of the information provided, no responsponsibility is taken for any application of it. Use at own risk and consult a health professional if required.</p>
+		<p>2022</p>
+	</div>
 
-<h1>&nbsp;</h1>
-
-<p align="center"><strong><font size="3">While the new dW3b is about gaining an independence,</font></p>
-	<p align="center"><strong><font size="3"></font> it infers taking a degree of responsibility also.</font></p>
-		<h3>&nbsp;</h3>
-<p align="center"><strong><font size="3">Such is the truth with one's own Health, too ..</font></p>
-	<p align="center"><strong><font size="3"></font> the [often ancient] knowledge here presented </font></p>
-		<p align="center"><strong><font size="3"></font> in this new space can enable that strength.</font></p>
-<h1>&nbsp;</h1>
-
-</font>
-<p align="center"><b><u><font size="4">( Holistic Lifestyle Guidance )</font></u></b></p>
-<font size="3"> </font>
-
-<p align="center"><font size="3">Welcome to AboutLife;</font></p>
-<font size="3"> </font>
-
-<p align="center"><strong><font size="3">a no frills presentation comprising several articles</font></strong></p>
-
-<p align="center"><strong><font size="3">which may be of benefit to physical wellbeing and</font></strong></p>
-
-<p align="center"><strong><font size="3">hopefully will stimulate the mind. </font> </strong></p>
-
-<p align="center"><font size="2">Please enjoy ..</font></p>
-<br />
-<br />
-<contents>
-<h2><b><u>Contents</u></b></h2>
-
-<p><b><u>Exercise-</u></b></p>
-<li><a href="#kinesio">Kinesiology:</a></li>
-<li><a href="#stretch">Stretching:</a></li>
-<li><a href="#iso">Isometrics:</a></li>
-<li><a href="#kinetics">Kinetics:</a></li>
-<li><a href="#qigong">Qigong:</a></li>
-<br />
-<br />
-<br />
-&nbsp;
-<p><b><u>Relaxation-</u></b></p>
-<li>Card <a href="#fibopat">game:</a></li>
-<li><a href="#medit">Meditation:</a></li>
-<br />
-<br />
-<br />
-&nbsp;
-<p><b><u>Other-</u></b></p>
-
-<li><a href="#herbs">Herbs</a></li>
-
-<li><a href="#philo">Philosophy:</a></li>
-
-<li><a href="#psych">Psychology:</a></li>
-<br />
-<br />
-<br />
-&nbsp;
-<p align="CENTER">(<a href="#contact">Contact</a>)</p>
-<br />
-<br />
-<disclaimer>
-<p align="CENTER">While all due diligence has been given in the preparation of the information provided, no responsponsibility is taken for any application of it. Use at own risk and consult a health professional if required.</p>
-
-<p align="center"><br />
-<br />
-2022</p>
-<exercise><exercise>
-<p><u><b><font size="8">EXERCISE</font></b></u></p>
-<a name="kinesio"> </a>
-
-<p align="center"><a name="kinesio"> </a><a href="#contact">Contact</a> <a href="#fibopat">Game</a> <a href="#herbs">Herbs</a> <a href="#t">Home</a> <a href="#iso">Isometrics</a> <a href="#kinesio">Kinesiology</a> <a href="#kinetics">Kinetics</a> <a href="#medit">Meditation</a> <a href="#philo">Philosophy</a> <a href="#psych">Psychology</a> <a href="#qigong">Qigong</a> <a href="#stretch">Stretching</a></p>
-<kinesiology>
-<p align="center"><b><u><font size="7">Kinesiology </font></u></b></p>
+	<div class="section">
+		<h1><u>EXERCISE</u></h1>
+		<a name="kinesio"> </a>
+		<div class="nav-menu">
+			<a href="#contact">Contact</a> <a href="#fibopat">Game</a> <a href="#herbs">Herbs</a> <a href="#t">Home</a> <a href="#iso">Isometrics</a> <a href="#kinesio">Kinesiology</a> <a href="#kinetics">Kinetics</a> <a href="#medit">Meditation</a> <a href="#philo">Philosophy</a> <a href="#psych">Psychology</a> <a href="#qigong">Qigong</a> <a href="#stretch">Stretching</a>
+		</div>
+		<h2 class="center"><u>Kinesiology</u></h2>
 
 <table align="center" border="0" cellpadding="4" cellspacing="4" style="TEXT-ALIGN: center" width="90%">
 	<tbody>
@@ -1368,13 +1497,10 @@ It is also useful as an aromatic relaxant.</p>
 </contact></rayid></psychology></book></philosophy></other></other></ibm></meditation></relaxation></relaxation></the></central></isometrics></pnf></static></circling></stretching></kinesiology></exercise></exercise></disclaimer></contents></introduction></p>
 
 <p>&nbsp;
-<p>&nbsp;</p>
 </p>
-<footer>
-	<p align="center">a <a href="http://dlink.timaxal.hns.is/" target="_blank">tiMaxal</a> project</strong></p>
-	<p align="center">[content derived from a decade studying Natural Therapies on the turn of the 21st century]</p>
-<BR>
-	<p align="center"><b>original dW3b</b> work by <a href="https://nathan.woodburn.au/" target="_blank">NathanWoodburn</a></p>
-</footer>
-</body
+</div>
+
+<div id="footer-container"></div>
+</div>
+</body>
 </html>
