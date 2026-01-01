@@ -278,8 +278,18 @@ function extractFolderStructure(categories) {
 /**
  * Generate footer-loader.js content based on folder structure
  */
-function generateFooterLoaderJs(folders) {
-  const depth2Checks = folders.depth2.map(f => `pathLower.includes('${f.toLowerCase()}')`).join(' || \n        ');
+function generateFooterLoaderJs(folders) {  // Read footer.html content
+  const footerHtmlPath = path.join(__dirname, '..', 'site-helpers', 'footer.html');
+  let footerContent = '';
+  try {
+    footerContent = fs.readFileSync(footerHtmlPath, 'utf-8').trim();
+    // Replace imgs/ with ${imgPrefix} for dynamic path resolution
+    footerContent = footerContent.replace(/src="imgs\//g, 'src="${imgPrefix}');
+  } catch (error) {
+    console.warn(`⚠️  Warning: Could not read footer.html: ${error.message}`);
+    footerContent = '<div class="footer"><p>Footer content not found</p></div>';
+  }
+    const depth2Checks = folders.depth2.map(f => `pathLower.includes('${f.toLowerCase()}')`).join(' || \n        ');
   const depth1Checks = folders.depth1.map(f => `pathLower.includes('${f.toLowerCase()}')`).join(' || \n             ');
   
   return `// Footer loader - dynamically loads footer.html into pages
@@ -322,26 +332,7 @@ function loadFooter() {
   
   // For file:// protocol, we can't use fetch, so insert the footer HTML directly
   if (window.location.protocol === 'file:') {
-    const footerHTML = \`
-<div class="footer">
-  <p>
-    <a href="https://hns.au" target="_blank">
-      <img src="\${imgPrefix}hnsau_blak-H-trans-bak+gg-centre_60x60.webp" alt="Handshake Australia" height="50" width="50">
-    </a>
-  </p>
-  <p style="margin-top: 15px;">
-    <a href="https://discord.gg/uKV5yKyBHG" target="_blank">
-      <img src="\${imgPrefix}MaxPixel.Logo-Discord-6062232.CC0.png" alt="Handshake Australia Community Discord" height="20" width="20">
-    </a>
-    <a href="https://www.facebook.com/people/HNS-AU/100086556653400/" target="_blank">
-      <img src="\${imgPrefix}fb-web.svg" alt="HNSau@fb.com" height="20" width="20">
-    </a>
-    <a href="https://twitter.com/tiMaxal" target="_blank">
-      <img src="\${imgPrefix}Twitter.svg" alt="@tiMaxal" height="20" width="20">
-    </a>
-  </p>
-  <h6>[a <a href="https://timax.au/" target="_blank">tiMaxal</a> enterprises offering]</h6>
-</div>\`;
+    const footerHTML = \`${footerContent}\`;
     footerContainer.innerHTML = footerHTML;
   } else {
     // For HTTP/HTTPS, use fetch

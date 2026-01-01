@@ -1,0 +1,2224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FishinGame - Web Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: flex;
+            min-height: 600px;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .right-panel {
+            width: 250px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 1px solid #e0e0e0;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .sidebar h3 {
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+
+        .sidebar h3:first-child {
+            margin-top: 0;
+        }
+
+        .stat-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            padding: 5px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .stat-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: #6c757d;
+        }
+
+        button.secondary:hover {
+            background: #5a6268;
+        }
+
+        button.danger {
+            background: #dc3545;
+        }
+
+        button.danger:hover {
+            background: #c82333;
+        }
+
+        button.success {
+            background: #28a745;
+        }
+
+        button.success:hover {
+            background: #218838;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .error-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .fish-card {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .fish-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .fish-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            text-transform: capitalize;
+        }
+
+        .fish-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 0.85em;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        .fight-panel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .fight-title {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .fight-status {
+            font-size: 1.2em;
+            margin: 20px 0;
+            min-height: 30px;
+        }
+
+        .fight-message {
+            font-size: 1.1em;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .strike-button {
+            background: #ff6b6b;
+            font-size: 1.3em;
+            padding: 20px 40px;
+            margin-top: 20px;
+        }
+
+        .strike-button:hover {
+            background: #ff5252;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+            color: #333;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: #999;
+            cursor: pointer;
+            min-width: auto;
+            padding: 0;
+        }
+
+        .modal-close:hover {
+            color: #333;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .level-info {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .level-card {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #ddd;
+        }
+
+        .level-card.current {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .level-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .level-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .inventory-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .inventory-item:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+        }
+
+        .item-quantity {
+            color: #667eea;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .item-price {
+            color: #999;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .right-panel {
+                width: 100%;
+                border-left: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .fish-details {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20% auto;
+            }
+        }
+
+        .action-button {
+            background: #667eea;
+        }
+
+        .action-button:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎣 FishinGame</h1>
+            <p>A Queensland Fishing Simulation</p>
+        </div>
+
+        <div class="main-content">
+            <!-- SIDEBAR -->
+            <div class="sidebar" id="sidebar">
+                <div id="fisher-select-container">
+                    <h3>Fisher</h3>
+                    <select id="fisher-select" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px;">
+                        <option value="">Select a Fisher...</option>
+                    </select>
+                    <button onclick="showModal('create-fisher-modal')" style="width: 100%; margin-bottom: 5px;">New Fisher</button>
+                    <div style="display:flex; gap:6px; margin-bottom:6px;">
+                        <button class="secondary" onclick="app.exportPlayer()" style="flex:1;">Export</button>
+                        <button class="secondary" onclick="app.importPlayerPrompt()" style="flex:1;">Import</button>
+                    </div>
+                    <button class="secondary" onclick="app.removeFisher()" style="width: 100%;">Delete</button>
+                    <!-- hidden file input for import -->
+                    <input id="import-file-input" type="file" accept="application/json" style="display:none" />
+                </div>
+
+                <h3>Stats</h3>
+                <div class="stat-line">
+                    <span class="stat-label">Level:</span>
+                    <span class="stat-value" id="stat-level">-</span>
+                </div>
+                <div class="stat-line">
+                    <span class="stat-label">XP:</span>
+                    <span class="stat-value" id="stat-xp">-</span>
+                </div>
+                <div class="stat-line">
+                    <span class="stat-label">Cash:</span>
+                    <span class="stat-value" id="stat-cash">-</span>
+                </div>
+                <div class="progress-bar" style="margin-top: 10px;">
+                    <div class="progress-fill" id="xp-progress"></div>
+                </div>
+
+                <h3>Area</h3>
+                <select id="area-select" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px;">
+                    <option value="">Select Area...</option>
+                </select>
+
+                <h3>Bait</h3>
+                <select id="bait-select" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px; background: #a0522d; color: white;">
+                    <option value="">No bait (or jig)</option>
+                </select>
+                <div id="bait-status">
+                    <div class="stat-line">
+                        <span class="stat-label">Worms:</span>
+                        <span class="stat-value" id="bait-worms">0</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">Prawns:</span>
+                        <span class="stat-value" id="bait-prawns">0</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">Livebait:</span>
+                        <span class="stat-value" id="bait-livebait">0</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">Lures:</span>
+                        <span class="stat-value" id="bait-lures">0</span>
+                    </div>
+                </div>
+
+                <h3>Target Species</h3>
+                <select id="species-target" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px;">
+                    <option value="">Any Species</option>
+                </select>
+            </div>
+
+            <!-- CONTENT AREA -->
+            <div class="content" id="content">
+                <!-- MAIN SECTION -->
+                <div class="section active" id="main-section">
+                    <h2>Welcome to FishinGame</h2>
+                    <p style="margin: 15px 0; color: #666;">Select a fisher from the sidebar to get started!</p>
+                </div>
+
+                <!-- GAMEPLAY SECTION -->
+                <div class="section" id="gameplay-section">
+                    <h2 id="gameplay-title">Fishing</h2>
+                    <div id="gameplay-content"></div>
+                </div>
+
+                <!-- CATCH RESULT SECTION -->
+                <div class="section" id="catch-section">
+                    <h2>Fish Caught!</h2>
+                    <div id="catch-content"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="right-panel" id="right-panel">
+                <h3>Actions</h3>
+                <button onclick="app.cast()" style="width: 100%; margin-bottom: 8px;" class="success">
+                    🎣 Cast
+                </button>
+                <button onclick="showModal('shop-modal')" style="width: 100%; margin-bottom: 8px;">Shop</button>
+                <button onclick="showModal('leaderboard-modal')" style="width: 100%; margin-bottom: 8px;">Leaderboard</button>
+                <button onclick="showModal('howto-modal')" style="width: 100%; margin-bottom: 8px; background: #17a2b8;">Help</button>
+
+                <h3>Gear</h3>
+                <div id="gear-checkboxes" class="checkbox-group"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <!-- Create Fisher Modal -->
+    <div class="modal" id="create-fisher-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Fisher</h2>
+                <button class="modal-close" onclick="closeModal('create-fisher-modal')">×</button>
+            </div>
+            <div class="form-group">
+                <label for="fisher-name">Fisher Name:</label>
+                <input type="text" id="fisher-name" placeholder="Enter fisher name" onkeypress="if(event.key==='Enter') app.createFisher();">
+            </div>
+            <button onclick="app.createFisher()" class="success" style="width: 100%; margin-bottom: 10px;">Create</button>
+            <button class="secondary" onclick="closeModal('create-fisher-modal')" style="width: 100%;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Delete Fisher Modal -->
+    <div class="modal" id="delete-fisher-modal-1">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Delete Fisher?</h2>
+                <button class="modal-close" onclick="closeModal('delete-fisher-modal-1')">×</button>
+            </div>
+            <p id="delete-fisher-name"></p>
+            <p style="color: #999;">Are you sure? Click "Yes, Delete" to confirm.</p>
+            <button onclick="app.confirmDeleteFisher()" class="danger" style="width: 100%; margin-bottom: 10px;">Yes, Delete</button>
+            <button class="secondary" onclick="closeModal('delete-fisher-modal-1')" style="width: 100%;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Final Delete Confirmation Modal -->
+    <div class="modal" id="delete-fisher-modal-2">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚠️ FINAL WARNING</h2>
+                <button class="modal-close" onclick="closeModal('delete-fisher-modal-2')">×</button>
+            </div>
+            <p id="delete-fisher-name-2"></p>
+            <p style="color: #dc3545; font-weight: bold;">This action cannot be undone. All data will be lost.</p>
+            <button onclick="app.finalDeleteFisher()" class="danger" style="width: 100%; margin-bottom: 10px;">PERMANENTLY DELETE</button>
+            <button class="secondary" onclick="closeModal('delete-fisher-modal-2')" style="width: 100%;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Shop Modal -->
+    <div class="modal" id="shop-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Shop</h2>
+                <button class="modal-close" onclick="closeModal('shop-modal')">×</button>
+            </div>
+            <div id="shop-content"></div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div class="modal" id="leaderboard-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Leaderboard</h2>
+                <button class="modal-close" onclick="closeModal('leaderboard-modal')">×</button>
+            </div>
+            <div id="leaderboard-content"></div>
+        </div>
+    </div>
+
+    <!-- How-To Modal -->
+    <div class="modal" id="howto-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>How to Play</h2>
+                <button class="modal-close" onclick="closeModal('howto-modal')">×</button>
+            </div>
+            <div id="howto-content"></div>
+        </div>
+    </div>
+
+    <!-- Debug Modal -->
+    <div class="modal" id="debug-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Debug Mode</h2>
+                <button class="modal-close" onclick="closeModal('debug-modal')">×</button>
+            </div>
+            <div id="debug-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // ============== GAME DATA ==============
+        const FISH_DICT = {
+            'spangled perch': {
+                'locations': ['creek', 'river', 'lake'],
+                'rarity': 'vc',
+                'size_min': 10,
+                'size_max': 25,
+                'min_take': 0,
+                'max_take': 0,
+                'possession_limit': 0,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'catfish': {
+                'locations': ['creek', 'river', 'lake'],
+                'rarity': 'c',
+                'size_min': 20,
+                'size_max': 60,
+                'min_take': 35,
+                'max_take': 0,
+                'possession_limit': 5,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'eel': {
+                'locations': ['creek', 'river', 'lake'],
+                'rarity': 'c',
+                'size_min': 20,
+                'size_max': 100,
+                'min_take': 30,
+                'max_take': 0,
+                'possession_limit': 10,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'bass': {
+                'locations': ['creek', 'river', 'lake', 'estuary'],
+                'rarity': 'c',
+                'size_min': 15,
+                'size_max': 60,
+                'min_take': 30,
+                'max_take': 0,
+                'possession_limit': 2,
+                'closed_season': ['06-01', '08-31'],
+                'no_take': false,
+            },
+            'golden perch': {
+                'locations': ['river', 'lake'],
+                'rarity': 'u',
+                'size_min': 20,
+                'size_max': 55,
+                'min_take': 30,
+                'max_take': 0,
+                'possession_limit': 10,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'silver perch': {
+                'locations': ['river', 'lake'],
+                'rarity': 'u',
+                'size_min': 20,
+                'size_max': 50,
+                'min_take': 30,
+                'max_take': 0,
+                'possession_limit': 2,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'lungfish': {
+                'locations': ['river'],
+                'rarity': 'vu',
+                'size_min': 60,
+                'size_max': 150,
+                'min_take': 0,
+                'max_take': 0,
+                'possession_limit': 0,
+                'closed_season': null,
+                'no_take': true,
+            },
+            'murray cod': {
+                'locations': ['river', 'lake'],
+                'rarity': 'u',
+                'size_min': 40,
+                'size_max': 110,
+                'min_take': 60,
+                'max_take': 0,
+                'possession_limit': 2,
+                'closed_season': ['08-01', '10-31'],
+                'no_take': false,
+            },
+            'mary river cod': {
+                'locations': ['river', 'lake'],
+                'rarity': 'r',
+                'size_min': 40,
+                'size_max': 100,
+                'min_take': 60,
+                'max_take': 0,
+                'possession_limit': 1,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'saratoga': {
+                'locations': ['lake'],
+                'rarity': 'c',
+                'size_min': 30,
+                'size_max': 90,
+                'min_take': 50,
+                'max_take': 0,
+                'possession_limit': 1,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'bream': {
+                'locations': ['estuary', 'beach'],
+                'rarity': 'c',
+                'size_min': 15,
+                'size_max': 40,
+                'min_take': 25,
+                'max_take': 0,
+                'possession_limit': 30,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'flathead': {
+                'locations': ['estuary'],
+                'rarity': 'm',
+                'size_min': 30,
+                'size_max': 100,
+                'min_take': 40,
+                'max_take': 75,
+                'possession_limit': 5,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'tailor': {
+                'locations': ['beach'],
+                'rarity': 'c',
+                'size_min': 20,
+                'size_max': 60,
+                'min_take': 35,
+                'max_take': 0,
+                'possession_limit': 20,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'bullnose shark': {
+                'locations': ['estuary'],
+                'rarity': 'u',
+                'size_min': 50,
+                'size_max': 200,
+                'min_take': 75,
+                'max_take': 150,
+                'possession_limit': 1,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'mud crab': {
+                'locations': ['estuary'],
+                'rarity': 'u',
+                'size_min': 10,
+                'size_max': 25,
+                'min_take': 15,
+                'max_take': 0,
+                'possession_limit': 7,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'blue swimmer crab': {
+                'locations': ['estuary', 'beach'],
+                'rarity': 'u',
+                'size_min': 8,
+                'size_max': 20,
+                'min_take': 11.5,
+                'max_take': 0,
+                'possession_limit': 20,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'mangrove jack': {
+                'locations': ['estuary'],
+                'rarity': 'm',
+                'size_min': 20,
+                'size_max': 60,
+                'min_take': 35,
+                'max_take': 0,
+                'possession_limit': 5,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'garfish': {
+                'locations': ['estuary'],
+                'rarity': 'c',
+                'size_min': 15,
+                'size_max': 40,
+                'min_take': 0,
+                'max_take': 0,
+                'possession_limit': 50,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'leatherjacket': {
+                'locations': ['estuary'],
+                'rarity': 'm',
+                'size_min': 15,
+                'size_max': 40,
+                'min_take': 0,
+                'max_take': 0,
+                'possession_limit': 20,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'estuary cod': {
+                'locations': ['estuary'],
+                'rarity': 'u',
+                'size_min': 30,
+                'size_max': 100,
+                'min_take': 38,
+                'max_take': 0,
+                'possession_limit': 5,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'shovelnose ray': {
+                'locations': ['estuary', 'beach'],
+                'rarity': 'u',
+                'size_min': 36,
+                'size_max': 150,
+                'min_take': 0,
+                'max_take': 0,
+                'possession_limit': 1,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'stingray': {
+                'locations': ['estuary'],
+                'rarity': 'u',
+                'size_min': 60,
+                'size_max': 150,
+                'min_take': 0,
+                'max_take': 0,
+                'possession_limit': 1,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'mullet': {
+                'locations': ['estuary'],
+                'rarity': 'c',
+                'size_min': 20,
+                'size_max': 50,
+                'min_take': 30,
+                'max_take': 0,
+                'possession_limit': 20,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'trevally': {
+                'locations': ['beach'],
+                'rarity': 'm',
+                'size_min': 20,
+                'size_max': 100,
+                'min_take': 0,
+                'max_take': 0,
+                'possession_limit': 20,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'school mackerel': {
+                'locations': ['beach'],
+                'rarity': 'm',
+                'size_min': 40,
+                'size_max': 80,
+                'min_take': 50,
+                'max_take': 0,
+                'possession_limit': 10,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'manta ray': {
+                'locations': ['beach', 'reef'],
+                'rarity': 'r',
+                'size_min': 100,
+                'size_max': 300,
+                'min_take': 0,
+                'max_take': 0,
+                'possession_limit': 0,
+                'closed_season': null,
+                'no_take': false,
+            },
+            'barramundi': {
+                'locations': ['river', 'estuary'],
+                'rarity': 'm',
+                'size_min': 40,
+                'size_max': 120,
+                'min_take': 58,
+                'max_take': 120,
+                'possession_limit': 5,
+                'closed_season': ['11-01', '01-31'],
+                'no_take': false,
+            },
+        };
+
+        const AREAS = ['creek', 'river', 'estuary', 'lake', 'beach', 'reef', 'pelagic'];
+
+        const LEVEL_UNLOCK_AREAS = {
+            1: 'creek',
+            2: 'river',
+            3: 'estuary',
+            4: 'lake',
+            5: 'beach',
+            6: 'reef',
+            7: 'pelagic',
+        };
+
+        const GEAR = {
+            'handline': { level: 1, cost: 0, bonus: 0, depre_rate: 0.5 },
+            'rod': { level: 2, cost: 50, bonus: 10, depre_rate: 1 },
+            'herring jig': { level: 3, cost: 30, bonus: 5, depre_rate: 0.5 },
+            'bigrod': { level: 3, cost: 100, bonus: 20, depre_rate: 0.8 },
+            'boat': { level: 4, cost: 500, bonus: 15, depre_rate: 2 },
+            'boatrod': { level: 5, cost: 150, bonus: 25, depre_rate: 1.2 },
+            'castnet': { level: 5, cost: 80, bonus: 0, depre_rate: 0.5 },
+            'bigboat': { level: 6, cost: 1000, bonus: 30, depre_rate: 3 },
+            'bigboatrod': { level: 7, cost: 200, bonus: 35, depre_rate: 1.5 },
+            'verybigboat': { level: 8, cost: 2000, bonus: 40, depre_rate: 4 },
+            'passport': { level: 9, cost: 300, bonus: 0, depre_rate: 0 },
+        };
+
+        const RARITY_PROBS = { 'vc': 0.3, 'c': 0.2, 'm': 0.1, 'u': 0.05, 'vu': 0.01, 'r': 0.005 };
+
+        const BAIT_PRICES = { worms: 1, prawns: 2, livebait: 3, lures: 5 };
+
+        // ============== UI HELPER FUNCTIONS ==============
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.remove('active');
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            const section = document.getElementById(sectionId);
+            if (section) section.classList.add('active');
+        }
+
+        function formatMoney(amount) {
+            return '$' + amount.toLocaleString();
+        }
+
+        function formatFishName(name) {
+            return name.charAt(0).toUpperCase() + name.slice(1);
+        }
+
+        // ============== MAIN APP CLASS ==============
+        class FishinGame {
+            constructor() {
+                this.player = null;
+                this.currentFight = null;
+                this.forceSpecies = null;
+                this.allFishers = this.loadFisherList();
+                this.initializeUI();
+            }
+
+            initializeUI() {
+                this.loadFisherSelect();
+                this.setupEventListeners();
+                this.loadShop();
+                this.loadHowTo();
+            }
+
+            setupEventListeners() {
+                document.getElementById('fisher-select').addEventListener('change', (e) => {
+                    if (e.target.value) this.loadPlayer(e.target.value);
+                });
+
+                document.getElementById('fisher-select').addEventListener('focus', (e) => {
+                    e.target.click();
+                });
+
+                document.getElementById('area-select').addEventListener('change', (e) => {
+                    if (this.player && e.target.value) {
+                        this.player.area = e.target.value;
+                        this.player.target_species = ''; // Reset target when area changes
+                        this.savePlayer();
+                        this.updateAvailableSpecies();
+                    }
+                });
+
+                document.getElementById('species-target').addEventListener('change', (e) => {
+                    this.player.target_species = e.target.value || '';
+                    this.savePlayer();
+                });
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    // Always allow these global shortcuts regardless of player state
+                    if (e.shiftKey && e.key.toLowerCase() === 'f') {
+                        e.preventDefault();
+                        document.getElementById('fisher-select').focus();
+                        return;
+                    }
+                    if (e.shiftKey && e.key.toLowerCase() === 'b') {
+                        e.preventDefault();
+                        const baitSelect = document.getElementById('bait-select');
+                        if (baitSelect) {
+                            baitSelect.click();
+                            baitSelect.focus();
+                        }
+                        return;
+                    }
+                    if (e.shiftKey && e.key.toLowerCase() === 'a') {
+                        e.preventDefault();
+                        const areaSelect = document.getElementById('area-select');
+                        if (areaSelect) {
+                            areaSelect.click();
+                            areaSelect.focus();
+                        }
+                        return;
+                    }
+                    
+                    // These require a player to be selected
+                    if (!this.player) return;
+                    
+                    if (e.shiftKey && e.key.toLowerCase() === 'c') {
+                        e.preventDefault();
+                        this.cast();
+                        return;
+                    }
+                    if (e.shiftKey && e.key.toLowerCase() === 's') {
+                        e.preventDefault();
+                        showModal('shop-modal');
+                        return;
+                    }
+                    if (e.shiftKey && e.key === '?') {
+                        e.preventDefault();
+                        showModal('howto-modal');
+                        return;
+                    }
+                    if (e.shiftKey && e.key.toLowerCase() === 'l') {
+                        e.preventDefault();
+                        showModal('leaderboard-modal');
+                        return;
+                    }
+                    if (e.shiftKey && e.key.toLowerCase() === 'd') {
+                        e.preventDefault();
+                        showModal('debug-modal');
+                        return;
+                    }
+                    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'q') {
+                        e.preventDefault();
+                        window.location.reload();
+                        return;
+                    }
+                    // Space for strike - prevent default scroll
+                    // Use currentSpecies as the indicator that a bite/fight is pending
+                    if (e.code === 'Space' && this.currentSpecies) {
+                        e.preventDefault();
+                        this.strike();
+                        return;
+                    }
+                    // X for XP, C for cash on catch decision
+                    if ((e.key.toLowerCase() === 'x' || e.key.toLowerCase() === 'c') && this.pendingCatch) {
+                        e.preventDefault();
+                        if (e.key.toLowerCase() === 'x') {
+                            this.keepFishForXP(this.pendingCatch.species, this.pendingCatch.size, this.pendingCatch.xpGain, this.pendingCatch.cashGain);
+                        } else {
+                            this.keepFishForCash(this.pendingCatch.species, this.pendingCatch.size, this.pendingCatch.xpGain, this.pendingCatch.cashGain);
+                        }
+                        return;
+                    }
+                });
+            }
+
+            loadFisherList() {
+                const stored = localStorage.getItem('fisherList');
+                return stored ? JSON.parse(stored) : [];
+            }
+
+            saveFisherList() {
+                localStorage.setItem('fisherList', JSON.stringify(this.allFishers));
+            }
+
+            loadFisherSelect() {
+                const select = document.getElementById('fisher-select');
+                select.innerHTML = '<option value="">Select a Fisher...</option>';
+                this.allFishers.forEach(name => {
+                    const opt = document.createElement('option');
+                    opt.value = name;
+                    opt.textContent = name;
+                    select.appendChild(opt);
+                });
+            }
+
+            createDefaultPlayer(name) {
+                return {
+                    name: name,
+                    level: 1,
+                    xp: 0,
+                    cash: 100,
+                    worms: 10,
+                    prawns: 0,
+                    livebait: 0,
+                    lures: 0,
+                    gear: ['handline'],
+                    gear_dur: { handline: 100 },
+                    area: 'creek',
+                    target_species: '',
+                    catches: [],
+                    inventory: {},
+                    lure_casts: 0,
+                    lure_fish: 0,
+                };
+            }
+
+            createFisher() {
+                const name = document.getElementById('fisher-name').value.trim();
+                if (!name) {
+                    alert('Please enter a fisher name');
+                    return;
+                }
+                if (this.allFishers.includes(name)) {
+                    alert('Fisher already exists');
+                    return;
+                }
+
+                this.player = this.createDefaultPlayer(name);
+                this.allFishers.push(name);
+                this.saveFisherList();
+                this.savePlayer();
+                this.loadFisherSelect();
+                document.getElementById('fisher-select').value = name;
+                document.getElementById('fisher-name').value = '';
+                closeModal('create-fisher-modal');
+                this.updateGUI();
+            }
+
+            loadPlayer(name) {
+                const stored = localStorage.getItem(`fisher_${name}`);
+                this.player = stored ? JSON.parse(stored) : this.createDefaultPlayer(name);
+                // Normalize imported/stored player data to prevent missing fields
+                if (typeof this.player !== 'object' || Array.isArray(this.player)) {
+                    this.player = this.createDefaultPlayer(name);
+                }
+
+                // Numeric defaults
+                this.player.level = Number(this.player.level) || 1;
+                this.player.xp = Number(this.player.xp) || 0;
+                this.player.cash = (this.player.cash === null || this.player.cash === undefined) ? 0 : Number(this.player.cash) || 0;
+
+                // Bait defaults
+                this.player.worms = Number(this.player.worms) || 0;
+                this.player.prawns = Number(this.player.prawns) || 0;
+                this.player.livebait = Number(this.player.livebait) || 0;
+                this.player.lures = Number(this.player.lures) || 0;
+                this.player.lure_casts = Number(this.player.lure_casts) || 0;
+                this.player.lure_fish = Number(this.player.lure_fish) || 0;
+
+                // Gear defaults
+                if (!Array.isArray(this.player.gear)) this.player.gear = ['handline'];
+                if (!this.player.gear_dur || typeof this.player.gear_dur !== 'object') this.player.gear_dur = {};
+                this.player.gear.forEach(g => {
+                    if (!this.player.gear_dur[g]) this.player.gear_dur[g] = 100;
+                });
+
+                // Equipped gear (what's actively in use). Keep separate from owned gear.
+                if (!Array.isArray(this.player.equipped)) {
+                    // equip the first available line if present, otherwise default to handline
+                    const LINE_TYPES = ['handline', 'rod', 'bigrod', 'boatrod', 'bigboatrod'];
+                    const ownedLine = (this.player.gear || []).find(g => LINE_TYPES.includes(g));
+                    this.player.equipped = ownedLine ? [ownedLine] : ['handline'];
+                }
+
+                // Catches and inventory
+                if (!Array.isArray(this.player.catches)) this.player.catches = [];
+                if (!this.player.inventory || typeof this.player.inventory !== 'object') this.player.inventory = {};
+
+                // Area: keep if valid and unlocked, otherwise fallback to first unlocked area
+                if (!this.player.area) this.player.area = 'creek';
+                const unlocked = this.getUnlockedAreas();
+                if (!unlocked.includes(this.player.area)) {
+                    // if the stored area is valid but not yet unlocked, still allow it in the selector
+                    if (AREAS.includes(this.player.area)) {
+                        // add stored area to the unlocked list for display
+                        unlocked.push(this.player.area);
+                    } else {
+                        this.player.area = unlocked[0] || 'creek';
+                    }
+                }
+
+                if (!this.player.target_species) this.player.target_species = '';
+
+                // Persist any normalization back to storage to avoid repeated problems
+                this.savePlayer();
+
+                this.updateGUI();
+            }
+
+            savePlayer() {
+                if (this.player) {
+                    localStorage.setItem(`fisher_${this.player.name}`, JSON.stringify(this.player));
+                }
+            }
+
+            removeFisher() {
+                if (!this.player) return;
+                document.getElementById('delete-fisher-name').textContent = `Delete fisher "${this.player.name}"?`;
+                showModal('delete-fisher-modal-1');
+            }
+
+            confirmDeleteFisher() {
+                document.getElementById('delete-fisher-name-2').textContent = `Permanently delete "${this.player.name}"?\nAll catches and data will be lost forever.`;
+                closeModal('delete-fisher-modal-1');
+                showModal('delete-fisher-modal-2');
+            }
+
+            finalDeleteFisher() {
+                if (!this.player) return;
+
+                const idx = this.allFishers.indexOf(this.player.name);
+                if (idx > -1) this.allFishers.splice(idx, 1);
+                localStorage.removeItem(`fisher_${this.player.name}`);
+                this.saveFisherList();
+
+                this.player = null;
+                closeModal('delete-fisher-modal-2');
+                this.updateGUI();
+                this.loadFisherSelect();
+                alert('Fisher deleted.');
+            }
+
+            updateGUI() {
+                if (!this.player) {
+                    showSection('main-section');
+                    return;
+                }
+
+                // Update stats
+                document.getElementById('stat-level').textContent = this.player.level;
+                document.getElementById('stat-xp').textContent = this.player.xp;
+                document.getElementById('stat-cash').textContent = formatMoney(this.player.cash);
+
+                const xpForLevel = this.player.level * 100;
+                const progress = (this.player.xp % xpForLevel) / xpForLevel * 100;
+                document.getElementById('xp-progress').style.width = progress + '%';
+
+                // Update bait
+                document.getElementById('bait-worms').textContent = this.player.worms;
+                document.getElementById('bait-prawns').textContent = this.player.prawns;
+                document.getElementById('bait-livebait').textContent = this.player.livebait;
+                document.getElementById('bait-lures').textContent = this.player.lures;
+
+                // Update bait selector with available bait options
+                const baitSelect = document.getElementById('bait-select');
+                if (baitSelect) {
+                    const options = [''];
+                    const baitNames = ['worms', 'prawns', 'livebait', 'lures'];
+                    baitNames.forEach(bait => {
+                        if (this.player[bait] && this.player[bait] > 0) {
+                            options.push(bait);
+                        }
+                    });
+                    const currentValue = baitSelect.value;
+                    baitSelect.innerHTML = '';
+                    options.forEach(opt => {
+                        const optEl = document.createElement('option');
+                        optEl.value = opt;
+                        optEl.textContent = opt ? `${opt} (${this.player[opt]})` : 'No bait (or jig)';
+                        baitSelect.appendChild(optEl);
+                    });
+                    if (options.includes(currentValue)) {
+                        baitSelect.value = currentValue;
+                    } else {
+                        baitSelect.value = '';
+                    }
+                }
+
+                // Update areas
+                const areaSelect = document.getElementById('area-select');
+                const unlockedAreas = this.getUnlockedAreas();
+                areaSelect.innerHTML = '';
+                unlockedAreas.forEach(area => {
+                    const opt = document.createElement('option');
+                    opt.value = area;
+                    opt.textContent = area.charAt(0).toUpperCase() + area.slice(1);
+                    areaSelect.appendChild(opt);
+                });
+                areaSelect.value = this.player.area;
+
+                // Update species
+                this.updateAvailableSpecies();
+
+                // Update gear checkboxes
+                this.updateGearCheckboxes();
+
+                showSection('main-section');
+            }
+
+            getUnlockedAreas() {
+                const areas = [];
+                for (let i = 1; i <= this.player.level && i <= 7; i++) {
+                    areas.push(LEVEL_UNLOCK_AREAS[i]);
+                }
+                return areas;
+            }
+
+            updateAvailableSpecies() {
+                const speciesSelect = document.getElementById('species-target');
+                const availableSpecies = this.getAvailableSpecies();
+                const currentTarget = speciesSelect.value;
+                speciesSelect.innerHTML = '<option value="">Any Species</option>';
+                availableSpecies.forEach(species => {
+                    const opt = document.createElement('option');
+                    opt.value = species;
+                    opt.textContent = formatFishName(species);
+                    speciesSelect.appendChild(opt);
+                });
+                // Preserve selection if still available
+                if (currentTarget && availableSpecies.includes(currentTarget)) {
+                    speciesSelect.value = currentTarget;
+                } else {
+                    speciesSelect.value = '';
+                }
+            }
+
+            getAvailableSpecies() {
+                const species = [];
+                Object.keys(FISH_DICT).forEach(name => {
+                    const fish = FISH_DICT[name];
+                    if (fish.locations.includes(this.player.area)) {
+                        species.push(name);
+                    }
+                });
+                return species;
+            }
+
+            updateGearCheckboxes() {
+                const container = document.getElementById('gear-checkboxes');
+                container.innerHTML = '';
+
+                // Only display gear the player actually owns. Purchaseable gear appears in the shop.
+                const LINE_TYPES = ['handline', 'rod', 'bigrod', 'boatrod', 'bigboatrod'];
+                const activeLines = this.player.gear.filter(g => LINE_TYPES.includes(g));
+
+                // If player has no gear array, initialize
+                if (!Array.isArray(this.player.gear)) this.player.gear = ['handline'];
+
+                this.player.gear.forEach(gearName => {
+                    const gearData = GEAR[gearName];
+                    if (!gearData) return; // skip unknown gear
+
+                    const hasGear = true; // iterating owned gear
+                    const isLine = LINE_TYPES.includes(gearName);
+                    const isEquipped = Array.isArray(this.player.equipped) && this.player.equipped.includes(gearName);
+
+                    const div = document.createElement('div');
+                    div.className = 'checkbox-item';
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `gear-${gearName}`;
+                    checkbox.checked = isEquipped;
+                    checkbox.addEventListener('change', () => {
+                        // Treat checkbox as equip/unequip, not ownership toggle
+                        if (!Array.isArray(this.player.equipped)) this.player.equipped = [];
+                        if (checkbox.checked) {
+                            // If this is a line type, ensure only one line is equipped
+                            if (isLine) {
+                                const otherLines = this.player.equipped.filter(g => LINE_TYPES.includes(g) && g !== gearName);
+                                otherLines.forEach(l => {
+                                    this.player.equipped = this.player.equipped.filter(x => x !== l);
+                                    const el = document.getElementById(`gear-${l}`);
+                                    if (el) el.checked = false;
+                                });
+                            }
+                            if (!this.player.equipped.includes(gearName)) this.player.equipped.push(gearName);
+                        } else {
+                            this.player.equipped = this.player.equipped.filter(g => g !== gearName);
+                        }
+                        this.savePlayer();
+                        this.updateGearCheckboxes();
+                    });
+
+                    const label = document.createElement('label');
+                    label.htmlFor = `gear-${gearName}`;
+                    label.textContent = gearName;
+
+                    div.appendChild(checkbox);
+                    div.appendChild(label);
+                    container.appendChild(div);
+                });
+            }
+
+            cast() {
+                if (!this.player) {
+                    alert('Please select a fisher first');
+                    return;
+                }
+
+                const LINE_TYPES = ['handline', 'rod', 'bigrod', 'boatrod', 'bigboatrod'];
+                const hasLine = Array.isArray(this.player.equipped) && this.player.equipped.some(g => LINE_TYPES.includes(g));
+                const hasHerringJig = this.player.gear.includes('herring jig');
+
+                // Herring jig mode: does not require bait and catches livebait (1-6, commonly 2-4)
+                if (hasHerringJig && !hasLine) {
+                    // catch livebait now
+                    const r = Math.random();
+                    let count = 3; // default
+                    if (r < 0.05) count = 1;
+                    else if (r < 0.25) count = 2;
+                    else if (r < 0.80) count = 3;
+                    else if (r < 0.95) count = 4;
+                    else if (r < 0.99) count = 5;
+                    else count = 6;
+
+                    this.player.livebait = (this.player.livebait || 0) + count;
+                    this.savePlayer();
+                    this.updateGUI();
+
+                    showSection('gameplay-section');
+                    const content = document.getElementById('gameplay-content');
+                    content.innerHTML = `
+                        <div class="success-box">
+                            <strong>Herring Jig</strong>
+                            <p>You caught ${count} livebait (${this.player.livebait} total).</p>
+                        </div>
+                        <button onclick="app.cast()" class="success" style="width: 100%;">Cast Again</button>
+                    `;
+                    return;
+                }
+
+                // Get selected bait from dropdown
+                const baitSelect = document.getElementById('bait-select');
+                const selectedBait = baitSelect ? baitSelect.value : '';
+
+                // Check for bait (required unless using jig-only above)
+                if (!selectedBait) {
+                    alert('Please select a bait type');
+                    return;
+                }
+
+                if ((this.player[selectedBait] || 0) <= 0) {
+                    alert(`No ${selectedBait} available! Buy some in the shop.`);
+                    return;
+                }
+
+                const availableSpecies = this.getAvailableSpecies();
+                if (availableSpecies.length === 0) {
+                    alert('No fish available in this area');
+                    return;
+                }
+
+                if (!hasLine && !hasHerringJig) {
+                    alert('Need a fishing line (handline/rod/etc) or herring jig');
+                    return;
+                }
+
+                // Select species - if target is specified, increase its likelihood
+                let species;
+                if (this.player.target_species && availableSpecies.includes(this.player.target_species)) {
+                    // 70% chance to get target species when specified
+                    if (Math.random() < 0.7) {
+                        species = this.player.target_species;
+                    } else {
+                        species = availableSpecies[Math.floor(Math.random() * availableSpecies.length)];
+                    }
+                } else {
+                    species = availableSpecies[Math.floor(Math.random() * availableSpecies.length)];
+                }
+
+                const fish = FISH_DICT[species];
+                const size = Math.random() * (fish.size_max - fish.size_min) + fish.size_min;
+
+                // Consume selected bait (track lure usage separately)
+                if (selectedBait === 'lures') {
+                    // For lures, track casts instead of consuming immediately
+                    this.player.lure_casts = (this.player.lure_casts || 0) + 1;
+                } else {
+                    this.player[selectedBait] = (this.player[selectedBait] || 0) - 1;
+                }
+
+                this.savePlayer();
+                this.updateGUI();
+
+                // Show fishing animation
+                showSection('gameplay-section');
+                document.getElementById('gameplay-title').textContent = 'Fishing...';
+                const content = document.getElementById('gameplay-content');
+                content.innerHTML = `
+                    <div class="fight-panel">
+                        <div class="fight-title">🎣 Casting into the ${this.player.area}...</div>
+                        <div class="fight-status">Waiting for a bite...</div>
+                    </div>
+                `;
+
+                // Simulate bite
+                // store current species/size for potential interactive strike
+                this.currentSpecies = species;
+                this.currentSize = size;
+                setTimeout(() => {
+                    this.simulateFight(species, size);
+                }, 2000);
+            }
+
+            simulateFight(species, size) {
+                const fish = FISH_DICT[species];
+                const fishName = formatFishName(species);
+
+                // Simulate strike chance (80%)
+                const strikeSuccess = Math.random() < 0.8;
+                if (!strikeSuccess) {
+                    this.showFightMessage(`${fishName} got away!`, 'Lost');
+                    return;
+                }
+
+                // Simulate play (80%)
+                const playSuccess = Math.random() < 0.8;
+                if (!playSuccess) {
+                    this.showFightMessage(`Line broke during the fight!`, 'Lost');
+                    return;
+                }
+
+                // Caught!
+                this.processCatch(species, size);
+            }
+
+            strike() {
+                // Placeholder for interactive strike mechanic
+                this.simulateFight(this.currentSpecies, this.currentSize);
+            }
+
+            showFightMessage(message, result) {
+                const content = document.getElementById('gameplay-content');
+                content.innerHTML = `
+                    <div class="warning-box">
+                        <h3>${result}</h3>
+                        <p>${message}</p>
+                    </div>
+                    <button onclick="app.cast()" class="success" style="width: 100%;">Cast Again</button>
+                `;
+                // Clear pending strike/fight state so Space won't re-trigger
+                this.currentSpecies = null;
+                this.currentSize = null;
+            }
+
+            processCatch(species, size) {
+                const fish = FISH_DICT[species];
+                const fishName = formatFishName(species);
+
+                // Check regulations
+                let legal = true;
+                let reason = '';
+
+                if (fish.no_take) {
+                    legal = false;
+                    reason = 'This species is no-take (protected)';
+                }
+
+                if (legal && fish.closed_season) {
+                    const today = new Date();
+                    const month = String(today.getMonth() + 1).padStart(2, '0');
+                    const day = String(today.getDate()).padStart(2, '0');
+                    const dateStr = `${month}-${day}`;
+                    if (dateStr >= fish.closed_season[0] && dateStr <= fish.closed_season[1]) {
+                        legal = false;
+                        reason = `${fishName} is in closed season`;
+                    }
+                }
+
+                if (legal && size < fish.min_take) {
+                    legal = false;
+                    reason = `Below minimum size (${fish.min_take}cm)`;
+                }
+
+                if (legal && fish.max_take > 0 && size > fish.max_take) {
+                    legal = false;
+                    reason = `Above maximum size (${fish.max_take}cm)`;
+                }
+
+                // Check possession limit
+                const caught = this.player.catches.filter(c => c.species === species).length;
+                if (legal && caught >= fish.possession_limit && fish.possession_limit > 0) {
+                    legal = false;
+                    reason = `Possession limit reached (${fish.possession_limit})`;
+                }
+
+                // Track lure usage: increment fish count if using lures
+                const baitSelect = document.getElementById('bait-select');
+                const selectedBait = baitSelect ? baitSelect.value : '';
+                if (selectedBait === 'lures') {
+                    this.player.lure_fish = (this.player.lure_fish || 0) + 1;
+                    // Check if lure should be consumed (10 casts OR 3 fish caught)
+                    if (this.player.lure_casts >= 10 || this.player.lure_fish >= 3) {
+                        if (this.player.lures > 0) {
+                            this.player.lures -= 1;
+                            this.player.lure_casts = 0;
+                            this.player.lure_fish = 0;
+                        }
+                    }
+                }
+
+                const content = document.getElementById('gameplay-content');
+                let html = `
+                    <div class="fish-card">
+                        <div class="fish-name">${fishName}</div>
+                        <div class="fish-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Size:</span>
+                                <span class="detail-value">${size.toFixed(1)}cm</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Status:</span>
+                                <span class="detail-value" style="color: ${legal ? '#28a745' : '#dc3545'};">${legal ? '✓ Legal' : '✗ Illegal'}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                if (!legal) {
+                    // For illegal fish: automatically release and grant conservation XP
+                    const conservationXP = Math.floor(size * 0.25);
+                    html += `<div class="warning-box"><strong>Cannot Keep:</strong> ${reason}</div>`;
+                    html += `<div class="success-box" style="background: #e8f5e9; border: 1px solid #4caf50;">
+                        <strong>Released for Conservation</strong>
+                        <p style="margin: 10px 0; color: #2e7d32;">Fish automatically released. Earned +${conservationXP} XP for conservation!</p>
+                    </div>`;
+                    html += `<button onclick="app.cast()" class="secondary" style="width: 100%; margin-top: 8px;">Cast Again</button>`;
+                    
+                    // Display the catch card first so player sees what was caught
+                        content.innerHTML = html;
+
+                        // Now automatically grant conservation XP
+                        this.player.xp += conservationXP;
+                        const levelXp = this.player.level * 100;
+                        while (this.player.xp >= levelXp) {
+                            this.player.level++;
+                            this.player.xp -= levelXp;
+                            alert(`Level up to ${this.player.level}!`);
+                        }
+                        this.savePlayer();
+
+                        // Refresh sidebar/stats but keep the gameplay view visible
+                        this.updateGUI();
+                        showSection('gameplay-section');
+                        // Re-apply the catch card HTML so it's not overwritten by updateGUI
+                        const replayContent = document.getElementById('gameplay-content');
+                        if (replayContent) replayContent.innerHTML = html;
+
+                        this.pendingCatch = null;
+                        // Clear pending strike/fight state
+                        this.currentSpecies = null;
+                        this.currentSize = null;
+                } else {
+                    const xpGain = Math.floor(size / 2);
+                    const cashGain = Math.floor(size * 0.2);
+
+                    html += `<div class="info-box">
+                        <strong>Choose One:</strong>
+                        <p style="margin: 10px 0;">XP: +${xpGain} OR Cash: +${formatMoney(cashGain)}</p>
+                        <p style="font-size: 0.9em; color: #666;">Press <strong>X</strong> for XP or <strong>C</strong> for Cash</p>
+                    </div>`;
+
+                    html += `
+                        <button onclick="app.keepFishForXP('${species}', ${size}, ${xpGain}, ${cashGain})" class="success" style="width: 100%; margin-bottom: 8px;">
+                            [X] Keep for XP (+${xpGain})
+                        </button>
+                        <button onclick="app.keepFishForCash('${species}', ${size}, ${xpGain}, ${cashGain})" style="width: 100%; background: #ffc107; margin-bottom: 8px;">
+                            [C] Keep for Cash (+${formatMoney(cashGain)})
+                        </button>
+                        <button onclick="app.releaseFish()" class="secondary" style="width: 100%;">Release</button>
+                    `;
+
+                    // Store pending catch for hotkey handling
+                    this.pendingCatch = { species, size, xpGain, cashGain, isIllegal: false };
+                }
+
+                content.innerHTML = html;
+                // After presenting the catch UI, clear the interactive strike state
+                // so Space will not retrigger the fight once the catch has been processed.
+                this.currentSpecies = null;
+                this.currentSize = null;
+            }
+
+            keepFish(species, size, xpGain, cashGain) {
+                this.player.catches.push({
+                    species: species,
+                    size: size,
+                    date: new Date().toLocaleDateString()
+                });
+                this.player.xp += xpGain;
+                this.player.cash += cashGain;
+
+                // Level up check
+                const levelXp = this.player.level * 100;
+                while (this.player.xp >= levelXp) {
+                    this.player.level++;
+                    this.player.xp -= levelXp;
+                    alert(`Level up to ${this.player.level}!`);
+                }
+
+                this.savePlayer();
+                this.updateGUI();
+                this.pendingCatch = null;
+                // Show a confirmation and wait for player action (no auto-cast)
+                const content = document.getElementById('gameplay-content');
+                content.innerHTML = `
+                    <div class="success-box">
+                        <strong>Kept:</strong>
+                        <p>${formatFishName(species)} ${size.toFixed(1)}cm kept. +${xpGain} XP, ${formatMoney(cashGain)} added.</p>
+                    </div>
+                    <button onclick="app.cast()" class="success" style="width: 100%; margin-top: 8px;">Cast Again</button>
+                `;
+            }
+
+            keepFishForXP(species, size, xpGain, cashGain) {
+                this.player.catches.push({
+                    species: species,
+                    size: size,
+                    date: new Date().toLocaleDateString()
+                });
+                this.player.xp += xpGain;
+
+                // Level up check
+                const levelXp = this.player.level * 100;
+                while (this.player.xp >= levelXp) {
+                    this.player.level++;
+                    this.player.xp -= levelXp;
+                    alert(`Level up to ${this.player.level}!`);
+                }
+
+                this.savePlayer();
+                this.updateGUI();
+                this.pendingCatch = null;
+                const content = document.getElementById('gameplay-content');
+                content.innerHTML = `
+                    <div class="success-box">
+                        <strong>Kept for XP</strong>
+                        <p>${formatFishName(species)} ${size.toFixed(1)}cm kept. +${xpGain} XP.</p>
+                    </div>
+                    <button onclick="app.cast()" class="success" style="width: 100%; margin-top: 8px;">Cast Again</button>
+                `;
+            }
+
+            keepFishForCash(species, size, xpGain, cashGain) {
+                this.player.catches.push({
+                    species: species,
+                    size: size,
+                    date: new Date().toLocaleDateString()
+                });
+                this.player.cash += cashGain;
+
+                this.savePlayer();
+                this.updateGUI();
+                this.pendingCatch = null;
+                const content = document.getElementById('gameplay-content');
+                content.innerHTML = `
+                    <div class="success-box">
+                        <strong>Kept for Cash</strong>
+                        <p>${formatFishName(species)} ${size.toFixed(1)}cm sold. +${formatMoney(cashGain)}.</p>
+                    </div>
+                    <button onclick="app.cast()" class="success" style="width: 100%; margin-top: 8px;">Cast Again</button>
+                `;
+            }
+
+            releaseFish() {
+                this.pendingCatch = null;
+                const content = document.getElementById('gameplay-content');
+                content.innerHTML = `
+                    <div class="info-box">
+                        <strong>Released</strong>
+                        <p>Fish released. Good conservation choice!</p>
+                    </div>
+                    <button onclick="app.cast()" class="success" style="width: 100%;">Cast Again</button>
+                `;
+            }
+
+            loadShop() {
+                const content = document.getElementById('shop-content');
+                if (!this.player) {
+                    content.innerHTML = '<p>Select a fisher from the sidebar first.</p>';
+                    return;
+                }
+
+                let html = '<h3>Bait</h3><div class="inventory-grid">';
+
+                Object.entries(BAIT_PRICES).forEach(([bait, price]) => {
+                    const quantity = this.player[bait] || 0;
+                    html += `
+                        <div class="inventory-item">
+                            <div class="item-name">${bait}</div>
+                            <div class="item-quantity">${quantity}</div>
+                            <div class="item-price">${formatMoney(price)}</div>
+                            <button onclick="app.buyBait('${bait}', ${price})" style="width: 100%; margin-top: 8px; font-size: 0.8em; padding: 5px;">Buy</button>
+                        </div>
+                    `;
+                });
+
+                html += '</div><h3 style="margin-top: 20px;">Gear</h3><div class="inventory-grid">';
+
+                Object.entries(GEAR).forEach(([gear, data]) => {
+                    if (this.player.level >= data.level) {
+                        const hasGear = this.player.gear.includes(gear);
+                        const owned = hasGear ? ' ✓' : '';
+                        html += `
+                            <div class="inventory-item" style="border-color: ${hasGear ? '#667eea' : '#ddd'};">
+                                <div class="item-name">${gear}${owned}</div>
+                                <div style="color: #999; font-size: 0.8em; margin: 5px 0;">Level ${data.level}</div>
+                                <div class="item-price">${formatMoney(data.cost)}</div>
+                                ${!hasGear ? `<button onclick="app.buyGear('${gear}')" style="width: 100%; margin-top: 8px; font-size: 0.8em; padding: 5px;">Buy</button>` : ''}
+                            </div>
+                        `;
+                    }
+                });
+
+                html += '</div>';
+                content.innerHTML = html;
+            }
+
+            buyBait(bait, price) {
+                if (this.player.cash < price) {
+                    alert('Not enough cash!');
+                    return;
+                }
+                this.player.cash -= price;
+                this.player[bait] = (this.player[bait] || 0) + 1;
+                this.savePlayer();
+                this.updateGUI();
+                this.loadShop();
+            }
+
+            buyGear(gear) {
+                const data = GEAR[gear];
+                if (this.player.cash < data.cost) {
+                    alert('Not enough cash!');
+                    return;
+                }
+                this.player.cash -= data.cost;
+                if (!this.player.gear.includes(gear)) {
+                    this.player.gear.push(gear);
+                    this.player.gear_dur[gear] = 100;
+                }
+                this.savePlayer();
+                this.updateGUI();
+                this.loadShop();
+            }
+
+            loadHowTo() {
+                const content = document.getElementById('howto-content');
+                content.innerHTML = `
+                    <h3>How to Fish</h3>
+                    <p>A concise guide to playing FishinGame, based on Queensland fishing regulations.</p>
+
+                    <h4 style="margin-top: 15px;">Gameplay:</h4>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Select your fisher or create a new one</li>
+                        <li>Choose your fishing area from unlocked areas</li>
+                        <li>Select bait if available (or use a herring jig)</li>
+                        <li>Cast to fish and wait for a bite</li>
+                        <li>Strike (Space) when a fish bites</li>
+                        <li>Decide to keep for XP, keep for cash, or release</li>
+                        <li>Releasing protected or undersized fish can grant conservation XP</li>
+                        <li>Gain XP to level up and unlock new areas and gear</li>
+                        <li>Use the shop to buy bait and gear</li>
+                    </ul>
+
+                    <h4>Regulations:</h4>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Based on QLD fresh and tidal limits/seasons</li>
+                        <li>No-take species must be released</li>
+                        <li>Closed seasons prevent keeping</li>
+                        <li>Possession and size limits are enforced by the game</li>
+                    </ul>
+
+                    <h4>Shortcuts:</h4>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li><strong>Shift+C:</strong> Cast</li>
+                        <li><strong>Shift+S:</strong> Shop</li>
+                        <li><strong>Shift+?:</strong> How to Fish</li>
+                        <li><strong>Shift+L:</strong> Leaderboard</li>
+                        <li><strong>Shift+A:</strong> Focus Area selector</li>
+                        <li><strong>Shift+B:</strong> Focus Bait selector</li>
+                        <li><strong>Space:</strong> Strike during fight</li>
+                    </ul>
+
+                    <p style="margin-top: 15px; color: #666; font-size: 0.9em;">Enjoy fishing responsibly!</p>
+                `;
+            }
+
+            getLeaderboard() {
+                const leaders = [];
+                this.allFishers.forEach(name => {
+                    const stored = localStorage.getItem(`fisher_${name}`);
+                    if (stored) {
+                        const player = JSON.parse(stored);
+                        let largestFish = 0;
+                        let largestSpecies = '';
+                        if (player.catches && player.catches.length > 0) {
+                            const best = player.catches.reduce((a, b) => (a.size > b.size ? a : b));
+                            largestFish = best.size;
+                            largestSpecies = best.species;
+                        }
+                        leaders.push({
+                            name: name,
+                            level: player.level,
+                            xp: player.xp,
+                            catches: player.catches.length,
+                            largestFish: largestFish,
+                            largestSpecies: largestSpecies
+                        });
+                    }
+                });
+                return leaders.sort((a, b) => {
+                    if (b.level !== a.level) return b.level - a.level;
+                    if (b.xp !== a.xp) return b.xp - a.xp;
+                    return b.catches - a.catches;
+                });
+            }
+
+            // Export current fisher to a JSON file
+            exportPlayer() {
+                if (!this.player) {
+                    alert('Select a fisher to export');
+                    return;
+                }
+                const dataStr = JSON.stringify(this.player, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `fisher_${this.player.name}.json`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+            }
+
+            // Prompt user to import a fisher JSON file
+            importPlayerPrompt() {
+                const input = document.getElementById('import-file-input');
+                if (!input) return;
+                input.value = null;
+                input.onchange = (e) => this.handleImportFile(e);
+                input.click();
+            }
+
+            // Handle file selected for import
+            handleImportFile(e) {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    try {
+                        const data = JSON.parse(evt.target.result);
+                        if (!data || !data.name) {
+                            alert('Invalid fisher file');
+                            return;
+                        }
+                        // Save into localStorage and add to fisher list
+                        localStorage.setItem(`fisher_${data.name}`, JSON.stringify(data));
+                        const list = this.loadFisherList();
+                        if (!list.includes(data.name)) {
+                            list.push(data.name);
+                            localStorage.setItem('fisherList', JSON.stringify(list));
+                            this.allFishers = list;
+                            this.loadFisherSelect();
+                        }
+                        this.loadPlayer(data.name);
+                        alert(`Imported fisher ${data.name}`);
+                    } catch (err) {
+                        alert('Failed to import file: ' + err.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        // Initialize app with game data
+        let app = new FishinGame();
+        app.currentFight = null;
+        app.pendingCatch = null;
+
+        // Handle modal population on open
+        document.getElementById('leaderboard-modal').addEventListener('show', () => {
+            const content = document.getElementById('leaderboard-content');
+            const leaders = app.getLeaderboard();
+            let html = '<table><thead><tr><th>Rank</th><th>Fisher</th><th>Level</th><th>Catches</th><th>Biggest</th><th>Size</th></tr></thead><tbody>';
+            leaders.forEach((leader, idx) => {
+                html += `<tr><td>${idx + 1}</td><td>${leader.name}</td><td>${leader.level}</td><td>${leader.catches}</td><td>${leader.largestSpecies || ''}</td><td>${leader.largestFish ? leader.largestFish.toFixed(1) + 'cm' : ''}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            content.innerHTML = html;
+        });
+
+        // Populate leaderboard when modal is shown
+        const leaderboardModal = document.getElementById('leaderboard-modal');
+        const originalShowModal = window.showModal;
+        window.showModal = function(modalId) {
+            if (modalId === 'leaderboard-modal') {
+                const content = document.getElementById('leaderboard-content');
+                const leaders = app.getLeaderboard();
+                let html = '<table><thead><tr><th>Rank</th><th>Fisher</th><th>Level</th><th>Catches</th><th>Biggest</th><th>Size</th></tr></thead><tbody>';
+                leaders.forEach((leader, idx) => {
+                    html += `<tr><td>${idx + 1}</td><td>${leader.name}</td><td>${leader.level}</td><td>${leader.catches}</td><td>${leader.largestSpecies || ''}</td><td>${leader.largestFish ? leader.largestFish.toFixed(1) + 'cm' : ''}</td></tr>`;
+                });
+                html += '</tbody></table>';
+                content.innerHTML = html;
+            } else if (modalId === 'shop-modal') {
+                // refresh shop content before showing
+                if (app) app.loadShop();
+                // set focus to shop modal content for keyboard navigation
+                setTimeout(() => {
+                    const shopContent = document.getElementById('shop-content');
+                    if (shopContent) {
+                        const firstButton = shopContent.querySelector('button');
+                        if (firstButton) firstButton.focus();
+                    }
+                }, 100);
+            } else if (modalId === 'howto-modal') {
+                if (app) app.loadHowTo();
+            }
+            originalShowModal(modalId);
+        };
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // ESC closes modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+                // Auto-focus fisher name if create modal is shown
+                if (document.getElementById('create-fisher-modal').classList.contains('active')) {
+                    document.getElementById('fisher-name').focus();
+                }
+            }
+        });
+
+        // Focus fisher name input when create fisher modal opens
+        const observeModal = new MutationObserver(() => {
+            if (document.getElementById('create-fisher-modal').classList.contains('active')) {
+                setTimeout(() => {
+                    document.getElementById('fisher-name').focus();
+                }, 100);
+            }
+        });
+        observeModal.observe(document.getElementById('create-fisher-modal'), { attributes: true });
+    </script>
+</body>
+</html>

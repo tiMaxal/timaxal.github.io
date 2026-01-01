@@ -83,6 +83,7 @@ function buildNav(prefix) {
             <a href="${prefix}varhns/aud/aud.html">AUD Converter</a>
             <a href="${prefix}varhns/uvau.html">UVAU</a>
             <a href="${prefix}varhns/FishingHowTo/FishingHowTo.html">FishingHowTo</a>
+            <a href="${prefix}varhns/FishingHowTo/fishingame_webapp.html" style="margin-left: 15px;">→ fishinGame</a>
             <a href="${prefix}varhns/fotografi/fotografi.html">fotografi</a>
             <a href="${prefix}varhns/fotografi/cc0img.html" style="margin-left: 15px;">→ CC0 Images</a>
             <a href="${prefix}varhns/fotografi/cc-by_img.html" style="margin-left: 15px;">→ CC-BY Images</a>

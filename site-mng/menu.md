@@ -39,6 +39,7 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 
 - [FishingHowTo](./varhns/FishingHowTo/FishingHowTo.html)
   basic info for fishing
+  - [fishinGame](./varhns/FishingHowTo/fishingame_webapp.html)
 
 - [fotografi](./varhns/fotografi/fotografi.html)
   CC-BY and CC0 images, mono and stereo

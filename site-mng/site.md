@@ -26,6 +26,7 @@ Base URL: https://timax.al
 
 ### Content Pages - Various HNS Content
 - [FishingHowTo - Basic Fishing Information](./varhns/FishingHowTo/FishingHowTo.html) | 0.7 | monthly
+- [fishinGame - in-browser text-based game](./varhns/FishingHowTo/fishingame_webapp.html) | 0.6 | monthly
 - [fotografi - Photography Gallery](./varhns/fotografi/fotografi.html) | 0.7 | monthly
 - [CC0 Images](./varhns/fotografi/cc0img.html) | 0.6 | monthly
 - [CC-BY Images](./varhns/fotografi/cc-by_img.html) | 0.6 | monthly

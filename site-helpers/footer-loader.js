@@ -44,11 +44,10 @@ function loadFooter() {
   
   // For file:// protocol, we can't use fetch, so insert the footer HTML directly
   if (window.location.protocol === 'file:') {
-    const footerHTML = `
-<div class="footer">
+    const footerHTML = `<div class="footer">
   <p>
     <a href="https://hns.au" target="_blank">
-      <img src="${imgPrefix}hnsau_blak-H-trans-bak+gg-centre_60x60.webp" alt="Handshake Australia" height="50" width="50">
+      <img src="${imgPrefix}hnsau_blak-H-trans-bak+gg-centre_60x60.webp" alt="Handshake Australia" height="50" width="50" class="footer-logo">
     </a>
   </p>
   <p style="margin-top: 15px;">
@@ -62,7 +61,7 @@ function loadFooter() {
       <img src="${imgPrefix}Twitter.svg" alt="@tiMaxal" height="20" width="20">
     </a>
   </p>
-  <h6>[a <a href="https://timax.au/" target="_blank">tiMaxal</a> enterprises offering]</h6>
+  <h6>[a <a href="https://timax.al/" target="_blank">tiMaxal</a> enterprises offering]</h6>
 </div>`;
     footerContainer.innerHTML = footerHTML;
   } else {
