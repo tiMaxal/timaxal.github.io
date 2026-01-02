@@ -8,10 +8,19 @@ The site uses simple Markdown (`.md`) files that you can edit with any text edit
 
 ## 🗂️ File Structure
 
+**Site Management (site-mng/):**
 - **menu.md** - Define the site navigation menu
-- **menu-builder.js** - Script to generate site-nav.js from menu.md
+- **menu-builder.js** - Script to generate site-nav.js and footer-loader.js from menu.md
 - **site.md** - Define all pages for the sitemap
 - **sitemap-builder.js** - Script to generate sitemap.xml and site-map.html from site.md
+- **template.html** - Template for new pages
+- **build-site.bat** - Runs both builder scripts
+
+**Content Structure:**
+- **HTML/** - All content pages go here (or in subdirectories)
+  - HTML/aboutlife/, HTML/software/, HTML/sellhns/, HTML/varhns/
+  - Up to 3 levels deep: HTML/varhns/FishingHowTo/page.html
+- **site-helpers/** - Navigation, footer, theme scripts (auto-loaded by pages)
 
 ## 🔧 How to Update the Navigation Menu
 
@@ -22,9 +31,11 @@ Open `menu.md` in any text editor and make your changes:
 ```markdown
 ## Main Sites
 
-- [Page Name](./folder/page.html)
+- [Page Name](./HTML/folder/page.html)
   Optional description text
 ```
+
+**Important:** All content page paths must start with `./HTML/`
 
 **Format Rules:**
 - `## Section Name` creates a category header
@@ -85,13 +96,14 @@ After generating sitemap.xml, submit it to search engines:
 ### Common Tasks
 
 **Add a new page to menu:**
-1. Open `menu.md`
-2. Add line: `- [New Page](./folder/page.html)`
-3. Run: `node menu-builder.js`
+1. Create page in HTML/ directory (e.g., HTML/software/newpage.html)
+2. Open `menu.md`
+3. Add line: `- [New Page](./HTML/software/newpage.html)`
+4. Run: `node menu-builder.js`
 
 **Add new page to sitemap:**
 1. Open `site.md`
-2. Add line: `- [New Page](./folder/page.html) | 0.7 | monthly`
+2. Add line: `- [New Page](./HTML/software/newpage.html) | 0.7 | monthly`
 3. Run: `node sitemap-builder.js`
 
 **Update both at once:**
@@ -104,19 +116,19 @@ node menu-builder.js; node sitemap-builder.js
 ```markdown
 ## Content Pages
 
-- [Photography](./photos/gallery.html)
+- [Photography](./HTML/varhns/fotografi/fotografi.html)
   Browse our photo collection
-  - [Nature Photos](./photos/nature.html)
-  - [City Photos](./photos/city.html)
+  - [CC-BY Images](./HTML/varhns/fotografi/cc-by_img.html)
+  - [CC0 Images](./HTML/varhns/fotografi/cc0img.html)
 ```
 
 ### Example site.md Entry
 
 ```markdown
 ### Photography Section
-- [Photo Gallery](./photos/gallery.html) | 0.8 | weekly
-- [Nature Photos](./photos/nature.html) | 0.7 | monthly
-- [City Photos](./photos/city.html) | 0.7 | monthly
+- [Photography](./HTML/varhns/fotografi/fotografi.html) | 0.8 | weekly
+- [CC-BY Images](./HTML/varhns/fotografi/cc-by_img.html) | 0.7 | monthly
+- [CC0 Images](./HTML/varhns/fotografi/cc0img.html) | 0.7 | monthly
 ```
 
 ## ❓ Troubleshooting
@@ -127,9 +139,11 @@ node menu-builder.js; node sitemap-builder.js
 - Check console for errors (F12)
 
 **Links not working?**
-- Use `./` prefix for relative paths: `./folder/page.html`
+- Content pages must use `./HTML/` prefix: `./HTML/folder/page.html`
+- Use `./` prefix only: no `/HTML/` (without dot)
 - External links need full URL: `https://example.com`
 - Add `{external}` for external links in menu.md
+- Check your script references match depth (../, ../../, or ../../../)
 
 **Script errors?**
 - Make sure Node.js is installed: `node --version`
