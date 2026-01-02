@@ -20,22 +20,22 @@ Base URL: https://timax.al
 - [tiMaxal Hub](./index.html) | 1.0 | weekly
 
 ### Main Sites
-- [AboutLife - Holistic Self-Care](./aboutlife/aboutlife.html) | 0.9 | monthly
-- [Software by tiMaxal](./software/software.html) | 0.9 | weekly
-- [AUD Currency Converter](./varhns/aud/aud.html) | 0.8 | daily
+- [AboutLife - Holistic Self-Care](./HTML/aboutlife/aboutlife.html) | 0.9 | monthly
+- [Software by tiMaxal](./HTML/software/software.html) | 0.9 | weekly
+- [AUD Currency Converter](./HTML/varhns/aud/aud.html) | 0.8 | daily
 
 ### Content Pages - Various HNS Content
-- [FishingHowTo - Basic Fishing Information](./varhns/FishingHowTo/FishingHowTo.html) | 0.7 | monthly
-- [fishinGame - in-browser text-based game](./varhns/FishingHowTo/fishingame_webapp.html) | 0.6 | monthly
-- [fotografi - Photography Gallery](./varhns/fotografi/fotografi.html) | 0.7 | monthly
-- [CC0 Images](./varhns/fotografi/cc0img.html) | 0.6 | monthly
-- [CC-BY Images](./varhns/fotografi/cc-by_img.html) | 0.6 | monthly
-- [TheBlackDog - Mental Health Organization](./varhns/TheBlackDog.html) | 0.8 | monthly
-- [uvau](./varhns/uvau.html) | 0.6 | monthly
+- [FishingHowTo - Basic Fishing Information](./HTML/varhns/FishingHowTo/FishingHowTo.html) | 0.7 | monthly
+- [fishinGame - in-browser text-based game](./HTML/varhns/FishingHowTo/fishingame_webapp.html) | 0.6 | monthly
+- [fotografi - Photography Gallery](./HTML/varhns/fotografi/fotografi.html) | 0.7 | monthly
+- [CC0 Images](./HTML/varhns/fotografi/cc0img.html) | 0.6 | monthly
+- [CC-BY Images](./HTML/varhns/fotografi/cc-by_img.html) | 0.6 | monthly
+- [TheBlackDog - Mental Health Organization](./HTML/varhns/TheBlackDog.html) | 0.8 | monthly
+- [uvau](./HTML/varhns/uvau.html) | 0.6 | monthly
 
 ### Commerce
-- [Buy HNS TLDs](./sellhns/hnsell.html) | 0.8 | weekly
-- [HNS Sell - Alternate Page](./sellhns/nb-sell.html) | 0.7 | weekly
+- [Buy HNS TLDs](./HTML/sellhns/hnsell.html) | 0.8 | weekly
+- [HNS Sell - Alternate Page](./HTML/sellhns/nb-sell.html) | 0.7 | weekly
 
 ### Utilities
 - [Site Map](./site-helpers/site-map.html) | 0.5 | monthly

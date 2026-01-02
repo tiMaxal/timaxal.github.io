@@ -121,32 +121,16 @@ function createSiteNav() {
       // We're in /site-helpers/ folder (1 level deep)
       const prefix = '../';
       return buildNav(prefix);
-    } else if (currentPath.includes('/software/')) {
-      // We're in /software/ folder (1 level deep)
-      const prefix = '../';
+    } else if (currentPath.includes('/HTML/varhns/aud/') || currentPath.includes('/HTML/varhns/FishingHowTo/') || currentPath.includes('/HTML/varhns/fotografi/')) {
+      // We're in /HTML/varhns/[subfolder]/ (3 levels deep)
+      const prefix = '../../../';
       return buildNav(prefix);
-    } else if (currentPath.includes('/aboutlife/')) {
-      // We're in /aboutlife/ folder (1 level deep)
-      const prefix = '../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/sellhns/')) {
-      // We're in /sellhns/ folder (1 level deep)
-      const prefix = '../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/varhns/aud/')) {
-      // We're in /varhns/aud/ folder (2 levels deep)
+    } else if (currentPath.includes('/HTML/software/') || currentPath.includes('/HTML/aboutlife/') || currentPath.includes('/HTML/sellhns/') || currentPath.includes('/HTML/varhns/')) {
+      // We're in /HTML/[folder]/ (2 levels deep)
       const prefix = '../../';
       return buildNav(prefix);
-    } else if (currentPath.includes('/varhns/FishingHowTo/')) {
-      // We're in /varhns/FishingHowTo/ folder (2 levels deep)
-      const prefix = '../../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/varhns/fotografi/')) {
-      // We're in /varhns/fotografi/ folder (2 levels deep)
-      const prefix = '../../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/varhns/')) {
-      // We're in /varhns/ folder (1 level deep)
+    } else if (currentPath.includes('/HTML/')) {
+      // We're in /HTML/ folder (1 level deep)
       const prefix = '../';
       return buildNav(prefix);
     } else {
@@ -230,7 +214,7 @@ document.addEventListener('DOMContentLoaded', createSiteNav);
 /**Extract folder structure from menu links
  */
 function extractFolderStructure(categories) {
-  const folders = { depth1: new Set(), depth2: new Set() };
+  const folders = { depth1: new Set(), depth2: new Set(), depth3: new Set() };
   
   for (const category of categories) {
     // Process main category items
@@ -242,7 +226,10 @@ function extractFolderStructure(categories) {
         // Split into parts
         const parts = cleanUrl.split('/').filter(p => p && !p.endsWith('.html'));
         
-        if (parts.length === 2) {
+        if (parts.length === 3) {
+          // Format: folder/subfolder/subsubfolder/file.html (depth 3)
+          folders.depth3.add(`/${parts[0]}/${parts[1]}/${parts[2]}/`);
+        } else if (parts.length === 2) {
           // Format: folder/subfolder/file.html (depth 2)
           folders.depth2.add(`/${parts[0]}/${parts[1]}/`);
         } else if (parts.length === 1) {
@@ -259,7 +246,9 @@ function extractFolderStructure(categories) {
           const cleanUrl = item.url.replace(/^\.?\//, '');
           const parts = cleanUrl.split('/').filter(p => p && !p.endsWith('.html'));
           
-          if (parts.length === 2) {
+          if (parts.length === 3) {
+            folders.depth3.add(`/${parts[0]}/${parts[1]}/${parts[2]}/`);
+          } else if (parts.length === 2) {
             folders.depth2.add(`/${parts[0]}/${parts[1]}/`);
           } else if (parts.length === 1) {
             folders.depth1.add(`/${parts[0]}/`);
@@ -271,7 +260,8 @@ function extractFolderStructure(categories) {
   
   return {
     depth1: Array.from(folders.depth1).sort(),
-    depth2: Array.from(folders.depth2).sort()
+    depth2: Array.from(folders.depth2).sort(),
+    depth3: Array.from(folders.depth3).sort()
   };
 }
 
@@ -289,7 +279,8 @@ function generateFooterLoaderJs(folders) {  // Read footer.html content
     console.warn(`⚠️  Warning: Could not read footer.html: ${error.message}`);
     footerContent = '<div class="footer"><p>Footer content not found</p></div>';
   }
-    const depth2Checks = folders.depth2.map(f => `pathLower.includes('${f.toLowerCase()}')`).join(' || \n        ');
+  const depth3Checks = folders.depth3.map(f => `pathLower.includes('${f.toLowerCase()}')`).join(' ||\n        ');
+  const depth2Checks = folders.depth2.map(f => `pathLower.includes('${f.toLowerCase()}')`).join(' || \n        ');
   const depth1Checks = folders.depth1.map(f => `pathLower.includes('${f.toLowerCase()}')`).join(' || \n             ');
   
   return `// Footer loader - dynamically loads footer.html into pages
@@ -299,8 +290,8 @@ function loadFooter() {
   
   // Determine the correct path to footer.html based on current page location
   const currentPath = window.location.pathname;
-  let footerPath = 'footer.html';
-  let imgPrefix = 'imgs/';
+  let footerPath = 'site-helpers/footer.html';
+  let imgPrefix = 'HTML/imgs/';
   
   // Automatically calculate depth
   let depth = 0;
@@ -310,12 +301,17 @@ function loadFooter() {
     // This is auto-generated from menu.md by menu-builder.js
     const pathLower = currentPath.toLowerCase();
     
-    // Check for 2-level deep folders (must check these first!)
-    if (${depth2Checks || 'false'}) {
+    // Check for 3-level deep folders (must check these first!)
+    if (${depth3Checks || 'false'}) {
+      depth = 3;
+    }
+    // Check for 2-level deep folders
+    else if (${depth2Checks || 'false'}) {
       depth = 2;
     }
     // Check for 1-level deep folders
-    else if (${depth1Checks || 'false'}) {
+    else if (${depth1Checks || 'false'} ||
+             pathLower.includes('/html/')) {
       depth = 1;
     }
     // Otherwise we're at root (depth = 0)
@@ -326,8 +322,8 @@ function loadFooter() {
   }
   
   if (depth > 0) {
-    footerPath = '../'.repeat(depth) + 'footer.html';
-    imgPrefix = '../'.repeat(depth) + 'imgs/';
+    footerPath = '../'.repeat(depth) + 'site-helpers/footer.html';
+    imgPrefix = '../'.repeat(depth) + 'HTML/imgs/';
   }
   
   // For file:// protocol, we can't use fetch, so insert the footer HTML directly
@@ -392,6 +388,7 @@ function main() {
   console.log(`\n📁 Detected folder structure:`);
   console.log(`   - Depth 1: ${folders.depth1.join(', ') || 'none'}`);
   console.log(`   - Depth 2: ${folders.depth2.join(', ') || 'none'}`);
+  console.log(`   - Depth 3: ${folders.depth3.join(', ') || 'none'}`);
   
   const footerLoaderJs = generateFooterLoaderJs(folders);
   fs.writeFileSync(FOOTER_LOADER_JS, footerLoaderJs, 'utf-8');

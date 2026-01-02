@@ -4,6 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FishinGame - Web Edition</title>
+    <link rel="stylesheet" href="../../../site-helpers/site-nav.css">
+    <style>
+        /* Theme switcher button styles */
+        .theme-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 16px;
+            background-color: rgba(52, 4, 244, 0.8);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1001;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        .theme-switcher:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        body.dark-theme .theme-switcher {
+            background-color: rgba(153, 221, 255, 0.8);
+            color: #003366;
+        }
+        body.black-theme .theme-switcher {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000000;
+        }
+    </style>
     <style>
         * {
             margin: 0;
@@ -13,9 +46,19 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #ccffff;
             min-height: 100vh;
             padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Theme backgrounds */
+        body.dark-theme {
+            background: #003366;
+        }
+
+        body.black-theme {
+            background: #000000;
         }
 
         .container {
@@ -565,6 +608,7 @@
     </style>
 </head>
 <body>
+    <button class="theme-switcher" id="themeBtn" onclick="cycleTheme()">☀️ Light</button>
     <div class="container">
         <div class="header">
             <h1>🎣 FishinGame</h1>
@@ -2220,5 +2264,10 @@
         });
         observeModal.observe(document.getElementById('create-fisher-modal'), { attributes: true });
     </script>
+    
+    <script src="../../../site-helpers/site-nav.js"></script>
+    <script src="../../../site-helpers/theme-switcher.js"></script>
+    <script src="../../../site-helpers/footer-loader.js"></script>
+    <div id="footer-container" style="text-align: center; margin-top: 20px;"></div>
 </body>
 </html>

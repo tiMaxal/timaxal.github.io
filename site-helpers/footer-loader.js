@@ -5,8 +5,8 @@ function loadFooter() {
   
   // Determine the correct path to footer.html based on current page location
   const currentPath = window.location.pathname;
-  let footerPath = 'footer.html';
-  let imgPrefix = 'imgs/';
+  let footerPath = 'site-helpers/footer.html';
+  let imgPrefix = 'HTML/imgs/';
   
   // Automatically calculate depth
   let depth = 0;
@@ -16,18 +16,22 @@ function loadFooter() {
     // This is auto-generated from menu.md by menu-builder.js
     const pathLower = currentPath.toLowerCase();
     
-    // Check for 2-level deep folders (must check these first!)
-    if (pathLower.includes('/varhns/fishinghowto/') || 
-        pathLower.includes('/varhns/aud/') || 
-        pathLower.includes('/varhns/fotografi/')) {
+    // Check for 3-level deep folders (must check these first!)
+    if (pathLower.includes('/html/varhns/fishinghowto/') ||
+        pathLower.includes('/html/varhns/aud/') ||
+        pathLower.includes('/html/varhns/fotografi/')) {
+      depth = 3;
+    }
+    // Check for 2-level deep folders
+    else if (pathLower.includes('/html/aboutlife/') || 
+        pathLower.includes('/html/sellhns/') || 
+        pathLower.includes('/html/software/') || 
+        pathLower.includes('/html/varhns/')) {
       depth = 2;
     }
     // Check for 1-level deep folders
-    else if (pathLower.includes('/aboutlife/') || 
-             pathLower.includes('/sellhns/') || 
-             pathLower.includes('/site-helpers/') || 
-             pathLower.includes('/software/') || 
-             pathLower.includes('/varhns/')) {
+    else if (pathLower.includes('/site-helpers/') ||
+             pathLower.includes('/html/')) {
       depth = 1;
     }
     // Otherwise we're at root (depth = 0)
@@ -38,8 +42,8 @@ function loadFooter() {
   }
   
   if (depth > 0) {
-    footerPath = '../'.repeat(depth) + 'footer.html';
-    imgPrefix = '../'.repeat(depth) + 'imgs/';
+    footerPath = '../'.repeat(depth) + 'site-helpers/footer.html';
+    imgPrefix = '../'.repeat(depth) + 'HTML/imgs/';
   }
   
   // For file:// protocol, we can't use fetch, so insert the footer HTML directly

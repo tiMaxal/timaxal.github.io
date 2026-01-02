@@ -13,10 +13,10 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 
 ## Main Sites
 
-- [AboutLife](./aboutlife/aboutlife.html)
+- [AboutLife](./HTML/aboutlife/aboutlife.html)
   holistic self-care
 
-- [Thortz.Click](https://thortz.click/) {external}
+- [Thortz.Click](https://tshirt.thortz.click/) {external}
   Buy T-shirts, mugs, et al, with original slogans + fotos
 
 - [HNSau](https://hns.au/) {external}
@@ -25,33 +25,33 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 - [registrAU](https://registr.au/) {external}
   Australian Registrar for HNS SLDs
 
-- [Software](./software/software.html)
+- [Software](./HTML/software/software.html)
   personally created and voding [ai-assisted 'vibe-coding'] apps
 
 
 ## Content Pages
 
-- [AUD Converter](./varhns/aud/aud.html)
+- [AUD Converter](./HTML/varhns/aud/aud.html)
   exchange rates currency converter [Fiat + Crypto]
 
-- [UVAU](./varhns/uvau.html)
+- [UVAU](./HTML/varhns/uvau.html)
   Check local UV levels [in Australia]
 
-- [FishingHowTo](./varhns/FishingHowTo/FishingHowTo.html)
+- [FishingHowTo](./HTML/varhns/FishingHowTo/FishingHowTo.html)
   basic info for fishing
-  - [fishinGame](./varhns/FishingHowTo/fishingame_webapp.html)
+  - [fishinGame](./HTML/varhns/FishingHowTo/fishingame_webapp.html)
 
-- [fotografi](./varhns/fotografi/fotografi.html)
+- [fotografi](./HTML/varhns/fotografi/fotografi.html)
   CC-BY and CC0 images, mono and stereo
-  - [CC0 Images](./varhns/fotografi/cc0img.html)
-  - [CC-BY Images](./varhns/fotografi/cc-by_img.html)
+  - [CC0 Images](./HTML/varhns/fotografi/cc0img.html)
+  - [CC-BY Images](./HTML/varhns/fotografi/cc-by_img.html)
 
-- [TheBlackDog](./varhns/TheBlackDog.html)
+- [TheBlackDog](./HTML/varhns/TheBlackDog.html)
   mental health org
 
 ### HNS Handshake
 
-- [Buy HNS TLDs](./sellhns/hnsell.html)
+- [Buy HNS TLDs](./HTML/sellhns/hnsell.html)
   purchase Handshake top-level domains
 - [HNS Merch](https://hmart/) {external}
   tiMaxal merchandise

@@ -124,18 +124,31 @@
             top: 20px;
             right: 20px;
             padding: 10px 20px;
-            border: 2px solid currentColor;
-            border-radius: 5px;
-            background-color: inherit;
-            color: inherit;
+            background-color: rgba(52, 4, 244, 0.8);
+            color: white;
+            border: none;
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
             z-index: 1000;
         }
 
         #theme-switcher:hover {
             transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        body.dark-theme #theme-switcher {
+            background-color: rgba(153, 221, 255, 0.8);
+            color: #003366;
+        }
+
+        body.black-theme #theme-switcher {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000000;
         }
 
         .loading {
@@ -262,10 +275,10 @@
             font-size: 0.9em;
         }
     </style>
-    <link rel="stylesheet" href="../site-helpers/site-nav.css?v=2">
-    <script src="../site-helpers/theme-switcher.js?v=2"></script>
-    <script src="../site-helpers/footer-loader.js?v=2"></script>
-    <script src="../site-helpers/site-nav.js?v=2"></script>
+    <link rel="stylesheet" href="../../site-helpers/site-nav.css?v=2">
+    <script src="../../site-helpers/theme-switcher.js?v=2"></script>
+    <script src="../../site-helpers/footer-loader.js?v=2"></script>
+    <script src="../../site-helpers/site-nav.js?v=2"></script>
 </head>
 <body>
     <button id="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
