@@ -1,0 +1,19 @@
+﻿{
+  "email": "[email][+]@[domain].[tld]",
+  "output_filename": "portfolio.html",
+  "title": "HNS Portfolio",
+  "credits_file": "html/credits.html",
+  "include_descriptions": false,
+  "all": false,
+  "csv_files": [
+    "csv-s/csv-nb/csv_nb-tld/Namebase-domains-export.csv",
+    "csv-s/csv-ss/csvg_ss-tld/hns_ss-export-tld.csv",
+    "csv-s"
+  ],
+  "_comments": {
+    "email": "Email template for Bob/FW domains. Use + for per-domain variation (user+@gmail.com)",
+    "all": "true = include ALL domains; false = only domains with price (for Bob/FW sources)",
+    "csv_files": "List of CSV files OR directories. Directories are searched recursively for *.csv files",
+    "include_descriptions": "true = show descript-IDNA and translate-IDNA fields"
+  }
+}

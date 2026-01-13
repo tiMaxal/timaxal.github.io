@@ -1,0 +1,1182 @@
+#!/usr/bin/env python3
+"""
+HNS Portfolio Maker for timax.al
+Generates HTML portfolio pages from Namebase/Shakestation CSV exports
+Styled to match timax.al theme with 3-way theme switcher
+"""
+
+import pandas as pd
+import os
+import sys
+import math
+import json
+import argparse
+from pathlib import Path
+from datetime import datetime
+import codecs
+import re
+import unicodedata
+
+# Translation library (install: pip install deep-translator)
+try:
+    from deep_translator import GoogleTranslator
+    TRANSLATION_AVAILABLE = True
+except ImportError:
+    TRANSLATION_AVAILABLE = False
+    print("Info: deep-translator not installed. Translation features will be disabled.")
+    print("Install with: pip install deep-translator")
+
+def find_csv_files(path, recursive=True):
+    """Find CSV files in a directory or return single file"""
+    csv_files = []
+    
+    if os.path.isfile(path):
+        if path.lower().endswith('.csv'):
+            csv_files.append(path)
+    elif os.path.isdir(path):
+        if recursive:
+            for root, dirs, files in os.walk(path):
+                for file in files:
+                    if file.lower().endswith('.csv'):
+                        csv_files.append(os.path.join(root, file))
+        else:
+            for file in os.listdir(path):
+                filepath = os.path.join(path, file)
+                if os.path.isfile(filepath) and file.lower().endswith('.csv'):
+                    csv_files.append(filepath)
+    
+    return sorted(csv_files)
+
+def detect_csv_source(filepath):
+    """Detect CSV source type from headers"""
+    try:
+        df = pd.read_csv(filepath, nrows=1)
+        headers = df.columns.tolist()
+        headers_lower = [h.lower() for h in headers]
+        
+        # Namebase Transactions: extra.domain (dot notation) is UNIQUE
+        if 'extra.domain' in headers:
+            return 'nb-tr'
+        # Shakestation TLD: for_sale column is UNIQUE
+        elif 'for_sale' in headers_lower:
+            return 'ss-tld'
+        # Shakestation Transactions: coin column is UNIQUE
+        elif 'coin' in headers_lower:
+            return 'ss-tr'
+        # Firewallet: expiry column is UNIQUE (date format, only FW has this)
+        elif 'expiry' in headers_lower:
+            return 'fw'
+        # Namebase TLD: price_hns is UNIQUE to Namebase
+        elif 'price_hns' in headers_lower:
+            return 'nb-tld'
+        # Bob Wallet TLD (processed): domains column (plural) with unicode/tags
+        elif 'domains' in headers_lower and 'unicode' in headers_lower:
+            return 'bob-tld'
+        # Bob Wallet TLD (unprocessed): single column, no header or domain names
+        elif len(headers) == 1:
+            first_val = str(headers[0]).lower()
+            # Exclude if first value is a known column name from other formats
+            if first_val in ['name', 'domain', 'time', 'action', 'coin', 'expiry', 'value', 'maxbid', 'price_hns', 'for_sale']:
+                return 'unknown'
+            # Accept if looks like domain: xn-- prefix OR alphanumeric/hyphen/underscore <= 63 chars
+            if first_val.startswith('xn--') or (len(first_val) <= 63 and all(c.isalnum() or c in '-_' for c in first_val)):
+                return 'bob-tld'
+        return 'unknown'
+    except Exception as e:
+        print(f"Error detecting source: {e}")
+        return 'unknown'
+
+def process_csv(filepath, auto_email=''):
+    """Process CSV and return list of domain dictionaries"""
+    source_type = detect_csv_source(filepath)
+    domains = []
+    
+    try:
+        # Handle different CSV reading methods for malformed files
+        try:
+            df = pd.read_csv(filepath)
+        except pd.errors.ParserError:
+            try:
+                df = pd.read_csv(filepath, quoting=1, escapechar='\\')
+            except:
+                df = pd.read_csv(filepath, on_bad_lines='skip')
+        
+        # For Bob TLD without header, add header
+        if source_type == 'bob-tld' and len(df.columns) == 1 and 'domains' not in df.columns:
+            df.columns = ['domains']
+        
+        if source_type == 'ss-tld':
+            # Only include domains marked for_sale=True
+            df = df[df['for_sale'] == True]
+        
+        # Determine domain column name
+        domain_col = None
+        if 'name' in df.columns:
+            domain_col = 'name'
+        elif 'domain' in df.columns:
+            domain_col = 'domain'
+        elif 'domains' in df.columns:
+            domain_col = 'domains'
+        elif 'extra.domain' in df.columns:
+            domain_col = 'extra.domain'
+        else:
+            print(f"Warning: No domain column found in {os.path.basename(filepath)}")
+            return domains
+        
+        # Determine source for marketplace linking
+        if source_type.startswith('ss'):
+            link_source = 'ss'
+        elif source_type.startswith('nb'):
+            link_source = 'nb'
+        elif source_type == 'fw':
+            link_source = 'fw'
+        elif source_type.startswith('bob'):
+            link_source = 'bob'
+        else:
+            link_source = 'nb'  # default
+        
+        for _, row in df.iterrows():
+            domain_name = row[domain_col]
+            
+            # Skip NaN domains
+            if isinstance(domain_name, float) and math.isnan(domain_name):
+                continue
+            domain_name = str(domain_name)
+            
+            # Get email and price
+            email = row.get('email', row.get('eml', ''))
+            price = row.get('price', '')
+            
+            # Clean up nan values
+            if isinstance(email, float) and math.isnan(email):
+                email = ''
+            if isinstance(price, float):
+                if math.isnan(price):
+                    price = ''
+                elif price == 0.0:
+                    price = ''
+                else:
+                    price = str(price)
+            else:
+                price = str(price).strip() if price else ''
+                if price.lower() in ['nan', 'none', '0', '0.0']:
+                    price = ''
+            
+            # Clean up email string
+            email = str(email).strip() if email else ''
+            if email.lower() in ['nan', 'none', '0']:
+                email = ''
+            
+            # Auto-append email for domains with price if auto_email provided
+            if auto_email and not email and price:
+                if '@' in auto_email:
+                    parts = auto_email.split('@')
+                    if len(parts) == 2:
+                        user_part = parts[0]
+                        if user_part.endswith('+'):
+                            email = f"{user_part}{domain_name}@{parts[1]}"
+                        else:
+                            email = f"{user_part}+{domain_name}@{parts[1]}"
+            
+            # For Bob/FW: skip domains without email or price
+            if link_source in ['bob', 'fw']:
+                if not email and not price:
+                    continue
+            
+            domain = {
+                'name': domain_name,
+                'unicode': row.get('unicode', ''),
+                'descript': row.get('descript-IDNA', ''),
+                'translate': row.get('translate-IDNA', ''),
+                'tags': row.get('tags', 'All Names'),
+                'source': link_source,
+                'email': email,
+                'price': price
+            }
+            domains.append(domain)
+            
+    except Exception as e:
+        print(f"Error processing {filepath}: {e}")
+    
+    return domains
+
+def format_domain_link(domain, include_descriptions=False):
+    """Format domain as HTML link with appropriate marketplace or contact info"""
+    name = domain['name']
+    unicode_val = str(domain.get('unicode', ''))
+    source = domain.get('source', 'nb')
+    email = domain.get('email', '')
+    price = domain.get('price', '')
+    tags = domain.get('tags', '')
+    descript = str(domain.get('descript', ''))
+    translate = str(domain.get('translate', ''))
+    
+    # Clean up nan values for descript/translate early
+    if descript.lower() == 'nan' or not descript:
+        descript = ''
+    if translate.lower() == 'nan' or not translate:
+        translate = ''
+    
+    # Format display name
+    if name.startswith('xn--'):
+        if unicode_val and unicode_val.lower() != 'nan' and unicode_val.strip():
+            try:
+                unicode_bytes = codecs.decode(unicode_val, 'unicode_escape')
+                unicode_char = unicode_bytes.encode('latin-1').decode('utf-8')
+            except:
+                unicode_char = unicode_val
+            display_name = f'{unicode_char} <span class="puny">({name})</span>'
+        else:
+            display_name = name
+    else:
+        display_name = name
+    
+    # Determine marketplace URL or contact display
+    if source == 'ss':
+        base_url = f"https://shakestation.io/domain/{name}"
+        link_html = f'<a href="{base_url}" target="_blank" rel="noreferrer">{display_name}</a>'
+    elif source == 'nb':
+        base_url = f"https://www.namebase.io/domains/{name}"
+        link_html = f'<a href="{base_url}" target="_blank" rel="noreferrer">{display_name}</a>'
+    elif source in ['bob', 'fw']:
+        # Bob/Firewallet: No marketplace link, show contact info
+        link_html = f'<span class="domain-name-only">{display_name}</span>'
+    else:
+        # Default to Namebase
+        base_url = f"https://www.namebase.io/domains/{name}"
+        link_html = f'<a href="{base_url}" target="_blank" rel="noreferrer">{display_name}</a>'
+    
+    # Build HTML parts
+    html_parts = [link_html]
+    
+    # Add descriptions if enabled
+    if include_descriptions and (descript or translate):
+        desc_parts = []
+        if descript:
+            desc_parts.append(f'<span class="desc-text">"{descript}"</span>')
+        if translate:
+            desc_parts.append(f'<span class="translate-text"><i>{translate}</i></span>')
+        if desc_parts:
+            html_parts.append(f'<div class="domain-descriptions">{" ".join(desc_parts)}</div>')
+    
+    # Add contact info
+    contact_parts = []
+    if price:
+        contact_parts.append(f'<span class="price-tag">💰 {price}</span>')
+    if email:
+        copy_btn = f'<button class="copy-email-btn" onclick="copyEmail(event, \'{email}\')" title="Copy {email}">📧 eml</button>'
+        contact_parts.append(copy_btn)
+    
+    if contact_parts:
+        html_parts.append(f'<div class="domain-contact">{" ".join(contact_parts)}</div>')
+    
+    return f'<div class="domain-with-contact" data-price="{price if price else ""}" data-email="{email if email else ""}" data-tags="{tags}">{"".join(html_parts)}</div>'
+
+def generate_html(domains, output_filename="portfolio.html", title="HNS Portfolio", credits_file=None, include_descriptions=False):
+    """Generate HTML with timax.al theming"""
+    
+    # Organize domains by tags
+    tags_dict = {}
+    for domain in domains:
+        tags_list = str(domain['tags']).split(',')
+        for tag in tags_list:
+            tag = tag.strip()
+            if not tag:
+                tag = 'All Names'
+            if tag not in tags_dict:
+                tags_dict[tag] = []
+            tags_dict[tag].append(domain)
+    
+    # Sort tags: 'All Names' first, then alphabetical
+    tags_sorted = ['All Names'] + sorted(set(tags_dict.keys()) - {'All Names'})
+    
+    # Generate navigation links
+    nav_links = []
+    for tag in tags_sorted:
+        section_id = tag.lower().replace(' ', '-')
+        nav_links.append(f'<button class="tag-button" onclick="showSection(\'{section_id}\')">{tag}</button>')
+    
+    # Generate tag sections
+    sections = []
+    for tag in tags_sorted:
+        section_id = tag.lower().replace(' ', '-')
+        domain_links = [f'<div class="domain-item">{format_domain_link(d, include_descriptions)}</div>' 
+                       for d in tags_dict[tag]]
+        sections.append(f'''
+        <div id="{section_id}" class="tag-section">
+            <h3>{tag}</h3>
+            <div class="domain-grid">
+                {''.join(domain_links)}
+            </div>
+        </div>
+        ''')
+    
+    # Load credits content if provided
+    credits_html = ''
+    if credits_file and os.path.exists(credits_file):
+        with open(credits_file, 'r', encoding='utf-8') as f:
+            credits_content = f.read()
+            credits_html = f'''
+        <div class="credits-section">
+            {credits_content}
+            <div style="margin-top: 0.5em; font-size: 0.9em; opacity: 0.85;">[AI-voding upgrade of original by tiMaxal]</div>
+        </div>
+        '''
+    
+    # Generate HTML
+    html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        
+        /* Light theme (default) */
+        body {{
+            background-color: #ccffff;
+            color: #3404f4;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }}
+        
+        /* Dark theme */
+        body.dark-theme {{
+            background-color: #003366;
+            color: #99ddff;
+        }}
+        
+        /* Black theme */
+        body.black-theme {{
+            background-color: #000000;
+            color: #ffffff;
+        }}
+        
+        a:link {{ color: #0000ee; text-decoration: none; }}
+        a:visited {{ color: #551a8b; }}
+        a:hover {{ color: #3404f4; text-decoration: underline; }}
+        
+        body.dark-theme a:link {{ color: #66bbff; }}
+        body.dark-theme a:visited {{ color: #9988ff; }}
+        body.dark-theme a:hover {{ color: #99ddff; }}
+        
+        body.black-theme a:link {{ color: #66bbff; }}
+        body.black-theme a:visited {{ color: #9999ff; }}
+        body.black-theme a:hover {{ color: #ffffff; }}
+        
+        /* Button container - fixed position for all control buttons */
+        .buttons-container {{
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }}
+        
+        .buttons-container button {{
+            padding: 10px 20px;
+            background-color: rgba(52, 4, 244, 0.8);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }}
+        
+        .buttons-container button:hover {{
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }}
+        
+        body.dark-theme .buttons-container button {{
+            background-color: rgba(153, 221, 255, 0.8);
+            color: #003366;
+        }}
+        
+        body.black-theme .buttons-container button {{
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000000;
+        }}
+        
+        /* Legacy button styles for compatibility */
+        .theme-switcher {{
+            /* Styles now handled by buttons-container */
+        }}
+        
+        .theme-switcher:hover {{
+            /* Handled by buttons-container */
+        }}
+        
+        body.dark-theme .theme-switcher {{
+            /* Handled by buttons-container */
+        }}
+        
+        body.black-theme .theme-switcher {{
+            /* Handled by buttons-container */
+        }}
+        
+        .container {{
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }}
+        
+        .header {{
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid currentColor;
+        }}
+        
+        .search-box {{
+            text-align: center;
+            margin: 20px 0;
+        }}
+        
+        .search-box input {{
+            width: 100%;
+            max-width: 500px;
+            padding: 10px 15px;
+            font-size: 1em;
+            border: 2px solid currentColor;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: inherit;
+        }}
+        
+        .tag-navigation {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(52, 4, 244, 0.1);
+            border-radius: 10px;
+        }}
+        
+        body.dark-theme .tag-navigation {{
+            background-color: rgba(153, 221, 255, 0.1);
+        }}
+        
+        body.black-theme .tag-navigation {{
+            background-color: rgba(255, 255, 255, 0.1);
+        }}
+        
+        .tag-button {{
+            padding: 8px 16px;
+            background-color: rgba(52, 4, 244, 0.15);
+            color: inherit;
+            border: 2px solid currentColor;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }}
+        
+        .tag-button:hover {{
+            background-color: rgba(52, 4, 244, 0.3);
+            transform: translateY(-2px);
+        }}
+        
+        body.dark-theme .tag-button {{
+            background-color: rgba(153, 221, 255, 0.15);
+        }}
+        
+        body.dark-theme .tag-button:hover {{
+            background-color: rgba(153, 221, 255, 0.3);
+        }}
+        
+        body.black-theme .tag-button {{
+            background-color: rgba(255, 255, 255, 0.15);
+        }}
+        
+        body.black-theme .tag-button:hover {{
+            background-color: rgba(255, 255, 255, 0.3);
+        }}
+        
+        .tag-section {{
+            display: none;
+            margin: 30px 0;
+        }}
+        
+        .tag-section.active {{
+            display: block;
+        }}
+        
+        .tag-section h3 {{
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }}
+        
+        .domain-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            padding: 10px;
+        }}
+        
+        .domain-item {{
+            padding: 12px;
+            background-color: rgba(52, 4, 244, 0.05);
+            border: 1px solid currentColor;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }}
+        
+        .domain-item:hover {{
+            background-color: rgba(52, 4, 244, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }}
+        
+        body.dark-theme .domain-item {{
+            background-color: rgba(153, 221, 255, 0.05);
+        }}
+        
+        body.dark-theme .domain-item:hover {{
+            background-color: rgba(153, 221, 255, 0.15);
+        }}
+        
+        body.black-theme .domain-item {{
+            background-color: rgba(255, 255, 255, 0.05);
+        }}
+        
+        body.black-theme .domain-item:hover {{
+            background-color: rgba(255, 255, 255, 0.15);
+        }}
+        
+        .puny {{
+            font-size: 0.8em;
+            opacity: 0.7;
+        }}
+        
+        /* Marketplace links section */
+        .marketplace-links {{
+            display: flex;
+            justify-content: center;
+            gap: 1.5em;
+            padding: 1em;
+            background-color: rgba(52, 4, 244, 0.08);
+            border-radius: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }}
+        
+        body.dark-theme .marketplace-links {{
+            background-color: rgba(153, 221, 255, 0.08);
+        }}
+        
+        body.black-theme .marketplace-links {{
+            background-color: rgba(255, 255, 255, 0.08);
+        }}
+        
+        .marketplace-links a {{
+            padding: 0.5em 1em;
+            background-color: rgba(52, 4, 244, 0.2);
+            color: inherit;
+            border: 2px solid currentColor;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }}
+        
+        .marketplace-links a:hover {{
+            background-color: rgba(52, 4, 244, 0.4);
+            transform: scale(1.05);
+        }}
+        
+        body.dark-theme .marketplace-links a {{
+            background-color: rgba(153, 221, 255, 0.2);
+        }}
+        
+        body.dark-theme .marketplace-links a:hover {{
+            background-color: rgba(153, 221, 255, 0.4);
+        }}
+        
+        body.black-theme .marketplace-links a {{
+            background-color: rgba(255, 255, 255, 0.2);
+        }}
+        
+        body.black-theme .marketplace-links a:hover {{
+            background-color: rgba(255, 255, 255, 0.4);
+        }}
+        
+        /* Contact info and price styles */
+        .domain-with-contact {{
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }}
+        
+        .domain-name-only {{
+            font-weight: bold;
+        }}
+        
+        .domain-contact {{
+            font-size: 0.9em;
+            display: flex;
+            gap: 0.5em;
+            justify-content: center;
+            align-items: center;
+        }}
+        
+        .price-tag {{
+            padding: 0.2em 0.5em;
+            background-color: rgba(52, 4, 244, 0.15);
+            border-radius: 4px;
+            font-weight: bold;
+        }}
+        
+        body.dark-theme .price-tag {{
+            background-color: rgba(153, 221, 255, 0.15);
+        }}
+        
+        body.black-theme .price-tag {{
+            background-color: rgba(255, 255, 255, 0.15);
+        }}
+        
+        .copy-email-btn {{
+            padding: 0.2em 0.5em;
+            background-color: rgba(52, 4, 244, 0.15);
+            border: 1px solid currentColor;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }}
+        
+        .copy-email-btn:hover {{
+            background-color: rgba(52, 4, 244, 0.3);
+            transform: scale(1.1);
+        }}
+        
+        body.dark-theme .copy-email-btn {{
+            background-color: rgba(153, 221, 255, 0.15);
+        }}
+        
+        body.dark-theme .copy-email-btn:hover {{
+            background-color: rgba(153, 221, 255, 0.3);
+        }}
+        
+        body.black-theme .copy-email-btn {{
+            background-color: rgba(255, 255, 255, 0.15);
+        }}
+        
+        body.black-theme .copy-email-btn:hover {{
+            background-color: rgba(255, 255, 255, 0.3);
+        }}
+        
+        /* Description and translation styles */
+        .domain-descriptions {{
+            font-size: 0.85em;
+            margin-top: 0.3em;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2em;
+        }}
+        
+        body.hide-descriptions .domain-descriptions {{
+            display: none;
+        }}
+        
+        .desc-text {{
+            color: inherit;
+            opacity: 0.9;
+        }}
+        
+        .translate-text {{
+            color: inherit;
+            opacity: 0.85;
+            font-style: italic;
+        }}
+        
+        /* Filter controls */
+        .filter-controls {{
+            display: flex;
+            gap: 0.5em;
+            padding: 1em;
+            justify-content: center;
+            flex-wrap: wrap;
+            background-color: rgba(52, 4, 244, 0.08);
+            border-radius: 10px;
+            margin: 20px 0;
+        }}
+        
+        body.dark-theme .filter-controls {{
+            background-color: rgba(153, 221, 255, 0.08);
+        }}
+        
+        body.black-theme .filter-controls {{
+            background-color: rgba(255, 255, 255, 0.08);
+        }}
+        
+        .filter-controls input,
+        .filter-controls select,
+        .filter-controls button {{
+            padding: 0.5em;
+            border: 2px solid currentColor;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: inherit;
+            font-family: inherit;
+        }}
+        
+        .filter-controls button {{
+            background-color: rgba(52, 4, 244, 0.2);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }}
+        
+        .filter-controls button:hover {{
+            background-color: rgba(52, 4, 244, 0.4);
+        }}
+        
+        body.dark-theme .filter-controls button {{
+            background-color: rgba(153, 221, 255, 0.2);
+        }}
+        
+        body.dark-theme .filter-controls button:hover {{
+            background-color: rgba(153, 221, 255, 0.4);
+        }}
+        
+        body.black-theme .filter-controls button {{
+            background-color: rgba(255, 255, 255, 0.2);
+        }}
+        
+        body.black-theme .filter-controls button:hover {{
+            background-color: rgba(255, 255, 255, 0.4);
+        }}
+        
+        /* Individual button styles now handled by buttons-container */
+        
+        /* List view styles */
+        .domain-grid.list-view {{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }}
+        
+        .domain-grid.list-view .domain-item {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+        }}
+        
+        .domain-grid.list-view .domain-with-contact {{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1em;
+            width: 100%;
+        }}
+        
+        .domain-grid.list-view .domain-descriptions {{
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+        }}
+        
+        .domain-grid.list-view .domain-contact {{
+            margin-left: auto;
+            flex-shrink: 0;
+        }}
+        
+        /* Credits section */
+        .credits-section {{
+            margin-top: 2em;
+            padding: 1em;
+            border-top: 2px solid currentColor;
+            opacity: 0.85;
+        }}
+        
+        body.dark-theme .credits-section {{
+            opacity: 0.8;
+        }}
+        
+        body.black-theme .credits-section {{
+            opacity: 0.75;
+        }}
+        
+        .footer {{
+            margin-top: 50px;
+            padding-top: 30px;
+            text-align: center;
+            border-top: 2px solid currentColor;
+        }}
+    </style>
+    <link rel="stylesheet" href="../../../site-helpers/site-nav.css?v=2">
+    <script src="../../../site-helpers/theme-switcher.js?v=2"></script>
+    <script src="../../../site-helpers/footer-loader.js?v=2"></script>
+    <script src="../../../site-helpers/site-nav.js?v=2"></script>
+</head>
+<body>
+    <div class="buttons-container">
+        <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
+        <button id="sortBtn" class="sort-button" onclick="cycleSortTLDs()">Sort: Random</button>
+        <button id="viewToggleBtn" class="view-toggle-button" onclick="toggleView()">📊 Grid</button>
+        <button id="descToggleBtn" class="desc-toggle-button" onclick="toggleDescriptions()">🔤 Show Desc</button>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>{title}</h1>
+        </div>
+        
+        <!-- Marketplace Links -->
+        <div class="marketplace-links">
+            <a href="https://shakeshift.com/names" target="_blank" rel="noreferrer">ShakeShift</a>
+            <a href="https://bobwallet.io" target="_blank" rel="noreferrer">Bob Wallet</a>
+            <a href="https://www.namebase.io" target="_blank" rel="noreferrer">Namebase</a>
+            <a href="https://shakestation.io" target="_blank" rel="noreferrer">ShakeStation</a>
+            <a href="https://impervious.com/fingertip" target="_blank" rel="noreferrer">Fingertip</a>
+            <a href="https://git.woodburn.au/nathanwoodburn/firewalletbrowser" target="_blank" rel="noreferrer">FireWallet</a>
+        </div>
+        
+        <!-- Filter Controls -->
+        <div class="filter-controls">
+            <input type="text" id="searchInput" placeholder="Search domains..." onkeyup="filterDomains()">
+            <input type="number" id="minPrice" placeholder="Min price (HNS)" step="0.01" onchange="filterDomains()">
+            <input type="number" id="maxPrice" placeholder="Max price (HNS)" step="0.01" onchange="filterDomains()">
+            <select id="tagFilter" onchange="filterDomains()">
+                <option value="">All Tags</option>
+            </select>
+            <button onclick="clearFilters()">Clear Filters</button>
+        </div>
+        
+        <div class="tag-navigation">
+            {''.join(nav_links)}
+        </div>
+        
+        {''.join(sections)}
+        
+        {credits_html}
+        
+        <div id="footer-container"></div>
+    </div>
+    
+    <script>
+        let sortState = 0; // 0=random, 1=a-z, 2=z-a, 3=price-low, 4=price-high
+        
+        // Show first section by default
+        document.addEventListener('DOMContentLoaded', function() {{
+            showSection('all-names');
+            populateTagFilter();
+            randomizeMarketplaceLinks();
+        }});
+        
+        function showSection(sectionId) {{
+            // Hide all sections
+            const sections = document.querySelectorAll('.tag-section');
+            sections.forEach(s => s.classList.remove('active'));
+            
+            // Show selected section
+            const section = document.getElementById(sectionId);
+            if (section) {{
+                section.classList.add('active');
+            }}
+        }}
+        
+        function cycleSortTLDs() {{
+            const sortBtn = document.getElementById('sortBtn');
+            const currentSection = document.querySelector('.tag-section.active');
+            if (!currentSection) return;
+            
+            const grid = currentSection.querySelector('.domain-grid');
+            const items = Array.from(grid.querySelectorAll('.domain-item'));
+            
+            sortState = (sortState + 1) % 5;
+            
+            switch(sortState) {{
+                case 0: // Random
+                    for (let i = items.length - 1; i > 0; i--) {{
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [items[i], items[j]] = [items[j], items[i]];
+                    }}
+                    sortBtn.textContent = 'Sort: Random';
+                    break;
+                case 1: // A-Z
+                    items.sort((a, b) => a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase()));
+                    sortBtn.textContent = 'Sort: A-Z ▲';
+                    break;
+                case 2: // Z-A
+                    items.sort((a, b) => b.textContent.toLowerCase().localeCompare(a.textContent.toLowerCase()));
+                    sortBtn.textContent = 'Sort: Z-A ▼';
+                    break;
+                case 3: // Price Low-High
+                    items.sort((a, b) => {{
+                        const priceA = parseFloat(a.querySelector('.domain-with-contact')?.dataset?.price || '999999');
+                        const priceB = parseFloat(b.querySelector('.domain-with-contact')?.dataset?.price || '999999');
+                        return priceA - priceB;
+                    }});
+                    sortBtn.textContent = 'Sort: Price ▲';
+                    break;
+                case 4: // Price High-Low
+                    items.sort((a, b) => {{
+                        const priceA = parseFloat(a.querySelector('.domain-with-contact')?.dataset?.price || '0');
+                        const priceB = parseFloat(b.querySelector('.domain-with-contact')?.dataset?.price || '0');
+                        return priceB - priceA;
+                    }});
+                    sortBtn.textContent = 'Sort: Price ▼';
+                    break;
+            }}
+            
+            grid.innerHTML = '';
+            items.forEach(item => grid.appendChild(item));
+        }}
+        
+        function toggleView() {{
+            const viewToggleBtn = document.getElementById('viewToggleBtn');
+            const grids = document.querySelectorAll('.domain-grid');
+            
+            grids.forEach(grid => {{
+                grid.classList.toggle('list-view');
+            }});
+            
+            // Update button text
+            if (document.querySelector('.domain-grid.list-view')) {{
+                viewToggleBtn.textContent = '\ud83d\udccb List';
+            }} else {{
+                viewToggleBtn.textContent = '\ud83d\udcca Grid';
+            }}
+        }}
+        
+        function toggleDescriptions() {{
+            const descToggleBtn = document.getElementById('descToggleBtn');
+            document.body.classList.toggle('hide-descriptions');
+            
+            // Update button text
+            if (document.body.classList.contains('hide-descriptions')) {{
+                descToggleBtn.textContent = '\ud83d\udd24 Hide Desc';
+            }} else {{
+                descToggleBtn.textContent = '\ud83d\udd24 Show Desc';
+            }}
+        }}
+        
+        function populateTagFilter() {{
+            const tagFilter = document.getElementById('tagFilter');
+            const allTags = new Set();
+            
+            document.querySelectorAll('.domain-with-contact').forEach(item => {{
+                const tags = item.dataset.tags?.split(',') || [];
+                tags.forEach(tag => {{
+                    const trimmedTag = tag.trim();
+                    if (trimmedTag && trimmedTag !== 'All Names') {{
+                        allTags.add(trimmedTag);
+                    }}
+                }});
+            }});
+            
+            Array.from(allTags).sort().forEach(tag => {{
+                const option = document.createElement('option');
+                option.value = tag;
+                option.textContent = tag;
+                tagFilter.appendChild(option);
+            }});
+        }}
+        
+        function filterDomains() {{
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const minPrice = parseFloat(document.getElementById('minPrice').value) || null;
+            const maxPrice = parseFloat(document.getElementById('maxPrice').value) || null;
+            const tagFilter = document.getElementById('tagFilter').value;
+            
+            const items = document.querySelectorAll('.domain-item');
+            
+            items.forEach(item => {{
+                const text = item.textContent.toLowerCase();
+                const domainDiv = item.querySelector('.domain-with-contact');
+                
+                // Text search
+                let textMatch = text.includes(searchInput);
+                
+                // Price filter
+                let priceMatch = true;
+                if (domainDiv && (minPrice !== null || maxPrice !== null)) {{
+                    const priceStr = domainDiv.dataset.price;
+                    if (priceStr) {{
+                        const price = parseFloat(priceStr);
+                        if (minPrice !== null && price < minPrice) priceMatch = false;
+                        if (maxPrice !== null && price > maxPrice) priceMatch = false;
+                    }} else {{
+                        priceMatch = false;
+                    }}
+                }}
+                
+                // Tag filter
+                let tagMatch = true;
+                if (tagFilter && domainDiv) {{
+                    const tags = domainDiv.dataset.tags?.split(',').map(t => t.trim()) || [];
+                    tagMatch = tags.includes(tagFilter);
+                }}
+                
+                if (textMatch && priceMatch && tagMatch) {{
+                    item.style.display = '';
+                }} else {{
+                    item.style.display = 'none';
+                }}
+            }});
+        }}
+        
+        function clearFilters() {{
+            document.getElementById('searchInput').value = '';
+            document.getElementById('minPrice').value = '';
+            document.getElementById('maxPrice').value = '';
+            document.getElementById('tagFilter').value = '';
+            filterDomains();
+        }}
+        
+        function copyEmail(event, email) {{
+            event.preventDefault();
+            event.stopPropagation();
+            navigator.clipboard.writeText(email).then(() => {{
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied';
+                setTimeout(() => {{ btn.textContent = originalText; }}, 1500);
+            }}).catch(err => {{
+                console.error('Failed to copy:', err);
+            }});
+        }}
+        
+        function randomizeMarketplaceLinks() {{
+            const container = document.querySelector('.marketplace-links');
+            if (!container) return;
+            
+            const links = Array.from(container.querySelectorAll('a'));
+            for (let i = links.length - 1; i > 0; i--) {{
+                const j = Math.floor(Math.random() * (i + 1));
+                [links[i], links[j]] = [links[j], links[i]];
+            }}
+            
+            container.innerHTML = '';
+            links.forEach(link => container.appendChild(link));
+        }}
+    </script>
+</body>
+</html>'''
+    
+    return html
+
+def main():
+    print("HNS Portfolio Maker for timax.al")
+    print("=" * 50)
+    
+    if len(sys.argv) < 2:
+        print("Usage: python hns-portfolio-maker.py <csv_files_or_directories...>")
+        print("\nSupports:")
+        print("  - CSV files")
+        print("  - Directories (recursive search)")
+        print("\nOr drag CSV files/folders onto this script")
+        print("\n--- Interactive Mode ---")
+        
+        # Interactive mode: ask for input
+        path_input = input("\nEnter CSV file or directory path (or press Enter to exit): ").strip()
+        if not path_input:
+            print("No input provided. Exiting.")
+            sys.exit(0)
+        
+        # Handle quoted paths
+        if path_input.startswith('"') and path_input.endswith('"'):
+            path_input = path_input[1:-1]
+        
+        input_paths = [path_input]
+    else:
+        input_paths = sys.argv[1:]
+    csv_files = []
+    
+    # Expand directories to CSV files
+    for path in input_paths:
+        if not os.path.exists(path):
+            print(f"Warning: Path not found: {path}")
+            continue
+        found = find_csv_files(path, recursive=True)
+        if found and os.path.isdir(path):
+            print(f"📁 Found {len(found)} CSV file(s) in: {os.path.basename(path)}")
+        csv_files.extend(found)
+    
+    if not csv_files:
+        print("\n❌ No CSV files found!")
+        sys.exit(1)
+    
+    print(f"\n📄 Processing {len(csv_files)} CSV file(s)\n")
+    
+    # Ask for auto-email (optional)
+    auto_email = input("Auto-email for priced domains (format: user+@gmail.com, or leave empty): ").strip()
+    
+    all_domains = []
+    
+    # Process all CSV files
+    for csv_file in csv_files:
+        if not os.path.exists(csv_file):
+            print(f"Warning: File not found: {csv_file}")
+            continue
+        
+        print(f"\nProcessing: {os.path.basename(csv_file)}")
+        domains = process_csv(csv_file, auto_email=auto_email)
+        print(f"  Found {len(domains)} domains")
+        all_domains.extend(domains)
+    
+    if not all_domains:
+        print("\nNo domains found in CSV files!")
+        sys.exit(1)
+    
+    print(f"\nTotal domains: {len(all_domains)}")
+    
+    # Generate HTML
+    title = input("\nEnter page title (default: HNS Portfolio): ").strip()
+    if not title:
+        title = "HNS Portfolio"
+    
+    output_filename = input("Enter output filename (default: portfolio.html): ").strip()
+    if not output_filename:
+        output_filename = "portfolio.html"
+    if not output_filename.endswith('.html'):
+        output_filename += '.html'
+    
+    # Ask for credits file
+    credits_file = input("Enter credits HTML file path (or leave empty): ").strip()
+    if credits_file and not os.path.exists(credits_file):
+        print(f"Warning: Credits file not found: {credits_file}")
+        credits_file = None
+    
+    # Ask if descriptions should be included
+    include_desc = input("Include descriptions/translations in page? (y/N): ").strip().lower()
+    include_descriptions = include_desc in ['y', 'yes']
+    
+    # Determine output path
+    script_dir = Path(__file__).parent
+    output_dir = script_dir.parent.parent / "HTML" / "sellhns"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = output_dir / output_filename
+    
+    html_content = generate_html(all_domains, output_filename, title, credits_file, include_descriptions)
+    
+    # Write file
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    
+    print(f"\n✓ Portfolio created: {output_path}")
+    print(f"\nView at: file:///{output_path}")
+
+if __name__ == "__main__":
+    main()
+
+
