@@ -53,30 +53,48 @@ function buildNav(prefix) {
         <div class="nav-category">
           <h4>Main Sites</h4>
           <div class="nav-submenu">
-            <a href="${prefix}HTML/aboutlife/aboutlife.html">AboutLife</a>
-            <a href="https://tshirt.thortz.click/" target="_blank">Thortz.Click</a>
             <a href="https://hns.au/" target="_blank">HNSau</a>
             <a href="https://registr.au/" target="_blank">registrAU</a>
             <a href="${prefix}HTML/software/software.html">Software</a>
+            <a href="${prefix}HTML/varhns/aud/aud.html">AUD Converter</a>
+            <a href="${prefix}HTML/varhns/uvau.html">UVAU</a>
           </div>
         </div>
         
         <div class="nav-category">
-          <h4>Content Pages</h4>
+          <h4>HNS Hosted Pages</h4>
           <div class="nav-submenu">
-            <a href="${prefix}HTML/varhns/aud/aud.html">AUD Converter</a>
-            <a href="${prefix}HTML/varhns/uvau.html">UVAU</a>
+            <a href="${prefix}HTML/aboutlife/aboutlife.html">AboutLife</a>
+            <a href="${prefix}HTML/sellhns/hnsell.html">Buy HNS TLDs</a>
+            <a href="${prefix}HTML/sellhns/hns-merch/merchns.html">HNS Merch</a>
+          </div>
+        </div>
+        
+        <div class="nav-category">
+          <h4>Other Content</h4>
+          <div class="nav-submenu">
             <a href="${prefix}HTML/varhns/FishingHowTo/FishingHowTo.html">FishingHowTo</a>
             <a href="${prefix}HTML/varhns/FishingHowTo/fishingame_webapp.html" style="margin-left: 15px;">→ fishinGame</a>
             <a href="${prefix}HTML/varhns/fotografi/fotografi.html">fotografi</a>
             <a href="${prefix}HTML/varhns/fotografi/cc0img.html" style="margin-left: 15px;">→ CC0 Images</a>
             <a href="${prefix}HTML/varhns/fotografi/cc-by_img.html" style="margin-left: 15px;">→ CC-BY Images</a>
             <a href="${prefix}HTML/varhns/TheBlackDog.html">TheBlackDog</a>
-            <div class="nav-subcategory">
-              <h5>HNS Handshake</h5>
-              <a href="${prefix}HTML/sellhns/hnsell.html">Buy HNS TLDs</a>
-              <a href="https://hmart/" target="_blank">HNS Merch</a>
-            </div>
+          </div>
+        </div>
+        
+        <div class="nav-category">
+          <h4>HNS Resources</h4>
+          <div class="nav-submenu">
+            <a href="${prefix}HTML/sellhns/hns-tld/hns-pf.html">tiMaxal HNS TLDs</a>
+            <a href="${prefix}HTML/sellhns/hns-tld/hmartld.html">Community TLD sales pages</a>
+            <a href="${prefix}HTML/varhns/hnsartm/hnsartm.html">HNS art</a>
+          </div>
+        </div>
+        
+        <div class="nav-category">
+          <h4>Support</h4>
+          <div class="nav-submenu">
+            <a href="${prefix}HTML/donate.html">Donate</a>
           </div>
         </div>
         

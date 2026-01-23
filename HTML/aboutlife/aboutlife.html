@@ -8,6 +8,10 @@
 	<META content="This is a no frills presentation comprising several articles which may be of benefit to physical wellbeing and hopefully will stimulate the mind.  Holistic Lifestyle Guidance - AboutLife." name=description>
 	<META content="tiMaxal" name=author>
 	<META  HTTP-EQUIV="EXPIRES"  CONTENT="Fri, 25 Mar 2022 23:59:59 GMT">
+	
+	<!-- HNS Button - Discreet button to open Handshake version in new tab -->
+	<script src="../../site-helpers/i2h/handshake-button.js" domain="aboutlife" protocol="http"></script>
+	
 	<style>
 		* {
 			margin: 0;
@@ -165,6 +169,42 @@
 		body.black-theme .disclaimer {
 			background-color: rgba(255, 255, 255, 0.1);
 		}
+		/* HNS Page Button */
+		#hns-page-button {
+			display: inline-block;
+			margin-left: 15px;
+			padding: 4px 12px;
+			font-size: 0.6em;
+			font-weight: normal;
+			background: rgba(52, 4, 244, 0.15);
+			color: #3404f4;
+			border: 1px solid rgba(52, 4, 244, 0.3);
+			border-radius: 4px;
+			text-decoration: none;
+			transition: all 0.2s ease;
+			vertical-align: middle;
+			white-space: nowrap;
+		}
+		#hns-page-button:hover {
+			background: rgba(52, 4, 244, 0.25);
+			transform: scale(1.05);
+		}
+		body.dark-theme #hns-page-button {
+			background: rgba(153, 221, 255, 0.15);
+			color: #99ddff;
+			border-color: rgba(153, 221, 255, 0.3);
+		}
+		body.dark-theme #hns-page-button:hover {
+			background: rgba(153, 221, 255, 0.3);
+		}
+		body.black-theme #hns-page-button {
+			background: rgba(255, 255, 255, 0.15);
+			color: #ffffff;
+			border-color: rgba(255, 255, 255, 0.3);
+		}
+		body.black-theme #hns-page-button:hover {
+			background: rgba(255, 255, 255, 0.3);
+		}
 	</style>
 	<link rel="stylesheet" href="../../site-helpers/site-nav.css?v=2">
 	<script src="../../site-helpers/theme-switcher.js?v=2"></script>
@@ -179,7 +219,7 @@
 	</div>
 
 	<div class="header">
-		<h1><u>AboutLife</u></h1>
+		<h1><u>AboutLife</u></h1> <a href="http://aboutlife/" target="_blank" rel="noopener noreferrer" id="hns-page-button" title="Open Handshake version in new tab">🌐 HNS page</a>
 		<p><strong>While the new dW3b is about gaining an independence,<br>
 		it infers taking a degree of responsibility also.</strong></p>
 		<p><strong>Such is the truth with one's own Health, too ..<br>

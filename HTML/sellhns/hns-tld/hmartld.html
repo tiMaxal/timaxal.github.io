@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community HNS TLD Sales Sites</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      /* Light theme (default) */
+      body {
+        background-color: #ccffff;
+        color: #3404f4;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      
+      /* Dark theme */
+      body.dark-theme {
+        background-color: #003366;
+        color: #99ddff;
+      }
+      
+      /* Black theme */
+      body.black-theme {
+        background-color: #000000;
+        color: #ffffff;
+      }
+      
+      a:link { color: #0000ee; }
+      a:visited { color: #551a8b; }
+      a:active { color: #ee0000; }
+      a:hover { 
+        color: #3404f4;
+        text-decoration: underline;
+      }
+      
+      body.dark-theme a:link { color: #66bbff; }
+      body.dark-theme a:visited { color: #9988ff; }
+      body.dark-theme a:hover { color: #99ddff; }
+      
+      body.black-theme a:link { color: #66bbff; }
+      body.black-theme a:visited { color: #9999ff; }
+      body.black-theme a:hover { color: #ffffff; }
+      
+      .theme-switcher {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        background-color: rgba(52, 4, 244, 0.8);
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.9em;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+      
+      .theme-switcher:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      }
+      
+      body.dark-theme .theme-switcher {
+        background-color: rgba(153, 221, 255, 0.8);
+        color: #003366;
+      }
+      
+      body.black-theme .theme-switcher {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000000;
+      }
+      
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+      }
+      
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid currentColor;
+      }
+      
+      .header h1 {
+        font-size: 2.3em;
+        margin: 15px 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      
+      .info-section {
+        text-align: center;
+        margin: 25px 0;
+        padding: 15px;
+        background-color: rgba(52, 4, 244, 0.05);
+        border-radius: 8px;
+      }
+      
+      body.dark-theme .info-section {
+        background-color: rgba(153, 221, 255, 0.08);
+      }
+      
+      body.black-theme .info-section {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      
+      .info-section h4 {
+        font-size: 1em;
+        font-weight: normal;
+        line-height: 1.8;
+      }
+      
+      .info-section h3 {
+        font-size: 1.2em;
+        margin: 15px 0 5px 0;
+      }
+      
+      .info-section h6 {
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+      
+      .embed-container {
+        text-align: center;
+        margin: 30px 0;
+      }
+      
+      iframe {
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        max-width: 100%;
+      }
+      
+      .footer {
+        text-align: center;
+        margin-top: 50px;
+        padding-top: 30px;
+        border-top: 2px solid currentColor;
+      }
+      
+      .footer img {
+        margin: 10px 5px;
+        transition: transform 0.3s ease;
+      }
+      
+      .footer img:hover {
+        transform: scale(1.1);
+      }
+      
+      .footer h6 {
+        margin-top: 20px;
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+    </style>
+    <link rel="stylesheet" href="../../../site-helpers/site-nav.css?v=2">
+    <script src="../../../site-helpers/theme-switcher.js?v=2"></script>
+    <script src="../../../site-helpers/footer-loader.js?v=2"></script>
+    <script src="../../../site-helpers/site-nav.js?v=2"></script>
+  </head>
+  <body>
+    <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
+    
+    <div class="container">
+      <div class="header">
+        <h1>Community HNS Handshake<br>TLD Secondary Sales Sites</h1>
+      </div>
+
+      <div class="info-section">
+        <h4>
+          [There are better ways to present this in a properly decentralized manner, but<br>
+          this is a quick-n-dirty setup using google sheets n forms, to be<br>
+          improved upon later ;) ] <a href="../hnsell.html">MAIN</a>
+        </h4>
+      </div>
+
+      <div class="info-section">
+        <h3>Please, feel free to submit your sales-page using this <a href="#form">form</a>.</h3>
+        <h6>[it can be anon, or give your best contact for buyers to use]</h6>
+      </div>
+      
+      <div class="embed-container">
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSGscjaLRH3WVaIDwTVfGqYeBmiIxL0MUBrYAEez7gAG3ZlRz6v2kkSmoy4k3ZkVr0zwmoXcpjpF1NH/pubhtml?gid=1458665808&amp;range=A1:D25&amp;single=true&amp;headers=false&amp;chrome=false"
+        height="500" width="700" scrolling="yes">
+        </iframe>
+      </div>
+
+      <div class="info-section">
+        <a name="form" id="form"><strong>[submission form]</strong></a>
+      </div>
+
+      <div class="embed-container">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScdRLRs3raQlBtzAxUTUPaykzTHHQZzmp1ZLd6SvhVCuWNfWg/viewform?embedded=true" width="700" height="750" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+      </div>
+
+      <div id="footer-container"></div>
+    </div>
+  </body>
+</html>

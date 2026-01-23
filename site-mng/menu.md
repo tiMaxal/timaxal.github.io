@@ -13,12 +13,6 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 
 ## Main Sites
 
-- [AboutLife](./HTML/aboutlife/aboutlife.html)
-  holistic self-care
-
-- [Thortz.Click](https://tshirt.thortz.click/) {external}
-  Buy T-shirts, mugs, et al, with original slogans + fotos
-
 - [HNSau](https://hns.au/) {external}
   Australian Handshake hub
 
@@ -28,14 +22,26 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 - [Software](./HTML/software/software.html)
   personally created and voding [ai-assisted 'vibe-coding'] apps
 
-
-## Content Pages
-
 - [AUD Converter](./HTML/varhns/aud/aud.html)
   exchange rates currency converter [Fiat + Crypto]
 
 - [UVAU](./HTML/varhns/uvau.html)
   Check local UV levels [in Australia]
+
+
+## HNS Hosted Pages
+
+- [AboutLife](./HTML/aboutlife/aboutlife.html)
+  holistic self-care
+
+- [Buy HNS TLDs](./HTML/sellhns/hnsell.html)
+  purchase Handshake top-level domains
+
+- [HNS Merch](./HTML/sellhns/hns-merch/merchns.html)
+  Handshake merchandise
+
+
+## Other Content
 
 - [FishingHowTo](./HTML/varhns/FishingHowTo/FishingHowTo.html)
   basic info for fishing
@@ -49,12 +55,22 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 - [TheBlackDog](./HTML/varhns/TheBlackDog.html)
   mental health org
 
-### HNS Handshake
 
-- [Buy HNS TLDs](./HTML/sellhns/hnsell.html)
-  purchase Handshake top-level domains
-- [HNS Merch](https://hmart/) {external}
-  tiMaxal merchandise
+## HNS Resources
+
+- [tiMaxal HNS TLDs](./HTML/sellhns/hns-tld/hns-pf.html)
+  tiMaxal's HNS portfolio
+
+- [Community TLD sales pages](./HTML/sellhns/hns-tld/hmartld.html)
+  Community HNS TLD sales
+
+- [HNS art](./HTML/varhns/hnsartm/hnsartm.html)
+  Free HNS Handshake image files
+
+## Support
+
+- [Donate](./HTML/donate.html)
+  Support tiMaxal projects
 
 ## Utilities
 

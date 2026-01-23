@@ -17,9 +17,12 @@ function loadFooter() {
     const pathLower = currentPath.toLowerCase();
     
     // Check for 3-level deep folders (must check these first!)
-    if (pathLower.includes('/html/varhns/fishinghowto/') ||
+    if (pathLower.includes('/html/sellhns/hns-merch/') ||
+        pathLower.includes('/html/sellhns/hns-tld/') ||
+        pathLower.includes('/html/varhns/fishinghowto/') ||
         pathLower.includes('/html/varhns/aud/') ||
-        pathLower.includes('/html/varhns/fotografi/')) {
+        pathLower.includes('/html/varhns/fotografi/') ||
+        pathLower.includes('/html/varhns/hnsartm/')) {
       depth = 3;
     }
     // Check for 2-level deep folders
@@ -30,7 +33,8 @@ function loadFooter() {
       depth = 2;
     }
     // Check for 1-level deep folders
-    else if (pathLower.includes('/site-helpers/') ||
+    else if (pathLower.includes('/html/') || 
+             pathLower.includes('/site-helpers/') ||
              pathLower.includes('/html/')) {
       depth = 1;
     }
@@ -55,7 +59,7 @@ function loadFooter() {
     </a>
   </p>
   <p style="margin-top: 15px;">
-    <a href="https://discord.gg/uKV5yKyBHG" target="_blank">
+    <a href="https://discord.gg/2SaK36G5eU" target="_blank">
       <img src="${imgPrefix}MaxPixel.Logo-Discord-6062232.CC0.png" alt="Handshake Australia Community Discord" height="20" width="20">
     </a>
     <a href="https://www.facebook.com/people/HNS-AU/100086556653400/" target="_blank">
@@ -64,6 +68,9 @@ function loadFooter() {
     <a href="https://twitter.com/tiMaxal" target="_blank">
       <img src="${imgPrefix}Twitter.svg" alt="@tiMaxal" height="20" width="20">
     </a>
+  </p>
+  <p style="margin-top: 10px; font-size: 0.9em;">
+    <a href="HTML/donate.html">💝 Support / Donate</a>
   </p>
   <h6>[a <a href="https://timax.al/" target="_blank">tiMaxal</a> enterprises offering]</h6>
 </div>`;

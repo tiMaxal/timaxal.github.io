@@ -33,9 +33,12 @@ Base URL: https://timax.al
 - [TheBlackDog - Mental Health Organization](./HTML/varhns/TheBlackDog.html) | 0.8 | monthly
 - [uvau](./HTML/varhns/uvau.html) | 0.6 | monthly
 
-### Commerce
-- [Buy HNS TLDs](./HTML/sellhns/hnsell.html) | 0.8 | weekly
-- [HNS Sell - Alternate Page](./HTML/sellhns/nb-sell.html) | 0.7 | weekly
+### Commerce - HNS Handshake
+- [HNSell - Buy HNS TLDs](./HTML/sellhns/hnsell.html) | 0.8 | weekly
+- [tiMaxal's HNS Portfolio](./HTML/sellhns/hns-tld/hns-pf.html) | 0.8 | weekly
+- [Community HNS TLD Sales Sites](./HTML/sellhns/hns-tld/hmartld.html) | 0.7 | monthly
+- [HNS Merchandise](./HTML/sellhns/hns-merch/merchns.html) | 0.7 | monthly
+- [HNS Art Gallery](./HTML/varhns/hnsartm/hnsartm.html) | 0.7 | monthly
 
 ### Utilities
 - [Site Map](./site-helpers/site-map.html) | 0.5 | monthly
