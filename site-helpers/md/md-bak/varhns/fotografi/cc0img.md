@@ -1,0 +1,178 @@
+---
+title: CC0 Images
+path: varhns/fotografi/cc0img.html
+---
+
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Image Gallery</title>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            
+            body {
+                background-color: #ccffff;
+                color: #3404f4;
+                font-family: Arial, Helvetica, sans-serif;
+                padding: 20px;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+            
+            body.dark-theme {
+                background-color: #003366;
+                color: #99ddff;
+            }
+            
+            body.black-theme {
+                background-color: #000000;
+                color: #ffffff;
+            }
+            
+            a:link { color: #0000ee; }
+            a:visited { color: #551a8b; }
+            a:hover, a:active { color: #ee0000; }
+            
+            body.dark-theme a:link { color: #66bbff; }
+            body.dark-theme a:visited { color: #9988ff; }
+            body.dark-theme a:hover { color: #99ddff; }
+            
+            body.black-theme a:link { color: #66bbff; }
+            body.black-theme a:visited { color: #9999ff; }
+            body.black-theme a:hover { color: #ffffff; }
+            
+            .theme-switcher {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                background-color: rgba(52, 4, 244, 0.8);
+                color: white;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 0.9em;
+                font-weight: bold;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s ease;
+                z-index: 1000;
+            }
+            
+            .theme-switcher:hover { transform: scale(1.05); }
+            
+            body.dark-theme .theme-switcher {
+                background-color: rgba(153, 221, 255, 0.8);
+                color: #003366;
+            }
+            
+            body.black-theme .theme-switcher {
+                background-color: rgba(255, 255, 255, 0.8);
+                color: #000000;
+            }
+            
+            /* CSS for image gallery */
+            .album {
+                margin-bottom: 20px;
+            }
+            .album h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            .images {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-gap: 10px;
+                padding: 10px;
+            }
+            .thumbnail {
+                width: 100%;
+                height: auto;
+                cursor: pointer;
+                border: 2px solid transparent;
+                transition: all 0.3s ease;
+            }
+            .thumbnail:hover {
+                border-color: currentColor;
+                transform: scale(1.05);
+            }
+            
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding-top: 30px;
+                border-top: 2px solid currentColor;
+            }
+            .footer img {
+                margin: 10px 5px;
+                transition: transform 0.3s ease;
+            }
+            .footer img:hover {
+                transform: scale(1.1);
+            }
+            .footer h6 {
+                margin-top: 20px;
+                font-size: 0.9em;
+                opacity: 0.8;
+            }
+        </style>
+        <link rel="stylesheet" href="../../../site-helpers/site-nav.css?v=2">
+        <script src="../../../site-helpers/theme-switcher.js?v=2"></script>
+        <script src="../../../site-helpers/footer-loader.js?v=2"></script>
+        <script src="../../../site-helpers/site-nav.js?v=2"></script>
+    </head>
+    <body>
+        <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
+        
+<center>This page is entirely free to use Creative Commons Zero images .. enjoy!
+
+        
+
+            
+## fotWograf Stereoscopic Images
+</center>
+            
+[<img src="../../imgs/thumbs/u_art_ornament_knitted_nemo_flash_20160624-092637_2_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_art_ornament_knitted_nemo_flash_20160624-092637_2_CC0.jpg)[<img src="../../imgs/thumbs/u_booringa-heritage-museum_mitchell_014_railway-suitcases_20150711-103553_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_booringa-heritage-museum_mitchell_014_railway-suitcases_20150711-103553_CC0.jpg)[<img src="../../imgs/thumbs/u_built_mccarthys-lookout_20150907-164122_CC0-NC-SA.jpg" class="thumbnail">](../../imgs/cc0x2img/u_built_mccarthys-lookout_20150907-164122_CC0-NC-SA.jpg)[<img src="../../imgs/thumbs/u_fishing_castnetting_20151117-072257_TDWM-ENHANCE_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_fishing_castnetting_20151117-072257_TDWM-ENHANCE_CC0.jpg)[<img src="../../imgs/thumbs/u_garden_bird_fowl_chook-sitting_20150126-141615_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_garden_bird_fowl_chook-sitting_20150126-141615_CC0.jpg)[<img src="../../imgs/thumbs/u_garden_fern_in-old-kettle_20160406-092033_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_garden_fern_in-old-kettle_20160406-092033_CC0.jpg)[<img src="../../imgs/thumbs/u_garden_side-tap_running_20160626-082625_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_garden_side-tap_running_20160626-082625_CC0.jpg)[<img src="../../imgs/thumbs/u_human-other_bloods_tdw_3full_20160630-110055_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_human-other_bloods_tdw_3full_20160630-110055_CC0.jpg)[<img src="../../imgs/thumbs/u_human-other_henna-hand_asb_mtnview_20160710-163706_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_human-other_henna-hand_asb_mtnview_20160710-163706_CC0.jpg)[<img src="../../imgs/thumbs/u_lightning_strike_mtn-view_LPG-pavers_20151113-173946_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_lightning_strike_mtn-view_LPG-pavers_20151113-173946_CC0.jpg)[<img src="../../imgs/thumbs/u_lightning_strike_mtn-view_palm_side_20151113-174020_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_lightning_strike_mtn-view_palm_side_20151113-174020_CC0.jpg)[<img src="../../imgs/thumbs/u_machine-other_optometry_close_20160624-091031_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_machine-other_optometry_close_20160624-091031_CC0.jpg)[<img src="../../imgs/thumbs/u_mtn_1tree_20231015-114742_CC0.jpg" class="thumbnail">](../../imgs/cc0x2img/u_mtn_1tree_20231015-114742_CC0.jpg)
+
+        
+
+        
+An 'anaglyph' image requires red-and-blue-lensed spectacles to view;
+
+        
+A L-R-L style stereo image allows two different viewing forms in the one picture - 'parallel' and 'cross-view'.
+
+            To view parallel, look at the left-and-middle images, while cross-view (or 'cross-eyed') can be seen by viewing the middle-and-right images. 
+
+            &nbsp;[ more on [Wikipedia ]](https://en.wikipedia.org/wiki/Stereoscopy#Freeviewing)
+            
+
+            
+
+
+        
+
+            
+## fotiMono Images
+
+            
+[<img src="../../imgs/thumbs/bch+c_bribie+caloundra-bar_one-wave_20130822-074903_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_bribie+caloundra-bar_one-wave_20130822-074903_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_fish-scale_20140704-071455_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/bch+c_fish-scale_20140704-071455_CC0.JPG)[<img src="../../imgs/thumbs/bch+c_foam-from-surf_ex-tc-oswald_20130131-090006_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_foam-from-surf_ex-tc-oswald_20130131-090006_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_hole-in-sand_20110127-053652_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_hole-in-sand_20110127-053652_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_rock-gap_rising-tide_20130822-071758_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_rock-gap_rising-tide_20130822-071758_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_sponge-on-rock-ledge_20110127-055906_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_sponge-on-rock-ledge_20110127-055906_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_after-wave_20110119-052014_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_after-wave_20110119-052014_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_blurred_salt-air-on-lens_oof_20110107-044223_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_blurred_salt-air-on-lens_oof_20110107-044223_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_dawn-over-distant-storm_20110127-052340_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_dawn-over-distant-storm_20110127-052340_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_dawn_low-tide_20110118-051820_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_dawn_low-tide_20110118-051820_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_dawn_low-tide_close_20110118-051824_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_dawn_low-tide_close_20110118-051824_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_foamy_ex-tc-oswald_20130131-084800_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_foamy_ex-tc-oswald_20130131-084800_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_left-hander_20110119-051855_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_left-hander_20110119-051855_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_right-hander_20110119-052751_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_right-hander_20110119-052751_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_rock-ledge_wave-break-reflect_20110127-060231_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_rock-ledge_wave-break-reflect_20110127-060231_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_rock-pool+wave-tip_20110119-053555_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_rock-pool+wave-tip_20110119-053555_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_surf_wave-at-foot_20110119-052029_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_surf_wave-at-foot_20110119-052029_CC0.jpg)[<img src="../../imgs/thumbs/bch+c_turtle-tracks_20110107-051800_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/bch+c_turtle-tracks_20110107-051800_CC0.jpg)[<img src="../../imgs/thumbs/boat_out_20130822-073449_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/boat_out_20130822-073449_CC0.jpg)[<img src="../../imgs/thumbs/boat_ship-behind-rock-pool-at-sunup_20130822-062354_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/boat_ship-behind-rock-pool-at-sunup_20130822-062354_CC0.jpg)[<img src="../../imgs/thumbs/built_bridge-pylon-stumps_20130811-110727_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/built_bridge-pylon-stumps_20130811-110727_CC0.jpg)[<img src="../../imgs/thumbs/car_defunct_50bux_20170310-100057_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/car_defunct_50bux_20170310-100057_CC0.JPG)[<img src="../../imgs/thumbs/ck_dappled-shade-pool-reflect-trees_20110507-130742_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/ck_dappled-shade-pool-reflect-trees_20110507-130742_CC0.jpg)[<img src="../../imgs/thumbs/ck_rockwall+reflect-trees_20130108-163816_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/ck_rockwall+reflect-trees_20130108-163816_CC0.jpg)[<img src="../../imgs/thumbs/ck_scotts-vanohr_20110507-130551_GGL-EFFECTS_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/ck_scotts-vanohr_20110507-130551_GGL-EFFECTS_CC0.jpg)[<img src="../../imgs/thumbs/dawn_rock-pool+ship_20130822-062340_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/dawn_rock-pool+ship_20130822-062340_CC0.jpg)[<img src="../../imgs/thumbs/dead-veg_log-under-reflect-tree_low-tide_20121002-095826_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/dead-veg_log-under-reflect-tree_low-tide_20121002-095826_CC0.jpg)[<img src="../../imgs/thumbs/feather_on-stream_20141130-074819_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/feather_on-stream_20141130-074819_CC0.JPG)[<img src="../../imgs/thumbs/flower_coastal_goatsfoot_close_20140210-095418_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/flower_coastal_goatsfoot_close_20140210-095418_CC0.JPG)[<img src="../../imgs/thumbs/h2o-fall_dripping-wall_bunyas-paradise-falls_20141130-115018_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/h2o-fall_dripping-wall_bunyas-paradise-falls_20141130-115018_CC0.JPG)[<img src="../../imgs/thumbs/h2o-fall_grotto_bunyas-tim-shea-falls-lower_20141130-074208_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/h2o-fall_grotto_bunyas-tim-shea-falls-lower_20141130-074208_CC0.JPG)[<img src="../../imgs/thumbs/h2o-fall_wall-to-pool_bunyas-tim-shea-falls_20141130-072309_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/h2o-fall_wall-to-pool_bunyas-tim-shea-falls_20141130-072309_CC0.JPG)[<img src="../../imgs/thumbs/h2o-still_lake-borumba(dam)_20130811-093448_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/h2o-still_lake-borumba(dam)_20130811-093448_CC0.jpg)[<img src="../../imgs/thumbs/human-h20_dawn_reflection_bells-upper_fishing_20130406-060229_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/human-h20_dawn_reflection_bells-upper_fishing_20130406-060229_CC0.jpg)[<img src="../../imgs/thumbs/human-h2o_a-rope-swing-at-ck-too_20110507-131322_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/human-h2o_a-rope-swing-at-ck-too_20110507-131322_CC0.jpg)[<img src="../../imgs/thumbs/human-h2o_fishing_gull-flying-over-heron-on-pontoon_20150427_061101_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/human-h2o_fishing_gull-flying-over-heron-on-pontoon_20150427_061101_CC0.jpg)[<img src="../../imgs/thumbs/human-h2o_nth-bribie_'surf'+pelican-waters_20130822-074949_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/human-h2o_nth-bribie_)[<img src="../../imgs/thumbs/human-h2o_piccaninny-dawn-over-caloundra_20080701-0608_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/human-h2o_piccaninny-dawn-over-caloundra_20080701-0608_CC0.jpg)[<img src="../../imgs/thumbs/human-h2o_rope-swing-at-ck_20110507-130714_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/human-h2o_rope-swing-at-ck_20110507-130714_CC0.jpg)[<img src="../../imgs/thumbs/human-h2o_seagull-at-sunrise_20150427_061054_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/human-h2o_seagull-at-sunrise_20150427_061054_CC0.jpg)[<img src="../../imgs/thumbs/insect_dragonfly_Arrowhead-Rockmaster_(Diphlebia nymphoides)_20131010-130645_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/insect_dragonfly_Arrowhead-Rockmaster_(Diphlebia nymphoides)_20131010-130645_CC0.jpg)[<img src="../../imgs/thumbs/landscape_bunya-skyline_bunyas6-mt-mowbullan_20141130-141440_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/landscape_bunya-skyline_bunyas6-mt-mowbullan_20141130-141440_CC0.JPG)[<img src="../../imgs/thumbs/landscape_coastal_rules-bch_20080815-065758_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/landscape_coastal_rules-bch_20080815-065758_CC0.jpg)[<img src="../../imgs/thumbs/lichen&moss_creeper-on-tree_close_bunyas-scenic-circuit_20141130-071018_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/lichen&moss_creeper-on-tree_close_bunyas-scenic-circuit_20141130-071018_CC0.JPG)[<img src="../../imgs/thumbs/seed_monkey-vine_pod_split_bunyas3-westcott_20141129-164414_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/seed_monkey-vine_pod_split_bunyas3-westcott_20141129-164414_CC0.JPG)[<img src="../../imgs/thumbs/shells_cowrie-at-dawn_holes_20130822-065859_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/shells_cowrie-at-dawn_holes_20130822-065859_CC0.jpg)[<img src="../../imgs/thumbs/shells_cowrie-at-dawn_shadow_20130822-064045_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/shells_cowrie-at-dawn_shadow_20130822-064045_CC0.jpg)[<img src="../../imgs/thumbs/shells_freshwater-mussel_20130811-100937_CC0.jpg" class="thumbnail">](../../imgs/CC0wlppr/shells_freshwater-mussel_20130811-100937_CC0.jpg)[<img src="../../imgs/thumbs/tree_bunyas-scenic-circuit_gympie-gympie_stinging-tree_leaf_20141130-072858_CC0.JPG" class="thumbnail">](../../imgs/CC0wlppr/tree_bunyas-scenic-circuit_gympie-gympie_stinging-tree_leaf_20141130-072858_CC0.JPG)
+
+        
+
+        
+&nbsp; [CC-BY images](cc-by_img.html), for use with acknowledgement :-)
+
+            &nbsp;&nbsp;[ or, just as wallpapers ! ] 
+
+        
+    
+
+
+    
+
+
+    
+    </body>
+    </html>

@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 // File paths
-const SITE_MD = path.join(__dirname, 'site.md');
+const SITE_MD = path.join(__dirname, '..', 'site-helpers', 'md', 'site.md');
 const SITEMAP_XML = path.join(__dirname, '..', 'site-helpers', 'sitemap.xml');
 const SITEMAP_HTML = path.join(__dirname, '..', 'site-helpers', 'site-map.html');
 

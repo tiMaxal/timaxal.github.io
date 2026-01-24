@@ -188,4 +188,136 @@ Total pages in sitemap: **13 pages**
 
 ---
 
-All fixes completed successfully! 🎉
+# 🔧 Additional Fixes - January 24, 2026
+
+## ✅ Issues Resolved
+
+### 1. Donate Page Menu Not Displaying
+
+**Problem:** Navigation menu didn't display on donate page. Had superfluous "← Back to tiMaxal Hub" link instead.
+
+**Root Cause:** Broken HTML script tag on line 356 - opening `<script src="` was split incorrectly.
+
+**Fix:** Repaired script tag structure in HTML/donate.html:
+- Removed redundant "Back to Hub" link
+- Fixed broken `<script>` tag for site-nav.js
+- Properly ordered all script includes
+
+### 2. Sitemap Path Verification
+
+**Issue:** User reported sitemap not working, wrong path reference.
+
+**Investigation:** Verified sitemap-builder.js was functioning correctly:
+- Reads from site-mng/site.md
+- Outputs to site-helpers/sitemap.xml (SEO)
+- Outputs to site-helpers/site-map.html (user-facing)
+
+**Result:** No changes needed - working as designed.
+
+### 3. HNS Portfolio Maker Path Issues
+
+**Issue:** Error report about absolute paths instead of relative.
+
+**Investigation:** 
+- Script correctly uses `Path(__file__).parent` for relative paths
+- Tested execution - runs properly
+- Error was from debugging context, not runtime
+
+**Result:** No changes needed - working correctly.
+
+## 🆕 New Features Implemented
+
+### 1. Markdown-to-HTML Build System
+
+**Purpose:** Write pages in Markdown and automatically convert to HTML with full site navigation.
+
+**Created:**
+- `site-mng/md-to-html.js` - Markdown to HTML converter
+- `site-helpers/md/` - Directory for markdown source files
+- `site-mng/MD-TO-HTML.md` - Comprehensive documentation
+
+**Features:**
+- Frontmatter support (title, path metadata)
+- Automatic path adjustment based on output depth
+- Integration with existing template.html
+- Navigation, footer, and theme support included
+- Supports all standard markdown syntax
+
+**Usage:**
+```bash
+# Convert all markdown files
+node md-to-html.js --all
+
+# Convert specific file
+node md-to-html.js myfile.md
+```
+
+**Example Markdown File:**
+```markdown
+---
+title: My Page
+path: folder/page.html
+---
+
+# My Page
+
+Content written in **Markdown**!
+```
+
+### 2. Cross-Platform Build Scripts
+
+**Created:** `site-mng/build-site.sh` - Linux/Mac equivalent of build-site.bat
+
+**Features:**
+- Bash script for Unix-based systems
+- Color-coded output
+- Error checking with descriptive messages
+- Same functionality as Windows version
+
+**Updated:** Both `build-site.bat` and `build-site.sh` now include:
+1. Menu builder (navigation)
+2. Sitemap builder (sitemap)
+3. **NEW:** Markdown converter (HTML from .md)
+
+### 3. Package Management
+
+**Created:** `site-mng/package.json`
+
+**Features:**
+- Declares `marked` dependency for markdown parsing
+- npm scripts for common tasks:
+  - `npm run build` - Full build
+  - `npm run build:menu` - Menu only
+  - `npm run build:sitemap` - Sitemap only
+  - `npm run build:pages` - Markdown only
+
+## 📝 Files Modified
+
+**Modified:**
+- HTML/donate.html - Fixed script tag
+- site-mng/build-site.bat - Added markdown conversion
+- site-mng/template.html - Added content marker
+
+**Created:**
+- site-mng/md-to-html.js
+- site-mng/build-site.sh
+- site-mng/package.json
+- site-mng/MD-TO-HTML.md
+
+## ✅ Benefits
+
+**Markdown System:**
+- ✅ Much faster page creation
+- ✅ Focus on content, not HTML markup
+- ✅ Cleaner, maintainable source files
+- ✅ Automatic navigation integration
+- ✅ Version control friendly
+- ✅ HTML template still available for complex layouts
+
+**Cross-Platform:**
+- ✅ Works on Windows, Linux, and Mac
+- ✅ Consistent build process across platforms
+
+---
+
+All fixes and features completed successfully! 🎉

@@ -5,33 +5,32 @@ function createSiteNav() {
   
   // For file:// protocol, handle Windows paths differently
   if (window.location.protocol === 'file:') {
-    // Get just the filename from the full path
-    const parts = currentPath.split('/');
-    const fileName = parts[parts.length - 1];
+    // Automatically detect depth by counting path segments
+    const pathLower = currentPath.toLowerCase();
+    let depth = 0;
     
-    // Determine depth by counting parent directories
-    // Check which folder we're in by looking at the path structure
-    if (currentPath.includes('/site-helpers/')) {
-      // We're in /site-helpers/ folder (1 level deep)
-      const prefix = '../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/HTML/varhns/aud/') || currentPath.includes('/HTML/varhns/FishingHowTo/') || currentPath.includes('/HTML/varhns/fotografi/')) {
-      // We're in /HTML/varhns/[subfolder]/ (3 levels deep)
-      const prefix = '../../../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/HTML/software/') || currentPath.includes('/HTML/aboutlife/') || currentPath.includes('/HTML/sellhns/') || currentPath.includes('/HTML/varhns/')) {
-      // We're in /HTML/[folder]/ (2 levels deep)
-      const prefix = '../../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/HTML/')) {
-      // We're in /HTML/ folder (1 level deep)
-      const prefix = '../';
-      return buildNav(prefix);
+    // Find the start of our site structure (after workspace root)
+    // Look for /HTML/ or /site-helpers/ markers
+    const htmlIndex = pathLower.lastIndexOf('/html/');
+    const helpersIndex = pathLower.lastIndexOf('/site-helpers/');
+    
+    if (helpersIndex !== -1) {
+      // Count segments after /site-helpers/
+      const afterHelpers = currentPath.substring(helpersIndex + '/site-helpers/'.length);
+      const segments = afterHelpers.split('/').filter(s => s && s !== 'index.html' && !s.endsWith('.html'));
+      depth = segments.length + 1; // +1 for site-helpers itself
+    } else if (htmlIndex !== -1) {
+      // Count segments after /HTML/
+      const afterHtml = currentPath.substring(htmlIndex + '/html/'.length);
+      const segments = afterHtml.split('/').filter(s => s && s !== 'index.html' && !s.endsWith('.html'));
+      depth = segments.length + 1; // +1 for HTML itself
     } else {
-      // We're in root
-      const prefix = './';
-      return buildNav(prefix);
+      // Root level
+      depth = 0;
     }
+    
+    const prefix = depth > 0 ? '../'.repeat(depth) : './';
+    return buildNav(prefix);
   } else {
     // For HTTP/HTTPS, use normal path calculation
     currentPath = currentPath.replace(/^\/[A-Za-z]:/, '');

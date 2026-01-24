@@ -12,33 +12,24 @@ function loadFooter() {
   let depth = 0;
   
   if (window.location.protocol === 'file:') {
-    // For file://, detect depth by checking which folders are in the path
-    // This is auto-generated from menu.md by menu-builder.js
+    // Automatically detect depth by counting path segments
     const pathLower = currentPath.toLowerCase();
     
-    // Check for 3-level deep folders (must check these first!)
-    if (pathLower.includes('/html/sellhns/hns-merch/') ||
-        pathLower.includes('/html/sellhns/hns-tld/') ||
-        pathLower.includes('/html/varhns/fishinghowto/') ||
-        pathLower.includes('/html/varhns/aud/') ||
-        pathLower.includes('/html/varhns/fotografi/') ||
-        pathLower.includes('/html/varhns/hnsartm/')) {
-      depth = 3;
+    // Find the start of our site structure
+    const htmlIndex = pathLower.lastIndexOf('/html/');
+    const helpersIndex = pathLower.lastIndexOf('/site-helpers/');
+    
+    if (helpersIndex !== -1) {
+      // Count segments after /site-helpers/
+      const afterHelpers = currentPath.substring(helpersIndex + '/site-helpers/'.length);
+      const segments = afterHelpers.split('/').filter(s => s && !s.endsWith('.html'));
+      depth = segments.length + 1;
+    } else if (htmlIndex !== -1) {
+      // Count segments after /HTML/
+      const afterHtml = currentPath.substring(htmlIndex + '/html/'.length);
+      const segments = afterHtml.split('/').filter(s => s && !s.endsWith('.html'));
+      depth = segments.length + 1;
     }
-    // Check for 2-level deep folders
-    else if (pathLower.includes('/html/aboutlife/') || 
-        pathLower.includes('/html/sellhns/') || 
-        pathLower.includes('/html/software/') || 
-        pathLower.includes('/html/varhns/')) {
-      depth = 2;
-    }
-    // Check for 1-level deep folders
-    else if (pathLower.includes('/html/') || 
-             pathLower.includes('/site-helpers/') ||
-             pathLower.includes('/html/')) {
-      depth = 1;
-    }
-    // Otherwise we're at root (depth = 0)
   } else {
     // For HTTP/HTTPS, count directory segments from domain root
     const pathSegments = currentPath.split('/').filter(part => part && !part.includes('.html'));
@@ -70,10 +61,8 @@ function loadFooter() {
     </a>
   </p>
   <p style="margin-top: 10px; font-size: 0.9em;">
-    <a href="HTML/donate.html">💝 Support / Donate</a>
-  </p>
-  <h6>[a <a href="https://timax.al/" target="_blank">tiMaxal</a> enterprises offering]</h6>
-</div>`;
+    <a href="HTML/donate.html">💝 Support / Donate</a> • 
+    <a href="site-helpers/site-map.html">🗺️ Site Map</a>`;
     footerContainer.innerHTML = footerHTML;
   } else {
     // For HTTP/HTTPS, use fetch

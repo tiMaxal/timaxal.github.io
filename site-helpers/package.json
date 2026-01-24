@@ -1,0 +1,23 @@
+{
+  "name": "timax-al-site-builder",
+  "version": "1.0.0",
+  "description": "Build tools for timax.al website - menu builder, sitemap generator, and markdown to HTML converter",
+  "main": "../site-mng/menu-builder.js",
+  "scripts": {
+    "build": "cd ../site-mng && node menu-builder.js && node sitemap-builder.js && node md-to-html.js --all",
+    "build:menu": "cd ../site-mng && node menu-builder.js",
+    "build:sitemap": "cd ../site-mng && node sitemap-builder.js",
+    "build:pages": "cd ../site-mng && node md-to-html.js --all",
+    "test": "echo \"No tests specified\""
+  },
+  "keywords": [
+    "static-site",
+    "markdown",
+    "site-builder"
+  ],
+  "author": "tiMaxal",
+  "license": "ISC",
+  "dependencies": {
+    "marked": "^11.1.1"
+  }
+}

@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 // File paths
-const MENU_MD = path.join(__dirname, 'menu.md');
+const MENU_MD = path.join(__dirname, '..', 'site-helpers', 'md', 'menu.md');
 const SITE_NAV_JS = path.join(__dirname, '..', 'site-helpers', 'site-nav.js');
 const FOOTER_LOADER_JS = path.join(__dirname, '..', 'site-helpers', 'footer-loader.js');
 
@@ -111,33 +111,32 @@ function createSiteNav() {
   
   // For file:// protocol, handle Windows paths differently
   if (window.location.protocol === 'file:') {
-    // Get just the filename from the full path
-    const parts = currentPath.split('/');
-    const fileName = parts[parts.length - 1];
+    // Automatically detect depth by counting path segments
+    const pathLower = currentPath.toLowerCase();
+    let depth = 0;
     
-    // Determine depth by counting parent directories
-    // Check which folder we're in by looking at the path structure
-    if (currentPath.includes('/site-helpers/')) {
-      // We're in /site-helpers/ folder (1 level deep)
-      const prefix = '../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/HTML/varhns/aud/') || currentPath.includes('/HTML/varhns/FishingHowTo/') || currentPath.includes('/HTML/varhns/fotografi/')) {
-      // We're in /HTML/varhns/[subfolder]/ (3 levels deep)
-      const prefix = '../../../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/HTML/software/') || currentPath.includes('/HTML/aboutlife/') || currentPath.includes('/HTML/sellhns/') || currentPath.includes('/HTML/varhns/')) {
-      // We're in /HTML/[folder]/ (2 levels deep)
-      const prefix = '../../';
-      return buildNav(prefix);
-    } else if (currentPath.includes('/HTML/')) {
-      // We're in /HTML/ folder (1 level deep)
-      const prefix = '../';
-      return buildNav(prefix);
+    // Find the start of our site structure (after workspace root)
+    // Look for /HTML/ or /site-helpers/ markers
+    const htmlIndex = pathLower.lastIndexOf('/html/');
+    const helpersIndex = pathLower.lastIndexOf('/site-helpers/');
+    
+    if (helpersIndex !== -1) {
+      // Count segments after /site-helpers/
+      const afterHelpers = currentPath.substring(helpersIndex + '/site-helpers/'.length);
+      const segments = afterHelpers.split('/').filter(s => s && s !== 'index.html' && !s.endsWith('.html'));
+      depth = segments.length + 1; // +1 for site-helpers itself
+    } else if (htmlIndex !== -1) {
+      // Count segments after /HTML/
+      const afterHtml = currentPath.substring(htmlIndex + '/html/'.length);
+      const segments = afterHtml.split('/').filter(s => s && s !== 'index.html' && !s.endsWith('.html'));
+      depth = segments.length + 1; // +1 for HTML itself
     } else {
-      // We're in root
-      const prefix = './';
-      return buildNav(prefix);
+      // Root level
+      depth = 0;
     }
+    
+    const prefix = depth > 0 ? '../'.repeat(depth) : './';
+    return buildNav(prefix);
   } else {
     // For HTTP/HTTPS, use normal path calculation
     currentPath = currentPath.replace(/^\\/[A-Za-z]:/, '');
@@ -297,24 +296,24 @@ function loadFooter() {
   let depth = 0;
   
   if (window.location.protocol === 'file:') {
-    // For file://, detect depth by checking which folders are in the path
-    // This is auto-generated from menu.md by menu-builder.js
+    // Automatically detect depth by counting path segments
     const pathLower = currentPath.toLowerCase();
     
-    // Check for 3-level deep folders (must check these first!)
-    if (${depth3Checks || 'false'}) {
-      depth = 3;
+    // Find the start of our site structure
+    const htmlIndex = pathLower.lastIndexOf('/html/');
+    const helpersIndex = pathLower.lastIndexOf('/site-helpers/');
+    
+    if (helpersIndex !== -1) {
+      // Count segments after /site-helpers/
+      const afterHelpers = currentPath.substring(helpersIndex + '/site-helpers/'.length);
+      const segments = afterHelpers.split('/').filter(s => s && !s.endsWith('.html'));
+      depth = segments.length + 1;
+    } else if (htmlIndex !== -1) {
+      // Count segments after /HTML/
+      const afterHtml = currentPath.substring(htmlIndex + '/html/'.length);
+      const segments = afterHtml.split('/').filter(s => s && !s.endsWith('.html'));
+      depth = segments.length + 1;
     }
-    // Check for 2-level deep folders
-    else if (${depth2Checks || 'false'}) {
-      depth = 2;
-    }
-    // Check for 1-level deep folders
-    else if (${depth1Checks || 'false'} ||
-             pathLower.includes('/html/')) {
-      depth = 1;
-    }
-    // Otherwise we're at root (depth = 0)
   } else {
     // For HTTP/HTTPS, count directory segments from domain root
     const pathSegments = currentPath.split('/').filter(part => part && !part.includes('.html'));

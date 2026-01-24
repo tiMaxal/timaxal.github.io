@@ -9,18 +9,18 @@
    - Depth 1: `../site-helpers/` (e.g., HTML/page.html)
    - Depth 2: `../../site-helpers/` (e.g., HTML/folder/page.html)
    - Depth 3: `../../../site-helpers/` (e.g., HTML/folder/subfolder/page.html)
-4. Add to `site-mng/menu.md` with `HTML/` prefix (if it should appear in navigation)
-5. Add to `site-mng/site.md` with `HTML/` prefix (to include in sitemap)
+4. Add to `site-helpers/md/menu.md` with `HTML/` prefix (if it should appear in navigation)
+5. Add to `site-helpers/md/site.md` with `HTML/` prefix (to include in sitemap)
 6. Run: `site-mng/build-site.bat` (or both builder scripts)
 
 ### Update Menu
-1. Open `site-mng/menu.md`
+1. Open `site-helpers/md/menu.md`
 2. Edit the text
 3. Run: `cd site-mng; node menu-builder.js`
    (This rebuilds both site-nav.js AND footer-loader.js)
 
 ### Update Sitemap  
-1. Open `site-mng/site.md`
+1. Open `site-helpers/md/site.md`
 2. Edit the text
 3. Run: `cd site-mng; node sitemap-builder.js`
 

@@ -8,19 +8,32 @@ The site uses simple Markdown (`.md`) files that you can edit with any text edit
 
 ## 🗂️ File Structure
 
-**Site Management (site-mng/):**
+**Markdown Sources (site-helpers/md/):**
 - **menu.md** - Define the site navigation menu
-- **menu-builder.js** - Script to generate site-nav.js and footer-loader.js from menu.md
 - **site.md** - Define all pages for the sitemap
-- **sitemap-builder.js** - Script to generate sitemap.xml and site-map.html from site.md
-- **template.html** - Template for new pages
-- **build-site.bat** - Runs both builder scripts
+- **md-new/** - New markdown files for page generation
+- **md-bak/** - Template markdown files (reference only)
+- **MD-TO-HTML.md** - Markdown system documentation
+- **MARKDOWN-WORKFLOW.md** - How markdown processing works
+
+**Build Scripts (site-mng/):**
+- **menu-builder.js** - Script to generate site-nav.js and footer-loader.js
+- **sitemap-builder.js** - Script to generate sitemap.xml and site-map.html
+- **md-to-html.js** - Converts markdown to HTML
+- **template.html** - Template for new HTML pages
+- **build-site.bat** - Runs all builder scripts
+
+**Generated Files (site-helpers/):**
+- **site-nav.js** - Navigation menu (auto-generated)
+- **footer-loader.js** - Footer paths (auto-generated)
+- **sitemap.xml** - SEO sitemap (auto-generated)
+- **site-map.html** - User sitemap (auto-generated)
+- **package.json** - Node.js dependencies
 
 **Content Structure:**
 - **HTML/** - All content pages go here (or in subdirectories)
   - HTML/aboutlife/, HTML/software/, HTML/sellhns/, HTML/varhns/
   - Up to 3 levels deep: HTML/varhns/FishingHowTo/page.html
-- **site-helpers/** - Navigation, footer, theme scripts (auto-loaded by pages)
 
 ## 🔧 How to Update the Navigation Menu
 
