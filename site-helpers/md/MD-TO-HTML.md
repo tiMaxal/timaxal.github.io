@@ -223,8 +223,8 @@ This is my latest creation!
 
 After creating a page, to add it to the site menu:
 
-1. Edit `site-mng/menu.md` - Add your page link
-2. Edit `site-mng/site.md` - Add to sitemap
+1. Edit `site-helpers/md/menu.md` - Add your page link
+2. Edit `site-helpers/md/site.md` - Add to sitemap
 3. Run `build-site.bat` or `build-site.sh`
 
 See `SITE-MANAGEMENT.md` for more details on menu and sitemap configuration.

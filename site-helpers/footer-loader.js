@@ -41,6 +41,8 @@ function loadFooter() {
     imgPrefix = '../'.repeat(depth) + 'HTML/imgs/';
   }
   
+  const prefix = depth > 0 ? '../'.repeat(depth) : './';
+  
   // For file:// protocol, we can't use fetch, so insert the footer HTML directly
   if (window.location.protocol === 'file:') {
     const footerHTML = `<div class="footer">
@@ -61,8 +63,8 @@ function loadFooter() {
     </a>
   </p>
   <p style="margin-top: 10px; font-size: 0.9em;">
-    <a href="HTML/donate.html">💝 Support / Donate</a> • 
-    <a href="site-helpers/site-map.html">🗺️ Site Map</a>`;
+    <a href="${prefix}HTML/donate.html">💝 Support / Donate</a> • 
+    <a href="${prefix}site-helpers/site-map.html">🗺️ Site Map</a>`;
     footerContainer.innerHTML = footerHTML;
   } else {
     // For HTTP/HTTPS, use fetch

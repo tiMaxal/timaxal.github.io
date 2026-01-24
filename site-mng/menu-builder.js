@@ -274,6 +274,9 @@ function generateFooterLoaderJs(folders) {  // Read footer.html content
     footerContent = fs.readFileSync(footerHtmlPath, 'utf-8').trim();
     // Replace imgs/ with ${imgPrefix} for dynamic path resolution
     footerContent = footerContent.replace(/src="imgs\//g, 'src="${imgPrefix}');
+    // Replace static paths with dynamic prefix variables
+    footerContent = footerContent.replace(/href="HTML\//g, 'href="${prefix}HTML/');
+    footerContent = footerContent.replace(/href="site-helpers\//g, 'href="${prefix}site-helpers/');
   } catch (error) {
     console.warn(`⚠️  Warning: Could not read footer.html: ${error.message}`);
     footerContent = '<div class="footer"><p>Footer content not found</p></div>';
@@ -324,6 +327,8 @@ function loadFooter() {
     footerPath = '../'.repeat(depth) + 'site-helpers/footer.html';
     imgPrefix = '../'.repeat(depth) + 'HTML/imgs/';
   }
+  
+  const prefix = depth > 0 ? '../'.repeat(depth) : './';
   
   // For file:// protocol, we can't use fetch, so insert the footer HTML directly
   if (window.location.protocol === 'file:') {
