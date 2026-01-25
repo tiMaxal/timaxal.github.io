@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FishingHowTo</title>
+        <style type="text/css">
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { background-color: #ccffff; color: #3404f4; font-family: Arial, Helvetica, sans-serif; line-height: 1.6; padding: 20px; transition: background-color 0.3s ease, color 0.3s ease; }
+            body.dark-theme { background-color: #003366; color: #99ddff; }
+            body.black-theme { background-color: #000000; color: #ffffff; }
+            a:link { color: #0000ee; }
+            a:visited { color: #551a8b; }
+            a:active { color: #ee0000; }
+            a:hover { color: #3404f4; text-decoration: underline; }
+            body.dark-theme a:link { color: #66bbff; }
+            body.dark-theme a:visited { color: #9988ff; }
+            body.dark-theme a:hover { color: #99ddff; }
+            body.black-theme a:link { color: #66bbff; }
+            body.black-theme a:visited { color: #9999ff; }
+            body.black-theme a:hover { color: #ffffff; }
+            .footer { text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 2px solid currentColor; }
+            .footer p { margin: 10px 0; }
+            .footer img { margin: 0 10px; vertical-align: middle; }
+            .footer h6 { margin-top: 20px; font-size: 0.9em; }
+            .theme-switcher { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: rgba(52, 4, 244, 0.8); color: white; border: none; border-radius: 20px; cursor: pointer; font-family: Arial, Helvetica, sans-serif; font-size: 0.9em; font-weight: bold; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; z-index: 1000; }
+            .theme-switcher:hover { transform: scale(1.05); }
+            body.dark-theme .theme-switcher { background-color: rgba(153, 221, 255, 0.8); color: #003366; }
+            body.black-theme .theme-switcher { background-color: rgba(255, 255, 255, 0.8); color: #000000; }
+            .container { max-width: 900px; margin: 0 auto; padding: 30px; }
+            h2 { margin: 20px 0; font-size: 2em; text-align: center; }
+            p { margin: 10px 0; }
+            .c0 { font-weight: 700; }
+        </style>
+        <link rel="stylesheet" href="../../../site-helpers/site-nav.css?v=2">
+        <script src="../../../site-helpers/theme-switcher.js?v=2"></script>
+        <script src="../../../site-helpers/footer-loader.js?v=2"></script>
+        <script src="../../../site-helpers/site-nav.js?v=2"></script>
+    </head>
+    <body>
+        <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
+        <div class="container">
+        <div class="container">
+        <h2>Fishing HowTo</h2>
+        <center>[in-browser  <a href="fishingame_webapp.html" target="_blank">fishinGame</a>. ]</center>
+            <p><span class="c0 c4">Be patient and persistent.</span></p>
+            <p><span class="c1">&nbsp; A relaxing and enjoyable activity, it can also be challenging at times.</span></p>
+            <p><span class="c1">&nbsp;Don&#39;t get discouraged if you don&#39;t catch anything right away - keep trying and you&#39;ll eventually have success.</span></p>
+            <p><span>1.</span><span class="c0">Obtain</span><span>&nbsp;the necessary fishing </span><span class="c0">licenses and permits</span><span class="c1">&nbsp;for the specific country and region you plan to fish in.</span></p>
+            <p><span>2.</span><span class="c0">Research</span><span>&nbsp;the local fishing </span><span class="c0">regulations</span><span class="c1">, including season dates, catch limits, and prohibited fishing methods.</span></p>
+            <p><span>3.</span><span class="c0">Familiarize</span><span>&nbsp;yourself </span><span class="c0">with the fish species in the area</span><span class="c1">&nbsp;and their habits, as well as the best fishing techniques and baits to use.</span></p>
+            <p><span>4.</span><span class="c0">Plan</span><span class="c1">&nbsp;your fishing trip carefully, considering factors such as weather, tide, and water conditions.</span></p>
+            <p><span>5.</span><span class="c0">Bring</span><span>&nbsp;appropriate </span><span class="c0">fishing gear</span><span class="c1">, including a fishing rod, reel, lures, line, hooks, and bait [plus any weights or floats].</span></p>
+            <p><span>6.</span><span class="c0">Respect</span><span>&nbsp;the local </span><span class="c0">environment and wildlife</span><span class="c1">, and practice catch and release if possible.</span></p>
+            <p><span>7.</span><span class="c0">Follow</span><span>&nbsp;all </span><span class="c0">safety guidelines</span><span class="c1">, such as wearing a life jacket and avoiding fishing alone in remote areas.</span></p>
+            <p><span>8.</span><span class="c0">Respect</span><span>&nbsp;the </span><span class="c0">rights of other fishers</span><span class="c1">&nbsp;and avoid overcrowding fishing spots.</span></p>
+            <p><span>9.</span><span class="c0">Be aware</span><span>&nbsp;of </span><span class="c0">cultural and religious customs</span><span class="c1">, and avoid fishing in prohibited areas or during sacred times.</span></p>
+            <p><span>10.</span><span class="c0">Dispose of any trash or waste responsibly</span><span class="c1">, and leave the fishing area as you found it.</span></p>
+            <p class="c2"><span class="c1">&nbsp; </span></p>
+            <p class="c2"><span class="c3">Determine the best bait or lure for the type of fish you are trying to catch.</span></p>
+            <p class="c2"><span class="c1">&nbsp;Different fish species are attracted to different types of bait and lures, so it is important to research the fish you are targeting and choose the bait or lure that is most likely to attract them.</span></p>
+            <p class="c2"><span class="c3">Cast your line.</span></p>
+            <p class="c2"><span class="c1">&nbsp;Once you have chosen a spot to fish and have your gear ready, it is time to cast your line.</span></p>
+            <p class="c2"><span class="c1">&nbsp;Hold on to the fishing rod firmly and gently toss the line out into the water, using a smooth, fluid motion. You may need to practise use of a reel first.</span></p>
+            <p class="c2"><span class="c3">Wait for a bite.</span></p>
+            <p class="c2"><span class="c1">&nbsp;Once your line is in the water, it is time to be patient and wait for a fish to bite.</span></p>
+            <p class="c2"><span class="c1">&nbsp;Keep an eye on your line and be ready to reel it in as soon as you feel a tug on the other end.</span></p>
+            <p class="c2"><span class="c3">Reel in your catch.</span></p>
+            <p class="c2"><span class="c1">&nbsp;Once you feel a tug on your line and set the hook, it is time to reel in your catch.</span></p>
+            <p class="c2"><span class="c1">&nbsp;Hold the fishing rod with both hands and gently crank the reel to bring the fish in towards you.</span></p>
+            <p class="c2"><span class="c1">&nbsp;Be careful not to jerk the line or reel too quickly, as this can cause the fish to break the line or get away.</span></p>
+            <p class="c2"><span class="c3">Release the fish or keep it for food.</span></p>
+            <p class="c2"><span class="c1">&nbsp;Once you have successfully reeled in a fish, you can either release it back into the water or keep it for food.</span></p>
+            <p class="c2"><span class="c1">&nbsp;If you plan to release the fish, handle it gently with wet hands and avoid touching its gills or eyes. If you plan to keep the fish, you will need to clean and prepare it for cooking.</span></p>
+            <p class="c2 c11"><span class="c1"></span></p>
+            <p class="c2 c11"><span class="c1"></span></p>
+            <p class="c13"><span class="c8"><center>[ Prepared with the assistance of </span>
+            <span class="c7"><a class="c12" href="https://www.google.com/url?q=https://chat.openai.com/&amp;sa=D&amp;source=editors&amp;ust=1674042098856427&amp;usg=AOvVaw1Opc2-IFnQjvI00uzjYnCN">ChatGPT</a>]</span><center>
+        </span></p>
+        </div></div>
+
+        <div id="footer-container"></div>
+      </div>
+    </body>
+</html>

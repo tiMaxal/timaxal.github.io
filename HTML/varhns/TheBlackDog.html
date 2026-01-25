@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>theBlackDog</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background-color: #ccffff; color: #3404f4; font-family: Arial, Helvetica, sans-serif; line-height: 1.6; padding: 20px; transition: background-color 0.3s ease, color 0.3s ease; }
+      body.dark-theme { background-color: #003366; color: #99ddff; }
+      body.black-theme { background-color: #000000; color: #ffffff; }
+      a:link { color: #0000ee; }
+      a:visited { color: #551a8b; }
+      a:active { color: #ee0000; }
+      a:hover { color: #3404f4; text-decoration: underline; }
+      body.dark-theme a:link { color: #66bbff; }
+      body.dark-theme a:visited { color: #9988ff; }
+      body.dark-theme a:hover { color: #99ddff; }
+      body.black-theme a:link { color: #66bbff; }
+      body.black-theme a:visited { color: #9999ff; }
+      body.black-theme a:hover { color: #ffffff; }
+      .theme-switcher { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: rgba(52, 4, 244, 0.8); color: white; border: none; border-radius: 20px; cursor: pointer; font-family: Arial, Helvetica, sans-serif; font-size: 0.9em; font-weight: bold; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; z-index: 1000; }
+      .theme-switcher:hover { transform: scale(1.05); }
+      body.dark-theme .theme-switcher { background-color: rgba(153, 221, 255, 0.8); color: #003366; }
+      body.black-theme .theme-switcher { background-color: rgba(255, 255, 255, 0.8); color: #000000; }
+      .container { max-width: 900px; margin: 0 auto; padding: 30px; text-align: center; }
+      h2, h3 { margin: 20px 0; }
+      .content { margin: 20px 0; line-height: 2; }
+      .footer { margin-top: 50px; padding-top: 30px; border-top: 2px solid currentColor; }
+      .footer img { margin: 10px 5px; transition: transform 0.3s ease; }
+      .footer img:hover { transform: scale(1.1); }
+    </style>
+    <link rel="stylesheet" href="../../site-helpers/site-nav.css?v=2">
+    <script src="../../site-helpers/theme-switcher.js?v=2"></script>
+    <script src="../../site-helpers/footer-loader.js?v=2"></script>
+    <script src="../../site-helpers/site-nav.js?v=2"></script>
+</head>
+<body>
+    <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
+    <div class="container">
+      <h3>Wrestling the Black Dog</h3>
+      <div class="content">
+        <p>It is not uncommon for people to experience emotional discomfort,<br>
+        though usually it will level out in short order - less than a day, rarely more than a week.</p>
+        <p>At the times it does not, the feelings may be known as 'the black dog'.</p>
+      </div>
+      <h2><a href="https://www.blackdoginstitute.org.au/" target="_blank">Black Dog Institute</a></h2>
+      <div class="content">
+        <p>is a not-for-profit facility for diagnosis,<br>
+        treatment and prevention of mood disorders such as depression,<br>
+        anxiety and bipolar disorder.</p>
+        <p>It was founded in 2002 by the UNSW School of Psychiatry Scientia <br>
+          Professor Gordon Parker and is based in Sydney, Australia.<br>
+        [<a href="https://en.wikipedia.org/wiki/Black_Dog_Institute" target="_blank">Wikipedia</a>]</p>
+        <p>If you have concerns about your personal inner wellbeing, contact the available help groups in your country [often by their call-centre numbers]</p>
+      </div>
+      
+      <div id="footer-container"></div>
+    </div>
+</body>
+</html>
+

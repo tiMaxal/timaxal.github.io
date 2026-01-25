@@ -2,114 +2,318 @@
 <html lang="en">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tiMaxal hub</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      /* Light theme (default) */
+      body {
+        background-color: #ccffff;
+        color: #3404f4;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      
+      /* Dark theme */
+      body.dark-theme {
+        background-color: #003366;
+        color: #99ddff;
+      }
+      
+      /* Black theme */
+      body.black-theme {
+        background-color: #000000;
+        color: #ffffff;
+      }
+      
+      a:link { color: #0000ee; }
+      a:visited { color: #551a8b; }
+      a:active { color: #ee0000; }
+      a:hover { 
+        color: #3404f4;
+        text-decoration: underline;
+      }
+      
+      body.dark-theme a:link { color: #66bbff; }
+      body.dark-theme a:visited { color: #9988ff; }
+      body.dark-theme a:hover { color: #99ddff; }
+      
+      body.black-theme a:link { color: #66bbff; }
+      body.black-theme a:visited { color: #9999ff; }
+      body.black-theme a:hover { color: #ffffff; }
+      
+      .theme-switcher {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        background-color: rgba(52, 4, 244, 0.8);
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.9em;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+      
+      .theme-switcher:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      }
+      
+      body.dark-theme .theme-switcher {
+        background-color: rgba(153, 221, 255, 0.8);
+        color: #003366;
+      }
+      
+      body.black-theme .theme-switcher {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000000;
+      }
+      
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+      }
+      
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid currentColor;
+      }
+      
+      .header h3 {
+        font-size: 1.1em;
+        font-weight: normal;
+        margin-bottom: 15px;
+        opacity: 0.8;
+      }
+      
+      .header h1 {
+        font-size: 2.8em;
+        margin: 15px 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      
+      .header h4 {
+        font-size: 1em;
+        font-weight: normal;
+        margin: 20px 0;
+        line-height: 1.8;
+      }
+      
+      .info-box {
+        background-color: rgba(52, 4, 244, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 25px 0;
+        border-left: 4px solid currentColor;
+      }
+      
+      body.dark-theme .info-box {
+        background-color: rgba(153, 221, 255, 0.1);
+      }
+      
+      body.black-theme .info-box {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      
+      .info-box b {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1.05em;
+      }
+      
+      .info-box a b {
+        display: inline;
+        margin-bottom: 0;
+      }
+      
+      .site-link {
+        margin: 25px 0;
+        padding: 15px;
+        background-color: rgba(52, 4, 244, 0.05);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+      
+      body.dark-theme .site-link {
+        background-color: rgba(153, 221, 255, 0.08);
+      }
+      
+      body.black-theme .site-link {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      
+      .site-link:hover {
+        background-color: rgba(52, 4, 244, 0.15);
+        transform: translateX(5px);
+      }
+      
+      body.dark-theme .site-link:hover {
+        background-color: rgba(153, 221, 255, 0.15);
+      }
+      
+      body.black-theme .site-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      
+      .site-link h3 {
+        margin-bottom: 8px;
+      }
+      
+      .site-link a {
+        font-size: 1.15em;
+        font-weight: bold;
+        text-decoration: none;
+      }
+      
+      .site-link-desc {
+        margin-left: 20px;
+        opacity: 0.8;
+        font-size: 0.95em;
+      }
+      
+      .section-title {
+        text-align: center;
+        margin: 40px 0 25px 0;
+        padding: 15px;
+        background: linear-gradient(90deg, transparent, rgba(52, 4, 244, 0.1), transparent);
+        border-radius: 5px;
+      }
+      
+      body.dark-theme .section-title {
+        background: linear-gradient(90deg, transparent, rgba(153, 221, 255, 0.1), transparent);
+      }
+      
+      body.black-theme .section-title {
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      }
+      
+      .section-title h3 {
+        font-size: 1.4em;
+      }
+      
+      .footer {
+        text-align: center;
+        margin-top: 50px;
+        padding-top: 30px;
+        border-top: 2px solid currentColor;
+      }
+      
+      .footer img {
+        margin: 10px 5px;
+        transition: transform 0.3s ease;
+      }
+      
+      .footer img:hover {
+        transform: scale(1.1);
+      }
+      
+      .footer h6 {
+        margin-top: 20px;
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+    </style>
+    <link rel="stylesheet" href="site-helpers/site-nav.css?v=2">
+    <script src="site-helpers/theme-switcher.js?v=2"></script>
+    <script src="site-helpers/footer-loader.js?v=2"></script>
+    <script src="site-helpers/site-nav.js?v=2"></script>
   </head>
-  <body style="    background-color: #ccffff; color: #3404f4;
-			 font-family: Arial, Helvetica, sans-serif;" vlink="#551a8b" link="#0000ee" alink="#ee0000">
-    <!--
-    <script src="https://ti.maxal/i2h/handshake.js" domain="ti.maxal"></script>
-    <script src="https://ti.maxal/i2h/https.js"></script> <br>
-    -->
-    <br>
-  
-    <div align="center">
-      <h3>This is a placeholder site for the upcoming </h3>
-      <br>
-      <h1> <u>tiMaxal</u> Hub </h1>
-      <br>
-      <h4>These are currently simple links to satellite sites under the banner
-        of tiMaxal Enterprises.</h4>
-      <br>
-      It is expected for them to be brought under this one site, soon. <br>
-      <br>
-      <b>Some sites may be accessed on HNS <a href="https://handshake.org/" target="_blank">Handshake</a>,
-        requiring at this time either:</b><br>
-      - appending '.hns.is' without a 3rd-party resolver [NOT assured secure],<br>
-      - install of <a href="https://impervious.com/fingertip.html"><b>Fingertip</b></a>
-      software. <br>
-      [or use <a href="https://impervious.com/beacon" target="_blank"><b>Beacon</b></a>
-      browser]<br>
-      <br>
-      [ICANN-based sites may also pass HNS-resolving browsers through to
-      Handshake sites]<br>
-    </div>
-    <br>
-    <br>
-    <!--
-    <h3>&nbsp;&nbsp;&nbsp;<a href="https://much.aboutlife/" target="_blank">AboutLife</a></h3>
-    -->
-    <h3>&nbsp;&nbsp;&nbsp;<a href="aboutlife/aboutlife.html" target="_blank">AboutLife</a></h3>
-    holistic self-care
-    <!--
-        <BR><BR>        <H3>&nbsp;&nbsp;&nbsp;<a href="https://adrex/" target="_blank">_ adrex _ </H3></a> your new online Address
-        --> <br>
-    <br>
-    <!--
-    <h3>&nbsp;&nbsp;&nbsp;<a href="http://hns.dona.im/" target="_blank">altim</a></h3>
-      <br>
-      -->
-    <!--[secure on HNS; not yet HTTPS on ICANN] <br>-->
-    <!-- <h3>&nbsp;&nbsp;&nbsp;<a href="fotwograf.html" target="_blank">foTwograf</a></h3>
-    info page about stereo photos <br> 
-    <br>
-    -->
-    <h3>&nbsp;&nbsp;&nbsp;<a href="https://hns.au/" target="_blank">HNSau</a></h3>
-    Australian Handshake hub <br>
-    <br>
-    <h3>&nbsp;&nbsp;&nbsp;<a href="https://registr.au/" target="_blank">registrAU</a></h3>
-    [imminent] Australian Registrar for HNS SLDs <br>
-    <br>
-    <h3>&nbsp;&nbsp;&nbsp;<a href="varhns/aud/aud.html" target="_blank">AUD</a></h3>
-    exchange rates currency converter [Fiat + Crypto]
-
-    <br>
-    <br>
-    <br>
-
-    <h3><u><b>Various HNS content pages:</b></u></h3>
-
-    <p> &nbsp;&nbsp;&nbsp;<a href="/varhns/FishingHowTo/FishingHowTo.html" target="_blank">FishingHowTo</a>
-      [basic info for fishing] </p>
-    <p> &nbsp;&nbsp;&nbsp;<a href="/varhns/fotografi/fotografi.html" target="_blank">fotografi</a>
-      [CC-BY and CC0 images, mono and stereo]</p>
-    <p>&nbsp;&nbsp; <a href="/varhns/TheBlackDog.html" target="_blank">TheBlackDog
-        </a>[mental health org]</p>
-    <br>
-    <h3>&nbsp;&nbsp;&nbsp;buy HNS Handshake <a href="sellhns/hnsell.html" target="_blank">TLDs</a> or 
-    <a href="https://hmart/" target="_blank">Merch</a></h3>
-
-    <br>
-    <br>
-
-    <!--        <div align="center">[<a href="mailto:timaxal@mail.com">contact</a>]</div>  -->
-    <div align="center">
-      <p>
-        <!-- HNSau link.. --> <a href="https://hns.au" target="_blank"> <img src="imgs/hnsau_blak-H-trans-bak+gg-centre_60x60.webp"
-
-            alt="Handshake Australia" height="50" width="50"> </a> <br>
-        <br>
-        <!-- HNSau Discord link.. --> <a href="https://discord.gg/uKV5yKyBHG" target="_blank"><img
-
-            src="imgs/MaxPixel.Logo-Discord-6062232.CC0.png" alt="Handshake Australia Community Discord"
-
-            height="20" width="20"></a>
-        <!-- tiMaxal Discord link..
-            <a href="https://discordapp.com/users/823447722215473163" target="_blank"><img src="imgs/MaxPixel.Logo-Discord-6062232.CC0.png" alt="h4ndsh4k@Discord" height="20" width="20"></a><span>&nbsp;</span> -->
-        <!-- h4ndsh4k Facebook link..  <a href="https://www.facebook.com/h4ndsh4k/"
-            target="_blank"> <img src="imgs/fb-web.svg" alt="h4ndsh4k@fb.com"            height="20" width="20"></a> <span>&nbsp;</span> -->
-        <!-- HNSau Facebook link.. --> <a href="https://www.facebook.com/people/HNS-AU/100086556653400/"
-
-          target="_blank"> <img src="imgs/fb-web.svg" alt="HNSau@fb.com" height="20"
-
-            width="20"></a> <span>&nbsp;</span>
-        <!-- h4ndsh4k Twitter link.. --> <a href="https://twitter.com/tiMaxal"
-
-          target="_blank"> <img src="imgs/Twitter.svg" alt="@tiMaxal" height="20"
-
-            width="20"> </a> <br>
-      </p>
-      <h6>[a <a href="https://timax.au/" target="_blank">tiMaxal</a>
-        enterprises offering]</h6>
+  <body>
+    <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
+    <div class="container">
+      <div class="header">
+        <h1><u>tiMaxal</u> Hub</h1>
+        <h4>A collection of sites under the banner of tiMaxal Enterprises.</h4>
       </div>
+
+      <div class="info-box">
+        <b>Some sites may be accessed on HNS <a href="https://handshake.org/" target="_blank">Handshake</a>, requiring at this time either:</b>
+        &nbsp;&nbsp;- appending '.hns.is' without a 3rd-party resolver [NOT assured secure];<br>
+        &nbsp;&nbsp;- install of <span style="white-space: nowrap;"><a href="https://impervious.com/fingertip.html"><b>Fingertip</b></a> software;</span><br>
+        &nbsp;&nbsp;- use a browser;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;- <span style="white-space: nowrap;"><a href="https://impervious.com/beacon" target="_blank"><b>Beacon</b></a>, open source</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;- <span style="white-space: nowrap;"><a href="https://www.rushbrowser.com/" target="_blank"><b>Rush</b></a>, currently closed source.</span><br><br>
+        <h6><center>
+        [ICANN-based sites may also pass <br>
+        HNS-resolving browsers through <br>
+        to Handshake sites]
+        </center><h6>
+      </div>
+      
+      <div class="section-title">
+        <h3><u><b>Main Sites:</b></u></h3>
+      </div>
+
+      <div class="site-link">
+        <h3><a href="https://hns.au/" target="_blank">HNSau</a></h3>
+        <div class="site-link-desc">Australian Handshake hub</div>
+      </div>
+
+      <div class="site-link">
+        <h3><a href="https://registr.au/" target="_blank">registrAU</a></h3>
+        <div class="site-link-desc">[imminent] Australian Registrar for HNS SLDs</div>
+      </div>
+
+      <div class="site-link">
+        <h3><a href="./HTML/software/software.html">Software</a></h3>
+        <div class="site-link-desc">personally created and voding [ai-assisted 'vibe-coding'] apps</div>
+      </div>
+
+      <div class="site-link">
+        <h3><a href="./HTML/varhns/aud/aud.html">AUD</a> | <a href="./HTML/varhns/uvau.html">UVAU</a></h3>
+        <div class="site-link-desc">exchange rates currency converter [Fiat + Crypto] | UV levels [Australia]</div>
+      </div>
+      
+      <div class="section-title">
+        <h3><u><b>HNS hosted pages:</b></u></h3>
+      </div>
+
+      <div class="site-link">
+        <h3><a href="./HTML/aboutlife/aboutlife.html">AboutLife</a></h3>
+        <div class="site-link-desc">holistic self-care</div>
+      </div>
+
+      <div class="site-link">
+        <h3>buy HNS Handshake <a href="./HTML/sellhns/hnsell.html" target="_blank">TLDs</a> or 
+        <a href="https://hmart/" target="_blank">Merch</a></h3>
+      </div>
+
+      <div class="section-title">
+        <h3><u><b>Other content:</b></u></h3>
+      </div>
+
+      <div class="site-link">
+        <h3><a href="./HTML/varhns/FishingHowTo/FishingHowTo.html">FishingHowTo</a></h3>
+        <div class="site-link-desc">[basic info for fishing, + in-browser  <a href="./HTML/varhns/FishingHowTo/fishingame_webapp.html" target="_blank">fishinGame</a>]</div>
+      </div>
+
+      <div class="site-link">
+        <h3><a href="./HTML/varhns/fotografi/fotografi.html">fotografi</a></h3>
+        <div class="site-link-desc">[CC-BY and CC0 images, mono and stereo]</div>
+      </div>
+
+      <div class="site-link">
+        <h3><a href="./HTML/varhns/TheBlackDog.html">TheBlackDog</a></h3>
+        <div class="site-link-desc">[mental health org]</div>
+      </div>
+
+      <div id="footer-container"></div>
+    </div>
   </body>
 </html>

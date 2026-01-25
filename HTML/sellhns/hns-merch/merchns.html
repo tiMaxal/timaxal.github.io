@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HNS \ Handshake Merchandise</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      /* Light theme (default) */
+      body {
+        background-color: #ccffff;
+        color: #3404f4;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      
+      /* Dark theme */
+      body.dark-theme {
+        background-color: #003366;
+        color: #99ddff;
+      }
+      
+      /* Black theme */
+      body.black-theme {
+        background-color: #000000;
+        color: #ffffff;
+      }
+      
+      a:link { color: #0000ee; }
+      a:visited { color: #551a8b; }
+      a:active { color: #ee0000; }
+      a:hover { 
+        color: #3404f4;
+        text-decoration: underline;
+      }
+      
+      body.dark-theme a:link { color: #66bbff; }
+      body.dark-theme a:visited { color: #9988ff; }
+      body.dark-theme a:hover { color: #99ddff; }
+      
+      body.black-theme a:link { color: #66bbff; }
+      body.black-theme a:visited { color: #9999ff; }
+      body.black-theme a:hover { color: #ffffff; }
+      
+      .theme-switcher {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        background-color: rgba(52, 4, 244, 0.8);
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.9em;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+      
+      .theme-switcher:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      }
+      
+      body.dark-theme .theme-switcher {
+        background-color: rgba(153, 221, 255, 0.8);
+        color: #003366;
+      }
+      
+      body.black-theme .theme-switcher {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000000;
+      }
+      
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+      }
+      
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid currentColor;
+      }
+      
+      .header h1 {
+        font-size: 2.5em;
+        margin: 15px 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      
+      .header h3 {
+        font-size: 1.2em;
+        margin: 10px 0;
+        font-weight: normal;
+      }
+      
+      .header h2 {
+        font-size: 1.3em;
+        margin: 20px auto;
+        font-weight: normal;
+        max-width: 700px;
+      }
+      
+      .intro-text {
+        text-align: center;
+        margin: 25px auto;
+        max-width: 700px;
+        padding: 15px;
+        background-color: rgba(52, 4, 244, 0.05);
+        border-radius: 8px;
+      }
+      
+      body.dark-theme .intro-text {
+        background-color: rgba(153, 221, 255, 0.08);
+      }
+      
+      body.black-theme .intro-text {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      
+      .vendor-item {
+        margin: 30px 0;
+        padding: 20px;
+        background-color: rgba(52, 4, 244, 0.05);
+        border-radius: 8px;
+        border-left: 4px solid currentColor;
+        transition: all 0.3s ease;
+      }
+      
+      body.dark-theme .vendor-item {
+        background-color: rgba(153, 221, 255, 0.08);
+      }
+      
+      body.black-theme .vendor-item {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      
+      .vendor-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      .vendor-item h3 {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+      }
+      
+      .vendor-desc {
+        font-size: 0.95em;
+        line-height: 1.8;
+      }
+      
+      .contact-section {
+        text-align: center;
+        margin: 50px 0 30px 0;
+        padding: 20px;
+      }
+      
+      .contact-section h3 {
+        font-size: 1.2em;
+      }
+      
+      .footer {
+        text-align: center;
+        margin-top: 50px;
+        padding-top: 30px;
+        border-top: 2px solid currentColor;
+      }
+      
+      .footer img {
+        margin: 10px 5px;
+        transition: transform 0.3s ease;
+      }
+      
+      .footer img:hover {
+        transform: scale(1.1);
+      }
+      
+      .footer h6 {
+        margin-top: 20px;
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+    </style>
+    <link rel="stylesheet" href="../../../site-helpers/site-nav.css?v=2">
+    <script src="../../../site-helpers/theme-switcher.js?v=2"></script>
+    <script src="../../../site-helpers/footer-loader.js?v=2"></script>
+    <script src="../../../site-helpers/site-nav.js?v=2"></script>
+  </head>
+  <body>
+    <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
+    
+    <div class="container">
+      <div class="header">
+        <h1><u>Handshake Merchandise</u></h1>
+        <h3>[and <a href="../../varhns/hnsartm/hnsartm.html"><b>HNSart</b></a>]</h3>
+        <h2>Sales sites for Handshake [and associated] product, available from various vendors.</h2>
+      </div>
+
+      <div class="intro-text">
+        Some are at cost, while others may donate proceeds to the ongoing usability or development of the HNS platform and environ.
+      </div>
+
+      <div class="vendor-item">
+        <h3><a href="https://www.bonfire.com/store/heytx/" target="_blank">[hey].tx and HNS merch</a></h3>
+        <div class="vendor-desc">
+          .tx goods, + "Own Your Name" tops\headwear @ cost
+        </div>
+      </div>
+
+      <div class="vendor-item">
+        <h3>Erwin's <a href="https://hns.au/pins" target="_blank">HNS 3D lapelpins</a></h3>
+        <div class="vendor-desc">
+          Cast metal "<b><i>H</i></b>" badge sets, shipped from Australia; more affordable as a batch
+        </div>
+      </div>
+
+      <div class="vendor-item">
+        <h3>migsmachine <a href="https://nftsarestupid.com/collections/handshake" target="_blank">Handshake HNS [and other!] Logo Rug</a></h3>
+        <div class="vendor-desc">
+          <b><i>H</i></b> or 🤝 rugs
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <h3><a href="mailto:h4ndsh4k+merch@gmail.com">[want to list?]</a></h3>
+      </div>
+
+      <div id="footer-container"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Map - tiMaxal Hub</title>
+    <link rel="stylesheet" href="site-nav.css?v=2">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ccffff;
+            color: #3404f4;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-theme {
+            background-color: #003366;
+            color: #99ddff;
+        }
+
+        body.black-theme {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            border-bottom: 3px solid currentColor;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            border-bottom: 2px solid currentColor;
+            padding-bottom: 10px;
+        }
+
+        .page-list {
+            list-style: none;
+            margin: 20px 0 40px 20px;
+        }
+
+        .page-list li {
+            margin: 12px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .page-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .page-list a {
+            font-size: 1.1em;
+            text-decoration: none;
+            color: #0000ee;
+            font-weight: 500;
+        }
+
+        body.dark-theme .page-list a {
+            color: #66bbff;
+        }
+
+        body.black-theme .page-list a {
+            color: #66bbff;
+        }
+
+        .page-list a:hover {
+            text-decoration: underline;
+            color: #3404f4;
+        }
+
+        body.dark-theme .page-list a:hover {
+            color: #99ddff;
+        }
+
+        body.black-theme .page-list a:hover {
+            color: #ffffff;
+        }
+
+        .page-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-left: 25px;
+            font-style: italic;
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: rgba(52, 4, 244, 0.8);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-switcher:hover {
+            transform: scale(1.05);
+        }
+
+        body.dark-theme .theme-switcher {
+            background-color: rgba(153, 221, 255, 0.8);
+            color: #003366;
+        }
+
+        body.black-theme .theme-switcher {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000000;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid currentColor;
+        }
+    </style>
+    <script src="theme-switcher.js?v=2"></script>
+    <script src="footer-loader.js?v=2"></script>
+    <script src="site-nav.js?v=2"></script>
+</head>
+<body>
+    <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
+    
+    <div class="container">
+        <h1>📍 Site Map</h1>
+        
+        <h2>Home Page</h2>
+        <ul class="page-list">
+            <li>
+                <a href="../index.html">tiMaxal Hub</a>
+            </li>
+        </ul>
+        <h2>Main Sites</h2>
+        <ul class="page-list">
+            <li>
+                <a href="../HTML/aboutlife/aboutlife.html">AboutLife - Holistic Self-Care</a>
+            </li>
+            <li>
+                <a href="../HTML/software/software.html">Software by tiMaxal</a>
+            </li>
+            <li>
+                <a href="../HTML/varhns/aud/aud.html">AUD Currency Converter</a>
+            </li>
+        </ul>
+        <h2>Content Pages - Various HNS Content</h2>
+        <ul class="page-list">
+            <li>
+                <a href="../HTML/varhns/FishingHowTo/FishingHowTo.html">FishingHowTo - Basic Fishing Information</a>
+            </li>
+            <li>
+                <a href="../HTML/varhns/FishingHowTo/fishingame_webapp.html">fishinGame - in-browser text-based game</a>
+            </li>
+            <li>
+                <a href="../HTML/varhns/fotografi/fotografi.html">fotografi - Photography Gallery</a>
+            </li>
+            <li>
+                <a href="../HTML/varhns/fotografi/cc0img.html">CC0 Images</a>
+            </li>
+            <li>
+                <a href="../HTML/varhns/fotografi/cc-by_img.html">CC-BY Images</a>
+            </li>
+            <li>
+                <a href="../HTML/varhns/TheBlackDog.html">TheBlackDog - Mental Health Organization</a>
+            </li>
+            <li>
+                <a href="../HTML/varhns/uvau.html">uvau</a>
+            </li>
+        </ul>
+        <h2>Commerce - HNS Handshake</h2>
+        <ul class="page-list">
+            <li>
+                <a href="../HTML/sellhns/hnsell.html">HNSell - Buy HNS TLDs</a>
+            </li>
+            <li>
+                <a href="../HTML/sellhns/hns-tld/hns-pf.html">tiMaxal's HNS Portfolio</a>
+            </li>
+            <li>
+                <a href="../HTML/sellhns/hns-tld/hmartld.html">Community HNS TLD Sales Sites</a>
+            </li>
+            <li>
+                <a href="../HTML/sellhns/hns-merch/merchns.html">HNS Merchandise</a>
+            </li>
+            <li>
+                <a href="../HTML/varhns/hnsartm/hnsartm.html">HNS Art Gallery</a>
+            </li>
+        </ul>
+        <h2>Utilities</h2>
+        <ul class="page-list">
+            <li>
+                <a href="../site-helpers/site-map.html">Site Map</a>
+            </li>
+        </ul>
+
+        <div id="footer-container"></div>
+    </div>
+</body>
+</html>
