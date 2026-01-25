@@ -11,7 +11,7 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 
 ---
 
-## Main Sites
+## Main Pages
 
 - [HNSau](https://hns.au/) {external}
   Australian Handshake hub
@@ -28,20 +28,10 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 - [UVAU](HTML/varhns/uvau.html)
   Check local UV levels [in Australia]
 
-
-## HNS Hosted Pages
+## Other Content
 
 - [AboutLife](HTML/aboutlife/aboutlife.html)
   holistic self-care
-
-- [Buy HNS TLDs](HTML/sellhns/hnsell.html)
-  purchase Handshake top-level domains
-
-- [HNS Merch](HTML/sellhns/hns-merch/merchns.html)
-  Handshake merchandise
-
-
-## Other Content
 
 - [FishingHowTo](HTML/varhns/FishingHowTo/FishingHowTo.html)
   basic info for fishing
@@ -55,7 +45,6 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 - [TheBlackDog](HTML/varhns/TheBlackDog.html)
   mental health org
 
-
 ## HNS Resources
 
 - [tiMaxal HNS TLDs](HTML/sellhns/hns-tld/hns-pf.html)
@@ -63,15 +52,18 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 
 - [Community TLD sales pages](HTML/sellhns/hns-tld/hmartld.html)
   Community HNS TLD sales
+  - [Buy HNS TLDs](HTML/sellhns/hnsell.html)
+    purchase Handshake top-level domains
+  - [HNS Merch](HTML/sellhns/hns-merch/merchns.html)
+    Handshake merchandise
 
 - [HNS art](HTML/varhns/hnsartm/hnsartm.html)
   Free HNS Handshake image files
 
-## Support
+## Utilities
 
 - [Donate](HTML/donate.html)
   Support tiMaxal projects
 
-## Utilities
-
 - [Site Map](site-helpers/site-map.html)
+

@@ -493,9 +493,8 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
     valid_tags = [tag for tag in tags_dict.keys() if tag and str(tag).lower() not in ['nan', '']]
     tags_sorted = ['All Names'] + sorted(set(valid_tags) - {'All Names'})
     
-    # Generate sections and navigation
+    # Generate sections
     sections = []
-    nav_links = []
     for tag in tags_sorted:
         section_id = tag.lower().replace(' ', '-')
         domain_links = [f'<div class="domain-item">{format_domain_link(d, include_descriptions)}</div>'
@@ -508,7 +507,6 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
             </div>
         </div>
         ''')
-        nav_links.append(f'<button class="tag-button" onclick="showSection(\'{section_id}\')">{tag}</button>')
     
     # Load credits content if provided (moved outside loop!)
     credits_html = ''
@@ -653,68 +651,26 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
             color: inherit;
         }}
         
-        .tag-navigation {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin: 20px 0;
-            padding: 20px;
-            background-color: rgba(52, 4, 244, 0.1);
-            border-radius: 10px;
-        }}
-        
-        body.dark-theme .tag-navigation {{
-            background-color: rgba(153, 221, 255, 0.1);
-        }}
-        
-        body.black-theme .tag-navigation {{
-            background-color: rgba(255, 255, 255, 0.1);
-        }}
-        
-        .tag-button {{
-            padding: 8px 16px;
-            background-color: rgba(52, 4, 244, 0.15);
-            color: inherit;
-            border: 2px solid currentColor;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-        }}
-        
-        .tag-button:hover {{
-            background-color: rgba(52, 4, 244, 0.3);
-            transform: translateY(-2px);
-        }}
-        
-        body.dark-theme .tag-button {{
-            background-color: rgba(153, 221, 255, 0.15);
-        }}
-        
-        body.dark-theme .tag-button:hover {{
-            background-color: rgba(153, 221, 255, 0.3);
-        }}
-        
-        body.black-theme .tag-button {{
-            background-color: rgba(255, 255, 255, 0.15);
-        }}
-        
-        body.black-theme .tag-button:hover {{
-            background-color: rgba(255, 255, 255, 0.3);
-        }}
-        
         .tag-section {{
-            display: none;
-            margin: 30px 0;
+            display: block;
+            margin: 0;
+            padding: 0;
+        }}
+        
+        .tag-section.hidden {{
+            display: none !important;
         }}
         
         .tag-section.active {{
             display: block;
         }}
         
+        .tag-section#all-names {{
+            display: block;
+        }}
+        
         .tag-section h3 {{
+            display: none;
             text-align: center;
             margin-bottom: 20px;
             font-size: 1.8em;
@@ -768,44 +724,46 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
             padding: 1em;
             margin: 10px 0;
             background-color: rgba(52, 4, 244, 0.1);
-            border-left: 4px solid rgba(52, 4, 244, 0.6);
             border-radius: 5px;
             text-align: center;
         }}
 
         body.dark-theme .info-banner {{
             background-color: rgba(153, 221, 255, 0.1);
-            border-left-color: rgba(153, 221, 255, 0.6);
         }}
 
         body.black-theme .info-banner {{
             background-color: rgba(255, 255, 255, 0.1);
-            border-left-color: rgba(255, 255, 255, 0.6);
         }}
 
         /* Marketplace links section */
+        .marketplace-section {{
+            padding: 1em;
+            background-color: rgba(52, 4, 244, 0.08);
+            border-radius: 10px;
+            margin: 20px 0;
+        }}
+        
+        body.dark-theme .marketplace-section {{
+            background-color: rgba(153, 221, 255, 0.08);
+        }}
+        
+        body.black-theme .marketplace-section {{
+            background-color: rgba(255, 255, 255, 0.08);
+        }}
+        
         .marketplace-label {{
             font-weight: bold;
-            margin-right: 1em;
+            text-align: center;
+            margin-bottom: 1em;
+            font-size: 1.1em;
         }}
         
         .marketplace-links {{
             display: flex;
             justify-content: center;
-            gap: 1.5em;
-            padding: 1em;
-            background-color: rgba(52, 4, 244, 0.08);
-            border-radius: 10px;
-            margin: 20px 0;
+            gap: 1em;
             flex-wrap: wrap;
-        }}
-        
-        body.dark-theme .marketplace-links {{
-            background-color: rgba(153, 221, 255, 0.08);
-        }}
-        
-        body.black-theme .marketplace-links {{
-            background-color: rgba(255, 255, 255, 0.08);
         }}
         
         .marketplace-links a {{
@@ -817,6 +775,8 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
             text-decoration: none;
             font-weight: bold;
             transition: all 0.3s ease;
+            text-align: center;
+            flex: 0 1 auto;
         }}
         
         .marketplace-links a:hover {{
@@ -1044,6 +1004,70 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
             color: inherit !important;
         }}
         
+        /* Pagination controls */
+        .pagination-controls {{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            margin: 2em 0;
+            padding: 1em;
+            background-color: rgba(52, 4, 244, 0.08);
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }}
+        
+        body.dark-theme .pagination-controls {{
+            background-color: rgba(153, 221, 255, 0.08);
+        }}
+        
+        body.black-theme .pagination-controls {{
+            background-color: rgba(255, 255, 255, 0.08);
+        }}
+        
+        .pagination-controls button {{
+            padding: 0.5em 1em;
+            background-color: rgba(52, 4, 244, 0.2);
+            color: inherit;
+            border: 2px solid currentColor;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }}
+        
+        .pagination-controls button:hover:not(:disabled) {{
+            background-color: rgba(52, 4, 244, 0.4);
+            transform: scale(1.05);
+        }}
+        
+        .pagination-controls button:disabled {{
+            opacity: 0.4;
+            cursor: not-allowed;
+        }}
+        
+        body.dark-theme .pagination-controls button {{
+            background-color: rgba(153, 221, 255, 0.2);
+        }}
+        
+        body.dark-theme .pagination-controls button:hover:not(:disabled) {{
+            background-color: rgba(153, 221, 255, 0.4);
+        }}
+        
+        body.black-theme .pagination-controls button {{
+            background-color: rgba(255, 255, 255, 0.2);
+        }}
+        
+        body.black-theme .pagination-controls button:hover:not(:disabled) {{
+            background-color: rgba(255, 255, 255, 0.4);
+        }}
+        
+        .pagination-info {{
+            font-weight: bold;
+            padding: 0 1em;
+        }}
+        
         .footer {{
             margin-top: 50px;
             padding-top: 30px;
@@ -1054,7 +1078,6 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
     <link rel="stylesheet" href="../../../site-helpers/site-nav.css?v=2">
     <script src="../../../site-helpers/theme-switcher.js?v=2"></script>
     <script src="../../../site-helpers/footer-loader.js?v=2"></script>
-    <script src="../../../site-helpers/site-nav.js?v=2"></script>
 </head>
 <body>
     <div class="buttons-container">
@@ -1070,14 +1093,17 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
         </div>
 
         <!-- Marketplace Links -->
-        <div class="marketplace-links">
-            <span class="marketplace-label">Access <a href="https://handshake.org/" target="_blank" rel="noreferrer">Handshake</a>:</span>
-            <a href="https://shakeshift.com/names" target="_blank" rel="noreferrer">ShakeShift</a>
-            <a href="https://bobwallet.io" target="_blank" rel="noreferrer">Bob Wallet</a>
-            <a href="https://www.namebase.io" target="_blank" rel="noreferrer">Namebase</a>
-            <a href="https://shakestation.io" target="_blank" rel="noreferrer">ShakeStation</a>
-            <a href="https://impervious.com/fingertip" target="_blank" rel="noreferrer">Fingertip</a>
-            <a href="https://git.woodburn.au/nathanwoodburn/firewalletbrowser" target="_blank" rel="noreferrer">FireWallet</a>
+        <div class="marketplace-section">
+            <div class="marketplace-label">Access Handshake:</div>
+            <div class="marketplace-links">
+                <a href="https://handshake.org/" target="_blank" rel="noreferrer">Handshake</a>
+                <a href="https://shakeshift.com/names" target="_blank" rel="noreferrer">ShakeShift</a>
+                <a href="https://bobwallet.io" target="_blank" rel="noreferrer">Bob Wallet</a>
+                <a href="https://www.namebase.io" target="_blank" rel="noreferrer">Namebase</a>
+                <a href="https://shakestation.io" target="_blank" rel="noreferrer">ShakeStation</a>
+                <a href="https://impervious.com/fingertip" target="_blank" rel="noreferrer">Fingertip</a>
+                <a href="https://git.woodburn.au/nathanwoodburn/firewalletbrowser" target="_blank" rel="noreferrer">FireWallet</a>
+            </div>
         </div>
         
         <!-- Filter Controls -->
@@ -1088,15 +1114,29 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
             <select id="tagFilter" onchange="filterDomains()">
                 <option value="">All Tags</option>
             </select>
+            <button id="buyNowBtn" onclick="toggleBuyNowFilter()">'Buy now' Only</button>
+            <select id="perPageSelect" onchange="updatePerPage()">
+                <option value="50">50 per page</option>
+                <option value="100" selected>100 per page</option>
+                <option value="500">500 per page</option>
+                <option value="all">All</option>
+            </select>
             <button onclick="clearFilters()">Clear Filters</button>
+        </div>
+        
+        <!-- Pagination Controls -->
+        <div id="paginationControls" class="pagination-controls" style="display: none;">
+            <button id="prevPageBtn" onclick="goToPage(currentPage - 1)">← Previous</button>
+            <span class="pagination-info" id="paginationInfo">Page 1 of 1</span>
+            <span id="goToPageContainer" style="display: none;">
+                Go to: <input type="number" id="goToPageInput" min="1" style="width: 60px; padding: 0.3em; border: 2px solid currentColor; border-radius: 5px; background: rgba(255,255,255,0.1); color: inherit;" onkeypress="if(event.key==='Enter') goToPageFromInput()">
+                <button onclick="goToPageFromInput()" style="padding: 0.3em 0.8em;">Go</button>
+            </span>
+            <button id="nextPageBtn" onclick="goToPage(currentPage + 1)">Next →</button>
         </div>
 
         <!-- Info Banner (when email is provided) -->
         {info_banner}
-
-        <div class="tag-navigation">
-            {''.join(nav_links)}
-        </div>
         
         {''.join(sections)}
         
@@ -1107,64 +1147,25 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
     
     <script>
         let sortState = 0; // 0=random, 1=a-z, 2=z-a, 3=price-low, 4=price-high
+        let buyNowFilterActive = false; // Track buy now filter state
+        let perPageLimit = '100'; // Track per-page limit
+        let currentPage = 1; // Track current page
+        let totalPages = 1; // Track total pages
         
-        // Theme cycling (Light -> Dark -> Black)
-        let currentTheme = 0; // 0=light, 1=dark, 2=black
+        // Site's theme-switcher.js handles all theme functionality
+        // No custom theme code needed
         
-        function cycleTheme() {{
-            const themeBtn = document.getElementById('themeBtn');
-            currentTheme = (currentTheme + 1) % 3;
-            
-            document.body.classList.remove('dark-theme', 'black-theme');
-            
-            switch(currentTheme) {{
-                case 0: // Light
-                    themeBtn.textContent = '☀️ Light';
-                    break;
-                case 1: // Dark
-                    document.body.classList.add('dark-theme');
-                    themeBtn.textContent = '🌙 Dark';
-                    break;
-                case 2: // Black
-                    document.body.classList.add('black-theme');
-                    themeBtn.textContent = '⚫ Black';
-                    break;
-            }}
-            
-            localStorage.setItem('theme', currentTheme.toString());
-        }}
-        
-        // Show first section by default
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {{
-            // Initialize theme first
-            const themeBtn = document.getElementById('themeBtn');
-            const themeNames = ['☀️ Light', '🌙 Dark', '⚫ Black'];
-            
-            // Load saved theme
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {{
-                currentTheme = parseInt(savedTheme);
-                // Apply theme without animation on load
-                document.body.classList.remove('dark-theme', 'black-theme');
-                if (currentTheme === 1) document.body.classList.add('dark-theme');
-                if (currentTheme === 2) document.body.classList.add('black-theme');
-            }}
-            
-            // Set theme button text immediately
-            if (themeBtn) {{
-                themeBtn.textContent = themeNames[currentTheme];
-            }}
+            // Site's theme-switcher.js handles theme button initialization
             
             showSection('all-names');
             populateTagFilter();
             randomizeMarketplaceLinks();
             
-            // Re-set theme button text after a brief delay to override any external scripts
-            setTimeout(function() {{
-                if (themeBtn) {{
-                    themeBtn.textContent = themeNames[currentTheme];
-                }}
-            }}, 100);
+            // Initialize per-page limit
+            perPageLimit = document.getElementById('perPageSelect').value;
+            applyPagination();
         }});
 
         function showSection(sectionId) {{
@@ -1272,7 +1273,13 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
                 }});
             }});
             
-            // Add special 'No PUNY' filter option at the TOP
+            // Add 'Buy now' Only option
+            const buyNowOption = document.createElement('option');
+            buyNowOption.value = '__BUY_NOW__';
+            buyNowOption.textContent = "'Buy now' Only";
+            tagFilter.appendChild(buyNowOption);
+            
+            // Add special 'No PUNY' filter option
             const punyOption = document.createElement('option');
             punyOption.value = '__NO_PUNY__';
             punyOption.textContent = "No 'PUNY'";
@@ -1298,6 +1305,21 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
             const minPrice = parseFloat(document.getElementById('minPrice').value) || null;
             const maxPrice = parseFloat(document.getElementById('maxPrice').value) || null;
             const tagFilter = document.getElementById('tagFilter').value;
+            
+            // Show/hide tag sections based on filter
+            const sections = document.querySelectorAll('.tag-section');
+            sections.forEach(section => {{
+                section.classList.remove('hidden');
+                
+                if (tagFilter && tagFilter !== '__BUY_NOW__' && tagFilter !== '__NO_PUNY__') {{
+                    // When filtering by specific tag, hide all sections except matching one
+                    const sectionId = section.id;
+                    const sectionTag = sectionId.replace(/-/g, ' ');
+                    if (sectionId !== 'all-names' && sectionTag !== tagFilter.toLowerCase()) {{
+                        section.classList.add('hidden');
+                    }}
+                }}
+            }});
             
             const items = document.querySelectorAll('.domain-item');
             
@@ -1327,6 +1349,16 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
                     }}
                 }}
                 
+                // Buy now filter (marketplace links only - nb/ss sources)
+                let buyNowMatch = true;
+                if (buyNowFilterActive || tagFilter === '__BUY_NOW__') {{
+                    // Check if domain has marketplace link (a tag exists)
+                    const hasMarketplaceLink = item.querySelector('a[href]');
+                    if (!hasMarketplaceLink) {{
+                        buyNowMatch = false;
+                    }}
+                }}
+                
                 // Tag filter
                 let tagMatch = true;
                 if (tagFilter && domainDiv) {{
@@ -1336,18 +1368,167 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
                         if (isPuny) {{
                             tagMatch = false;
                         }}
+                    }} else if (tagFilter === '__BUY_NOW__') {{
+                        // Handled by buyNowMatch above
+                        tagMatch = true;
                     }} else {{
                         const tags = domainDiv.dataset.tags?.split(',').map(t => t.trim()) || [];
                         tagMatch = tags.includes(tagFilter);
                     }}
                 }}
                 
-                if (textMatch && priceMatch && tagMatch) {{
+                if (textMatch && priceMatch && buyNowMatch && tagMatch) {{
                     item.style.display = '';
+                    item.removeAttribute('data-filter-hidden');
                 }} else {{
                     item.style.display = 'none';
+                    item.setAttribute('data-filter-hidden', 'true');
                 }}
             }});
+            
+            // Reset to page 1 when filters change
+            currentPage = 1;
+            
+            // Apply pagination after filtering
+            applyPagination();
+        }}
+        
+        function toggleBuyNowFilter() {{
+            buyNowFilterActive = !buyNowFilterActive;
+            const buyNowBtn = document.getElementById('buyNowBtn');
+            
+            if (buyNowFilterActive) {{
+                buyNowBtn.style.backgroundColor = 'rgba(52, 4, 244, 0.5)';
+                buyNowBtn.style.fontWeight = 'bold';
+            }} else {{
+                buyNowBtn.style.backgroundColor = '';
+                buyNowBtn.style.fontWeight = '';
+            }}
+            
+            filterDomains();
+        }}
+        
+        function updatePerPage() {{
+            perPageLimit = document.getElementById('perPageSelect').value;
+            currentPage = 1; // Reset to first page when changing limit
+            applyPagination();
+        }}
+        
+        function applyPagination() {{
+            const items = document.querySelectorAll('.domain-item');
+            const allItems = Array.from(items);
+            
+            // Get items not hidden by filters and deduplicate by domain name
+            const seenDomains = new Set();
+            const availableItems = [];
+            
+            allItems.forEach(item => {{
+                if (!item.hasAttribute('data-filter-hidden')) {{
+                    // Get domain name from the item for deduplication
+                    const domainDiv = item.querySelector('.domain-with-contact');
+                    const domainLink = item.querySelector('a, .domain-name-only');
+                    const domainName = domainLink ? domainLink.textContent.trim() : '';
+                    
+                    // Only include if we haven't seen this domain yet
+                    if (domainName && !seenDomains.has(domainName)) {{
+                        seenDomains.add(domainName);
+                        availableItems.push(item);
+                    }} else if (!domainName) {{
+                        // If we can't get domain name, include it anyway
+                        availableItems.push(item);
+                    }}
+                }}
+            }});
+            
+            const totalItems = availableItems.length;
+            
+            // Hide pagination controls if showing all or no items
+            const paginationControls = document.getElementById('paginationControls');
+            const goToPageContainer = document.getElementById('goToPageContainer');
+            
+            if (perPageLimit === 'all' || totalItems === 0) {{
+                // Show all items that aren't filtered out
+                availableItems.forEach(item => {{
+                    item.style.display = '';
+                }});
+                if (paginationControls) paginationControls.style.display = 'none';
+                return;
+            }}
+            
+            const limit = parseInt(perPageLimit);
+            totalPages = Math.max(1, Math.ceil(totalItems / limit));
+            
+            // Ensure current page is valid
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+            
+            // Show pagination controls
+            if (paginationControls) paginationControls.style.display = 'flex';
+            
+            // Show/hide go-to-page input based on total pages
+            if (goToPageContainer) {{
+                goToPageContainer.style.display = totalPages > 6 ? 'inline' : 'none';
+            }}
+            
+            // Calculate start and end indices
+            const startIdx = (currentPage - 1) * limit;
+            const endIdx = Math.min(startIdx + limit, totalItems);
+            
+            // Hide all items first
+            allItems.forEach(item => {{
+                item.style.display = 'none';
+            }});
+            
+            // Show only items in current page range from available items
+            for (let i = startIdx; i < endIdx && i < availableItems.length; i++) {{
+                availableItems[i].style.display = '';
+            }}
+            
+            // Update pagination info
+            updatePaginationControls(totalItems);
+        }}
+        
+        function updatePaginationControls(totalItems) {{
+            const paginationInfo = document.getElementById('paginationInfo');
+            const prevBtn = document.getElementById('prevPageBtn');
+            const nextBtn = document.getElementById('nextPageBtn');
+            const goToPageInput = document.getElementById('goToPageInput');
+            
+            if (paginationInfo) {{
+                paginationInfo.textContent = `Page ${{currentPage}} of ${{totalPages}} (${{totalItems}} items)`;
+            }}
+            
+            if (prevBtn) {{
+                prevBtn.disabled = currentPage <= 1;
+            }}
+            
+            if (nextBtn) {{
+                nextBtn.disabled = currentPage >= totalPages;
+            }}
+            
+            if (goToPageInput) {{
+                goToPageInput.max = totalPages;
+                goToPageInput.placeholder = `1-${{totalPages}}`;
+            }}
+        }}
+        
+        function goToPage(page) {{
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            applyPagination();
+        }}
+        
+        function goToPageFromInput() {{
+            const input = document.getElementById('goToPageInput');
+            if (!input) return;
+            
+            const page = parseInt(input.value);
+            if (!isNaN(page) && page >= 1 && page <= totalPages) {{
+                goToPage(page);
+                input.value = ''; // Clear input after navigation
+            }} else {{
+                alert(`Please enter a page number between 1 and ${{totalPages}}`);
+            }}
         }}
         
         function clearFilters() {{
@@ -1355,6 +1536,14 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
             document.getElementById('minPrice').value = '';
             document.getElementById('maxPrice').value = '';
             document.getElementById('tagFilter').value = '';
+            document.getElementById('perPageSelect').value = '100';
+            perPageLimit = '100';
+            buyNowFilterActive = false;
+            const buyNowBtn = document.getElementById('buyNowBtn');
+            if (buyNowBtn) {{
+                buyNowBtn.style.backgroundColor = '';
+                buyNowBtn.style.fontWeight = '';
+            }}
             filterDomains();
         }}
         
@@ -1605,7 +1794,7 @@ def main():
         desc_status = "enabled" if include_descriptions else "disabled"
         print(f"[INFO] Descriptions/translations from settings: {desc_status}")
     script_dir = Path(__file__).parent
-    output_dir = script_dir.parent.parent / "HTML" / "sellhns"
+    output_dir = script_dir.parent.parent / "HTML" / "sellhns" / "hns-tld"
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = output_dir / output_filename
     

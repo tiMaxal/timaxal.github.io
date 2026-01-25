@@ -50,7 +50,7 @@ function buildNav(prefix) {
         <a href="${prefix}index.html" style="font-weight: bold; border-bottom: 1px solid currentColor; margin-bottom: 10px; padding-bottom: 10px;">🏠 Home</a>
         
         <div class="nav-category">
-          <h4>Main Sites</h4>
+          <h4>Main Pages</h4>
           <div class="nav-submenu">
             <a href="https://hns.au/" target="_blank">HNSau</a>
             <a href="https://registr.au/" target="_blank">registrAU</a>
@@ -61,17 +61,9 @@ function buildNav(prefix) {
         </div>
         
         <div class="nav-category">
-          <h4>HNS Hosted Pages</h4>
-          <div class="nav-submenu">
-            <a href="${prefix}HTML/aboutlife/aboutlife.html">AboutLife</a>
-            <a href="${prefix}HTML/sellhns/hnsell.html">Buy HNS TLDs</a>
-            <a href="${prefix}HTML/sellhns/hns-merch/merchns.html">HNS Merch</a>
-          </div>
-        </div>
-        
-        <div class="nav-category">
           <h4>Other Content</h4>
           <div class="nav-submenu">
+            <a href="${prefix}HTML/aboutlife/aboutlife.html">AboutLife</a>
             <a href="${prefix}HTML/varhns/FishingHowTo/FishingHowTo.html">FishingHowTo</a>
             <a href="${prefix}HTML/varhns/FishingHowTo/fishingame_webapp.html" style="margin-left: 15px;">→ fishinGame</a>
             <a href="${prefix}HTML/varhns/fotografi/fotografi.html">fotografi</a>
@@ -86,20 +78,16 @@ function buildNav(prefix) {
           <div class="nav-submenu">
             <a href="${prefix}HTML/sellhns/hns-tld/hns-pf.html">tiMaxal HNS TLDs</a>
             <a href="${prefix}HTML/sellhns/hns-tld/hmartld.html">Community TLD sales pages</a>
+            <a href="${prefix}HTML/sellhns/hnsell.html" style="margin-left: 15px;">→ Buy HNS TLDs</a>
+            <a href="${prefix}HTML/sellhns/hns-merch/merchns.html" style="margin-left: 15px;">→ HNS Merch</a>
             <a href="${prefix}HTML/varhns/hnsartm/hnsartm.html">HNS art</a>
-          </div>
-        </div>
-        
-        <div class="nav-category">
-          <h4>Support</h4>
-          <div class="nav-submenu">
-            <a href="${prefix}HTML/donate.html">Donate</a>
           </div>
         </div>
         
         <div class="nav-category">
           <h4>Utilities</h4>
           <div class="nav-submenu">
+            <a href="${prefix}HTML/donate.html">Donate</a>
             <a href="${prefix}site-helpers/site-map.html">Site Map</a>
           </div>
         </div>
