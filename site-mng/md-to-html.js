@@ -126,16 +126,18 @@ function convertMdToHtml(mdPath, outputPath = null) {
   }
   
   // Update script paths based on output location depth
+  // Template has "HTML/helpers/" for root level (index.html)
+  // Generated pages in HTML/ need "helpers/"
+  // Generated pages in HTML/subfolder/ need "../helpers/"
   const depth = outputPath.split(path.sep).length - HTML_OUTPUT_DIR.split(path.sep).length - 1;
-  let pathPrefix = '../site-helpers/';
-  if (depth === 0) {
-    pathPrefix = 'site-helpers/';
-  } else if (depth > 1) {
-    pathPrefix = '../'.repeat(depth) + 'site-helpers/';
+  let pathPrefix = 'helpers/';
+  if (depth > 0) {
+    pathPrefix = '../'.repeat(depth) + 'helpers/';
   }
   
-  html = html.replace(/href="\.\.\/site-helpers\//g, `href="${pathPrefix}`);
-  html = html.replace(/src="\.\.\/site-helpers\//g, `src="${pathPrefix}`);
+  // Replace template's HTML/helpers/ pattern (for pages generated into HTML/ folder)
+  html = html.replace(/href="HTML\/helpers\//g, `href="${pathPrefix}`);
+  html = html.replace(/src="HTML\/helpers\//g, `src="${pathPrefix}`);
   
   // Create output directory if needed
   const outputDir = path.dirname(outputPath);

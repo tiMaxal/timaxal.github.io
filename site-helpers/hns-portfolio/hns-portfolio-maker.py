@@ -1075,9 +1075,10 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
             border-top: 2px solid currentColor;
         }}
     </style>
-    <link rel="stylesheet" href="../../../site-helpers/site-nav.css?v=2">
-    <script src="../../../site-helpers/theme-switcher.js?v=2"></script>
-    <script src="../../../site-helpers/footer-loader.js?v=2"></script>
+    <link rel="stylesheet" href="../../helpers/site-nav.css?v=2">
+    <script src="../../helpers/theme-switcher.js?v=2"></script>
+    <script src="../../helpers/footer-loader.js?v=2"></script>
+    <script src="../../helpers/site-nav.js?v=2"></script>
 </head>
 <body>
     <div class="buttons-container">
@@ -1086,6 +1087,8 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
         <button id="viewToggleBtn" class="view-toggle-button" onclick="toggleView()">📊 Grid</button>
         {desc_button_html}
     </div>
+    
+    <div id="nav-container"></div>
     
     <div class="container">
         <div class="header">
