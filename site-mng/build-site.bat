@@ -37,8 +37,8 @@ echo Build Complete!
 echo =============================================
 echo.
 echo Generated files:
-echo   - ../site-helpers/site-nav.js (navigation)
-echo   - ../site-helpers/footer-loader.js (footer paths)
+echo   - ../HTML/helpers/site-nav.js (navigation)
+echo   - ../HTML/helpers/footer-loader.js (footer paths)
 echo   - ../site-helpers/sitemap.xml (SEO sitemap)
 echo   - ../site-helpers/site-map.html (user-facing sitemap)
 echo   - ../HTML/*.html (pages from markdown in md-new/)

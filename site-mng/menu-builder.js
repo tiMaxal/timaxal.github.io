@@ -11,8 +11,8 @@ const path = require('path');
 
 // File paths
 const MENU_MD = path.join(__dirname, '..', 'site-helpers', 'md', 'menu.md');
-const SITE_NAV_JS = path.join(__dirname, '..', 'site-helpers', 'site-nav.js');
-const FOOTER_LOADER_JS = path.join(__dirname, '..', 'site-helpers', 'footer-loader.js');
+const SITE_NAV_JS = path.join(__dirname, '..', 'HTML', 'helpers', 'site-nav.js');
+const FOOTER_LOADER_JS = path.join(__dirname, '..', 'HTML', 'helpers', 'footer-loader.js');
 
 /**
  * Parse menu.md and convert to navigation structure
@@ -324,7 +324,7 @@ function loadFooter() {
   }
   
   if (depth > 0) {
-    footerPath = '../'.repeat(depth) + 'site-helpers/footer.html';
+    footerPath = '../'.repeat(depth) + 'HTML/helpers/footer.html';
     imgPrefix = '../'.repeat(depth) + 'HTML/imgs/';
   }
   
