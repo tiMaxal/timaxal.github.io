@@ -45,7 +45,31 @@ function loadFooter() {
   
   // For file:// protocol, we can't use fetch, so insert the footer HTML directly
   if (window.location.protocol === 'file:') {
-    const footerHTML = `<div class="footer"><p>Footer content not found</p></div>`;
+    const footerHTML = `
+      <div class="footer">
+        <p>
+          <a href="https://hns.au" target="_blank">
+            <img src="${imgPrefix}hnsau_blak-H-trans-bak+gg-centre_60x60.webp" alt="Handshake Australia" height="50" width="50" class="footer-logo">
+          </a>
+        </p>
+        <p style="margin-top: 15px;">
+          <a href="https://discord.gg/2SaK36G5eU" target="_blank">
+            <img src="${imgPrefix}MaxPixel.Logo-Discord-6062232.CC0.png" alt="Discord" height="20" width="20">
+          </a>
+          <a href="https://www.facebook.com/people/HNS-AU/100086556653400/" target="_blank">
+            <img src="${imgPrefix}fb-web.svg" alt="Facebook" height="20" width="20">
+          </a>
+          <a href="https://twitter.com/tiMaxal" target="_blank">
+            <img src="${imgPrefix}Twitter.svg" alt="Twitter" height="20" width="20">
+          </a>
+        </p>
+        <p style="margin-top: 10px; font-size: 0.9em;">
+          <a href="${prefix}HTML/donate.html">💝 Support / Donate</a> • 
+          <a href="${prefix}site-helpers/site-map.html">🗺️ Site Map</a>
+        </p>
+        <h6 style="margin-top: 20px; font-size: 0.8em; opacity: 0.8;">© 2026 tiMaxal</h6>
+      </div>
+    `;
     footerContainer.innerHTML = footerHTML;
   } else {
     // For HTTP/HTTPS, use fetch
