@@ -47,14 +47,14 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 
 ## HNS Resources
 
-- [tiMaxal HNS TLDs](HTML/sellhns/hns-tld/hns-pf.html)
-  tiMaxal's HNS portfolio
+- [Buy HNS TLDs](HTML/sellhns/hnsell.html)
+  purchase Handshake top-level domains
+  - [Community TLD sales pages](HTML/sellhns/hns-tld/hmartld.html)
+    Community HNS TLD sales
+  - [tiMaxal HNS TLDs](HTML/sellhns/hns-tld/hns-pf.html)
+    tiMaxal's HNS portfolio
 
-- [Community TLD sales pages](HTML/sellhns/hns-tld/hmartld.html)
-  Community HNS TLD sales
-  - [Buy HNS TLDs](HTML/sellhns/hnsell.html)
-    purchase Handshake top-level domains
-  - [HNS Merch](HTML/sellhns/hns-merch/merchns.html)
+- [HNS Merch](HTML/sellhns/hns-merch/merchns.html)
     Handshake merchandise
 
 - [HNS art](HTML/varhns/hnsartm/hnsartm.html)

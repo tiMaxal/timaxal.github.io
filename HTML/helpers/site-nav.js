@@ -76,10 +76,10 @@ function buildNav(prefix) {
         <div class="nav-category">
           <h4>HNS Resources</h4>
           <div class="nav-submenu">
-            <a href="${prefix}HTML/sellhns/hns-tld/hns-pf.html">tiMaxal HNS TLDs</a>
-            <a href="${prefix}HTML/sellhns/hns-tld/hmartld.html">Community TLD sales pages</a>
-            <a href="${prefix}HTML/sellhns/hnsell.html" style="margin-left: 15px;">→ Buy HNS TLDs</a>
-            <a href="${prefix}HTML/sellhns/hns-merch/merchns.html" style="margin-left: 15px;">→ HNS Merch</a>
+            <a href="${prefix}HTML/sellhns/hnsell.html">Buy HNS TLDs</a>
+            <a href="${prefix}HTML/sellhns/hns-tld/hmartld.html" style="margin-left: 15px;">→ Community TLD sales pages</a>
+            <a href="${prefix}HTML/sellhns/hns-tld/hns-pf.html" style="margin-left: 15px;">→ tiMaxal HNS TLDs</a>
+            <a href="${prefix}HTML/sellhns/hns-merch/merchns.html">HNS Merch</a>
             <a href="${prefix}HTML/varhns/hnsartm/hnsartm.html">HNS art</a>
           </div>
         </div>

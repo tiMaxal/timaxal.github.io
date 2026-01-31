@@ -268,7 +268,7 @@ function extractFolderStructure(categories) {
  * Generate footer-loader.js content based on folder structure
  */
 function generateFooterLoaderJs(folders) {  // Read footer.html content
-  const footerHtmlPath = path.join(__dirname, '..', 'site-helpers', 'footer.html');
+  const footerHtmlPath = path.join(__dirname, '..', 'HTML', 'helpers', 'footer.html');
   let footerContent = '';
   try {
     footerContent = fs.readFileSync(footerHtmlPath, 'utf-8').trim();
