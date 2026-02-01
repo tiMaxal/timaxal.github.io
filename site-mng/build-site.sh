@@ -26,19 +26,24 @@ check_status() {
     fi
 }
 
-echo "[1/3] Building navigation menu..."
+echo "[1/4] Building navigation menu..."
 node menu-builder.js
 check_status "Menu build"
 
 echo ""
-echo "[2/3] Building sitemap..."
+echo "[2/4] Building sitemap..."
 node sitemap-builder.js
 check_status "Sitemap build"
 
 echo ""
-echo "[3/3] Converting markdown to HTML..."
+echo "[3/4] Converting markdown to HTML..."
 node md-to-html.js --all
 check_status "Markdown conversion"
+
+echo ""
+echo "[4/4] Updating favicon links..."
+node favicon-builder.js
+check_status "Favicon update"
 
 echo ""
 echo "============================================="
@@ -51,6 +56,7 @@ echo "  - ../HTML/helpers/footer-loader.js (footer paths)"
 echo "  - ../site-helpers/sitemap.xml (SEO sitemap)"
 echo "  - ../site-helpers/site-map.html (user-facing sitemap)"
 echo "  - ../HTML/*.html (pages from markdown in md-new/)"
+echo "  - Favicon links updated across HTML pages"
 echo ""
 echo "Source files location:"
 echo "  - ../site-helpers/md/menu.md (navigation structure)"
