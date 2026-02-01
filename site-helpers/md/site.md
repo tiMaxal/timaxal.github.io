@@ -24,7 +24,7 @@ Base URL: https://timax.al
 - [Software by tiMaxal](./HTML/software/software.html) | 0.9 | weekly
 - [AUD Currency Converter](./HTML/varhns/aud/aud.html) | 0.8 | daily
 
-### Content Pages - Various HNS Content
+### Content Pages - 
 - [FishingHowTo - Basic Fishing Information](./HTML/varhns/FishingHowTo/FishingHowTo.html) | 0.7 | monthly
 - [fishinGame - in-browser text-based game](./HTML/varhns/FishingHowTo/fishingame_webapp.html) | 0.6 | monthly
 - [fotografi - Photography Gallery](./HTML/varhns/fotografi/fotografi.html) | 0.7 | monthly
