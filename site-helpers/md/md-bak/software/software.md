@@ -10,7 +10,7 @@ path: software/software.html
 
             
 Open source projects and tools developed by tiMaxal.
-
+            
             
 Explore the repositories on [GitHub](https://github.com/tiMaxal).
 

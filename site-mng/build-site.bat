@@ -1,4 +1,24 @@
 @echo off
+REM Ensure node is available (check PATH, then common install locations)
+where node >nul 2>nul
+if %errorlevel% neq 0 (
+    for %%P in (
+        "C:\Program Files\nodejs"
+        "C:\Program Files (x86)\nodejs"
+    ) do (
+        if exist "%%~P\node.exe" (
+            set "PATH=%%~P;%PATH%"
+            goto :NODE_FOUND
+        )
+    )
+    for /d %%P in ("C:\Users\Public\node-*-win-x64") do (
+        if exist "%%~P\node.exe" (
+            set "PATH=%%~P;%PATH%"
+            goto :NODE_FOUND
+        )
+    )
+)
+:NODE_FOUND
 echo.
 echo =============================================
 echo Building Site Navigation, Sitemap, and Pages...

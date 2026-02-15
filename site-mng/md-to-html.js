@@ -13,7 +13,7 @@ const { marked } = require('../site-helpers/node_modules/marked');
 // File paths
 const MD_DIR = path.join(__dirname, '..', 'site-helpers', 'md', 'md-new');
 const HTML_OUTPUT_DIR = path.join(__dirname, '..', 'HTML');
-const TEMPLATE_FILE = path.join(__dirname, 'template.html');
+const TEMPLATE_FILE = path.join(__dirname, '..', 'site-helpers', 'template.html');
 
 /**
  * Read template and extract styles section
