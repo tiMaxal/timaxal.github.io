@@ -63,13 +63,15 @@ function buildNav(prefix) {
         <div class="nav-category">
           <h4>Other Content</h4>
           <div class="nav-submenu">
-            <a href="${prefix}HTML/aboutlife/aboutlife.html">AboutLife</a>
+            <a href="${prefix}HTML/varhns/health.html">Health</a>
+            <a href="${prefix}HTML/aboutlife/aboutlife.html" style="margin-left: 15px;">→ AboutLife</a>
+            <a href="${prefix}HTML/varhns/digi-det0x.html" style="margin-left: 15px;">→ digital.det0x</a>
+            <a href="${prefix}HTML/varhns/TheBlackDog.html" style="margin-left: 15px;">→ TheBlackDog</a>
             <a href="${prefix}HTML/varhns/FishingHowTo/FishingHowTo.html">FishingHowTo</a>
             <a href="${prefix}HTML/varhns/FishingHowTo/fishingame_webapp.html" style="margin-left: 15px;">→ fishinGame</a>
             <a href="${prefix}HTML/varhns/fotografi/fotografi.html">fotografi</a>
             <a href="${prefix}HTML/varhns/fotografi/cc0img.html" style="margin-left: 15px;">→ CC0 Images</a>
             <a href="${prefix}HTML/varhns/fotografi/cc-by_img.html" style="margin-left: 15px;">→ CC-BY Images</a>
-            <a href="${prefix}HTML/varhns/TheBlackDog.html">TheBlackDog</a>
           </div>
         </div>
         

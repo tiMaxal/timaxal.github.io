@@ -30,8 +30,12 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
 
 ## Other Content
 
-- [AboutLife](HTML/aboutlife/aboutlife.html)
-  holistic self-care
+- [Health](HTML/varhns/health.html)
+  - [AboutLife](HTML/aboutlife/aboutlife.html)
+   holistic self-care
+  - [digital.det0x](HTML/varhns/digi-det0x.html)
+  - [TheBlackDog](HTML/varhns/TheBlackDog.html)
+    mental health org
 
 - [FishingHowTo](HTML/varhns/FishingHowTo/FishingHowTo.html)
   basic info for fishing
@@ -42,8 +46,6 @@ Edit this file to update the site menu, then run `node menu-builder.js` to regen
   - [CC0 Images](HTML/varhns/fotografi/cc0img.html)
   - [CC-BY Images](HTML/varhns/fotografi/cc-by_img.html)
 
-- [TheBlackDog](HTML/varhns/TheBlackDog.html)
-  mental health org
 
 ## HNS Resources
 
