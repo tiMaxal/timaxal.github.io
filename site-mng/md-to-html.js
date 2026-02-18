@@ -94,8 +94,24 @@ function convertMdToHtml(mdPath, outputPath = null) {
   // Get page title
   const title = frontmatter.title || 'Page Title';
   
-  // Convert markdown to HTML
-  const htmlBody = marked.parse(content);
+  // Configure marked renderer for external links
+  const renderer = new marked.Renderer();
+  const originalLinkRenderer = renderer.link.bind(renderer);
+  
+  renderer.link = (href, title, text) => {
+    const html = originalLinkRenderer(href, title, text);
+    
+    // Check if link is external (starts with http:// or https://)
+    if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+      // Add target="_blank" and rel for security
+      return html.replace('<a ', '<a target="_blank" rel="noopener noreferrer" ');
+    }
+    
+    return html;
+  };
+  
+  // Convert markdown to HTML with custom renderer
+  const htmlBody = marked.parse(content, { renderer });
   
   // Read template
   const template = readTemplate();
