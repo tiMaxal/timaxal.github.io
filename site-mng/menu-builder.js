@@ -312,7 +312,7 @@ function loadFooter() {
       const segments = afterHelpers.split('/').filter(s => s && !s.endsWith('.html'));
       depth = segments.length + 1;
     } else if (htmlIndex !== -1) {
-      // Count segments after /HTML/
+      // Count segments after /HTML/ (plus 1 for HTML folder itself to reach root)
       const afterHtml = currentPath.substring(htmlIndex + '/html/'.length);
       const segments = afterHtml.split('/').filter(s => s && !s.endsWith('.html'));
       depth = segments.length + 1;

@@ -25,7 +25,7 @@ function loadFooter() {
       const segments = afterHelpers.split('/').filter(s => s && !s.endsWith('.html'));
       depth = segments.length + 1;
     } else if (htmlIndex !== -1) {
-      // Count segments after /HTML/
+      // Count segments after /HTML/ (plus 1 for HTML folder itself to reach root)
       const afterHtml = currentPath.substring(htmlIndex + '/html/'.length);
       const segments = afterHtml.split('/').filter(s => s && !s.endsWith('.html'));
       depth = segments.length + 1;
@@ -63,8 +63,8 @@ function loadFooter() {
     </a>
   </p>
   <p style="margin-top: 10px; font-size: 0.9em;">
-    <a href="../donate.html">💝 Support / Donate</a> • 
-    <a href="../../site-helpers/site-map.html">🗺️ Site Map</a>`;
+    <a href="${prefix}HTML/donate.html">💝 Support / Donate</a> • 
+    <a href="${prefix}site-helpers/site-map.html">🗺️ Site Map</a>`;
     footerContainer.innerHTML = footerHTML;
   } else {
     // For HTTP/HTTPS, use fetch
