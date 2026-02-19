@@ -5,7 +5,7 @@ function loadFooter() {
   
   // Determine the correct path to footer.html based on current page location
   const currentPath = window.location.pathname;
-  let footerPath = 'site-helpers/footer.html';
+  let footerPath = 'HTML/helpers/footer.html';
   let imgPrefix = 'HTML/imgs/';
   
   // Automatically calculate depth
@@ -34,9 +34,31 @@ function loadFooter() {
     // For HTTP/HTTPS, count directory segments from domain root
     const pathSegments = currentPath.split('/').filter(part => part && !part.includes('.html'));
     depth = pathSegments.length;
+    
+    // Special handling for HTTP/HTTPS: check if we're inside HTML folder
+    const isInHtmlFolder = pathSegments.length > 0 && pathSegments[0].toLowerCase() === 'html';
+    if (isInHtmlFolder) {
+      // Inside HTML folder: adjust paths to be relative to HTML folder
+      const depthInHtml = pathSegments.length - 1;
+      footerPath = (depthInHtml > 0 ? '../'.repeat(depthInHtml) : '') + 'helpers/footer.html';
+      imgPrefix = (depthInHtml > 0 ? '../'.repeat(depthInHtml) : '') + 'imgs/';
+      // For links, go back to HTML folder root, then to target
+      depth = depthInHtml; // Reset depth for prefix calculation
+    } else {
+      // Outside HTML folder (e.g., root): use path from root
+      if (depth > 0) {
+        footerPath = '../'.repeat(depth) + 'HTML/helpers/footer.html';
+        imgPrefix = '../'.repeat(depth) + 'HTML/imgs/';
+      } else {
+        // At root level
+        footerPath = 'HTML/helpers/footer.html';
+        imgPrefix = 'HTML/imgs/';
+      }
+    }
   }
   
-  if (depth > 0) {
+  // For file:// protocol, override with file-specific paths
+  if (window.location.protocol === 'file:' && depth > 0) {
     footerPath = '../'.repeat(depth) + 'HTML/helpers/footer.html';
     imgPrefix = '../'.repeat(depth) + 'HTML/imgs/';
   }
@@ -83,10 +105,27 @@ function loadFooter() {
         });
         
         // Fix internal link paths after loading
+        const pathSegments = window.location.pathname.split('/').filter(part => part && !part.includes('.html'));
+        const isInHtmlFolder = pathSegments.length > 0 && pathSegments[0].toLowerCase() === 'html';
+        const depthInHtml = isInHtmlFolder ? pathSegments.length - 1 : 0;
+        
         const links = footerContainer.querySelectorAll('a[href^="HTML/"], a[href^="site-helpers/"]');
         links.forEach(link => {
-          const href = link.getAttribute('href');
-          if (href && (href.startsWith('HTML/') || href.startsWith('site-helpers/'))) {
+          let href = link.getAttribute('href');
+          if (!href) return;
+          
+          if (isInHtmlFolder) {
+            // Inside HTML folder: adjust paths relative to HTML folder root
+            if (href.startsWith('HTML/')) {
+              // Strip 'HTML/' prefix and add relative path if needed
+              const relativePath = href.substring(5); // Remove 'HTML/'
+              link.href = (depthInHtml > 0 ? '../'.repeat(depthInHtml) : '') + relativePath;
+            } else if (href.startsWith('site-helpers/')) {
+              // Go up to root first, then into site-helpers
+              link.href = (depthInHtml > 0 ? '../'.repeat(depthInHtml) : '') + '../' + href;
+            }
+          } else {
+            // Outside HTML folder: use prefix as before
             link.href = prefix + href;
           }
         });
