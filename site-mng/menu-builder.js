@@ -349,6 +349,15 @@ function loadFooter() {
             img.src = imgPrefix + src.substring(5);
           }
         });
+        
+        // Fix internal link paths after loading
+        const links = footerContainer.querySelectorAll('a[href^="HTML/"], a[href^="site-helpers/"]');
+        links.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href && (href.startsWith('HTML/') || href.startsWith('site-helpers/'))) {
+            link.href = prefix + href;
+          }
+        });
       })
       .catch(error => console.error('Error loading footer:', error));
   }
