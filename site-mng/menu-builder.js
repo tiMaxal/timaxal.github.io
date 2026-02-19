@@ -337,9 +337,9 @@ function loadFooter() {
         footerPath = '../'.repeat(depth) + 'HTML/helpers/footer.html';
         imgPrefix = '../'.repeat(depth) + 'HTML/imgs/';
       } else {
-        // At root level
-        footerPath = 'HTML/helpers/footer.html';
-        imgPrefix = 'HTML/imgs/';
+        // At root level - use absolute path from domain root for HTTP/HTTPS
+        footerPath = '/HTML/helpers/footer.html';
+        imgPrefix = '/HTML/imgs/';
       }
     }
   }
@@ -350,7 +350,16 @@ function loadFooter() {
     imgPrefix = '../'.repeat(depth) + 'HTML/imgs/';
   }
   
-  const prefix = depth > 0 ? '../'.repeat(depth) : './';
+  // Calculate prefix for internal links
+  let prefix;
+  if (window.location.protocol !== 'file:') {
+    // For HTTP/HTTPS at root level, use absolute paths
+    const pathSegments = currentPath.split('/').filter(part => part && !part.includes('.html'));
+    const isRoot = pathSegments.length === 0;
+    prefix = isRoot ? '/' : (depth > 0 ? '../'.repeat(depth) : './');
+  } else {
+    prefix = depth > 0 ? '../'.repeat(depth) : './';
+  }
   
   // For file:// protocol, we can't use fetch, so insert the footer HTML directly
   if (window.location.protocol === 'file:') {
