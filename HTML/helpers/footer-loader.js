@@ -83,7 +83,7 @@ function loadFooter() {
     </a>
   </p>
   <p style="margin-top: 15px;">
-    <a href="https://discord.gg/2SaK36G5eU" target="_blank">
+    <a href="https://discord.gg/jc5vUk3j3y" target="_blank">
       <img src="${imgPrefix}MaxPixel.Logo-Discord-6062232.CC0.png" alt="Handshake Australia Community Discord" height="20" width="20">
     </a>
     <a href="https://www.facebook.com/people/HNS-AU/100086556653400/" target="_blank">
