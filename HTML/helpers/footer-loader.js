@@ -89,8 +89,8 @@ function loadFooter() {
     <a href="https://www.facebook.com/people/HNS-AU/100086556653400/" target="_blank">
       <img src="${imgPrefix}fb-web.svg" alt="HNSau@fb.com" height="20" width="20">
     </a>
-    <a href="https://twitter.com/tiMaxal" target="_blank">
-      <img src="${imgPrefix}Twitter.svg" alt="@tiMaxal" height="20" width="20">
+    <a href="https://x.com/tiMaxal" target="_blank">
+      <img src="${imgPrefix}x-com-logo.png" alt="X@tiMaxal" height="20" width="20">
     </a>
   </p>
   <p style="margin-top: 10px; font-size: 0.9em;">
