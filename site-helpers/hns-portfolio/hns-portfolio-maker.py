@@ -136,6 +136,14 @@ def process_csv(filepath, auto_email='', include_all=False):
             if isinstance(domain_name, float) and math.isnan(domain_name):
                 continue
             domain_name = str(domain_name)
+
+            # HSD Sales Truth rows marked not for sale must never appear on the sales page.
+            if source_type == 'hsd' and 'for_sale' in row.index:
+                for_sale_value = row['for_sale']
+                if pd.notna(for_sale_value):
+                    for_sale_text = str(for_sale_value).strip().lower()
+                    if for_sale_text in ['false', '0', 'no', 'n', 'off']:
+                        continue
             
             # Get email and price
             email = row.get('email', row.get('eml', ''))
