@@ -10,20 +10,19 @@ CLI tool for generating HNS portfolio HTML pages with full timax.al site integra
 
 ### ✅ **Expanded CSV Format Support**
 - **Namebase**: TLD exports & Transactions
-- **Shakestation**: TLD exports & Transactions (only for_sale=TRUE domains)
+- **HSD Sales Truth**: Complete domain inventory from Handshake SD
 - **Bob Wallet**: TLD lists (processed or original single-column)
 - **Firewallet**: Domain exports
 
 ### ✅ **Marketplace Linking**
 - Namebase domains → `namebase.io/domains/{name}`
-- Shakestation domains → `shakestation.io/domain/{name}`
-- Bob/Firewallet → Contact info display (no marketplace link)
+- HSD/Bob/Firewallet → Contact info display (no marketplace link)
 
 ### ✅ **Contact Information**
 - Price display with 💰 icon
 - Email with 📧 copy-to-clipboard button
 - Auto-append email for domains with price: `user+domain@gmail.com`
-- **Requirement**: Bob/FW domains MUST have email or price to be displayed
+- **Requirement**: Bob/FW/HSD domains MUST have email or price to be displayed
 
 ### ✅ **Advanced Search & Filter**
 - Text search (domain names)
@@ -38,7 +37,7 @@ CLI tool for generating HNS portfolio HTML pages with full timax.al site integra
 5. Price High-Low ▼
 
 ### ✅ **Site Integration**
-- Top marketplace links (randomized on load): ShakeShift, Bob Wallet, Namebase, ShakeStation, Fingertip, **FireWallet**
+- Top marketplace links (randomized on load): Bob Wallet, Namebase, Fingertip, **FireWallet**
 - Links to site-nav.css, theme-switcher.js, footer-loader.js, site-nav.js
 - 3-way theme switcher: Light (#ccffff) → Dark (#003366) → Black (#000000)
 - Credits section (themed with page) above footer
@@ -98,7 +97,7 @@ python hns-portfolio-maker.py -s my-settings.json
   "all": false,
   "csv_files": [
     "csv-s/csv-nb/csv_nb-tld/Namebase-domains-export.csv",
-    "csv-s/csv-ss/csvg_ss-tld/hns_ss-export-tld.csv",
+    "csv-s/csv-hsd/hns_hsd_sales_truth.csv",
     "csv-s"
   ]
 }
@@ -110,7 +109,7 @@ python hns-portfolio-maker.py -s my-settings.json
 - `title`: Page title
 - `credits_file`: Path to credits HTML file
 - `include_descriptions`: `true` = show descript-IDNA and translate-IDNA fields
-- **`all`**: `true` = include ALL domains; `false` = only domains with price (for Bob/FW sources)
+- **`all`**: `true` = include ALL domains; `false` = only domains with price (for Bob/FW/HSD sources)
 - **`csv_files`**: Array of CSV file paths **OR directories** (searched recursively for `*.csv` files)
 
 ---
@@ -127,16 +126,10 @@ python hns-portfolio-maker.py -s my-settings.json
 - **Optional**: `unicode`, `tags`
 - **Links to**: Namebase marketplace
 
-### Shakestation TLD
-- **Required columns**: `domain`, `for_sale`
-- **Optional**: `unicode`, `tags`, `email`, `price`
-- **Filters**: Only includes `for_sale=TRUE` domains
-- **Links to**: Shakestation marketplace
-
-### Shakestation Transactions
-- **Required columns**: `domain`, `coin`
-- **Optional**: `unicode`, `tags`, `email`, `price`
-- **Links to**: Shakestation marketplace
+### HSD Sales Truth
+- **Required columns**: `domains`, `wallet_id`, `ownership_status`
+- **Optional**: `unicode`, `tags`, `email`, `price`, `descript-IDNA`, `translate-IDNA`
+- **Contact display only** (no marketplace link)
 
 ### Bob Wallet TLD
 - **Format 1**: Single column (no header) with domain names
@@ -149,6 +142,8 @@ python hns-portfolio-maker.py -s my-settings.json
 - **Optional**: `unicode`, `tags`
 - **Required**: `email` OR `price` column (or use `--email` flag)
 - **Contact display only** (no marketplace link)
+
+
 
 ---
 
@@ -166,13 +161,13 @@ HTML/sellhns/portfolio.html  ← Output location
 
 ## Examples
 
-### Process Namebase & Shakestation CSVs
+### Process Namebase & HSD CSVs
 ```bash
 python hns-portfolio-maker.py \
   -t "timax.al HNS Portfolio" \
   -o timax-hns.html \
   csv-nb/nb-export.csv \
-  csv-ss/ss-export.csv
+  csv-hsd/hns_hsd_sales_truth.csv
 ```
 
 ### Process Bob Wallet with Auto-Email
@@ -207,8 +202,7 @@ python hns-portfolio-maker.py -s portfolio-settings.json
 
 ### "No domains found in CSV files!"
 **Possible causes:**
-- Bob/Firewallet CSVs missing `email` or `price` columns
-- Shakestation domains not marked `for_sale=TRUE`
+- Bob/Firewallet/HSD CSVs missing `email` or `price` columns
 - Invalid CSV format
 
 **Solution:**
@@ -217,8 +211,8 @@ python hns-portfolio-maker.py -s portfolio-settings.json
 python hns-portfolio-maker.py -e user+@gmail.com bob-domains.csv
 ```
 
-### Bob/Firewallet Domains Not Showing
-Bob and Firewallet domains **require** either:
+### Bob/Firewallet/HSD Domains Not Showing
+Bob, Firewallet, and HSD domains **require** either:
 1. `email` column in CSV, OR
 2. `price` column in CSV, OR
 3. `--email` CLI flag with price column
@@ -237,7 +231,7 @@ Without contact info, these domains are skipped (no marketplace link available).
 | Feature | hns-portfolio-maker.py | HNSell Tab 3 |
 |---------|------------------------|--------------|
 | **Interface** | CLI, scriptable | GUI |
-| **CSV Formats** | nb-tld, nb-tr, ss-tld, ss-tr, bob-tld, fw | Same + bob-tr |
+| **CSV Formats** | nb-tld, nb-tr, hsd, bob-tld, fw | Varies |
 | **Price/Email** | ✅ Full support | ✅ Full support |
 | **Auto-Email** | ✅ CLI flag | ✅ GUI field |
 | **Search/Filter** | ✅ Text, price, tags | ✅ Text, price |
@@ -279,6 +273,6 @@ pip install pandas
   - Marketplace links randomization
 
 - **v1.0**: Initial timax.al version
-  - Basic Namebase/Shakestation support
+  - Basic Namebase/HSD support
   - 3-way theme switcher
   - Site integration

@@ -70,7 +70,6 @@ DEFAULT_CONFIG = {
         {
             "name": "Handshake (HNS)",
             "icon": "🤝",
-            "handle": "@timaxal.shakestation",
             "address": "hs1qwwsfgyxxvgq6k4qwcr0syyqss2c3ydxq4p3mml"
         },
         {
@@ -504,12 +503,6 @@ class DonationManager:
                 html_parts.append(f'''                        <div class="payment-label">Crypto Domain:</div>
                         <div class="payment-value" id="{safe_id}-domain">{crypto['domain']}</div>
                         <button class="copy-btn" onclick="copyToClipboard('{safe_id}-domain', this)">Copy Domain</button>
-                        
-                        <div class="payment-label" style="margin-top: 15px;">Address:</div>''')
-            elif 'handle' in crypto:
-                html_parts.append(f'''                        <div class="payment-label">ShakeStation Handle:</div>
-                        <div class="payment-value" id="{safe_id}-handle">{crypto['handle']}</div>
-                        <button class="copy-btn" onclick="copyToClipboard('{safe_id}-handle', this)">Copy Handle</button>
                         
                         <div class="payment-label" style="margin-top: 15px;">Address:</div>''')
             else:

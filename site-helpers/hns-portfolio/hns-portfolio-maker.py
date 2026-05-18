@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 HNS Portfolio Maker for timax.al
-Generates HTML portfolio pages from Namebase/Shakestation CSV exports
+Generates HTML portfolio pages from Namebase, HSD Sales Truth, Bob Wallet, and Firewallet CSV exports
 Styled to match timax.al theme with 3-way theme switcher
 """
 
@@ -58,12 +58,9 @@ def detect_csv_source(filepath):
         # Namebase Transactions: extra.domain (dot notation) is UNIQUE
         if 'extra.domain' in headers:
             return 'nb-tr'
-        # Shakestation TLD: for_sale column is UNIQUE
-        elif 'for_sale' in headers_lower:
-            return 'ss-tld'
-        # Shakestation Transactions: coin column is UNIQUE
-        elif 'coin' in headers_lower:
-            return 'ss-tr'
+        # HSD Sales Truth: wallet_id and ownership_status columns are UNIQUE
+        elif 'wallet_id' in headers_lower and 'ownership_status' in headers_lower:
+            return 'hsd'
         # Firewallet: expiry column is UNIQUE (date format, only FW has this)
         elif 'expiry' in headers_lower:
             return 'fw'
@@ -106,10 +103,6 @@ def process_csv(filepath, auto_email='', include_all=False):
         if source_type == 'bob-tld' and len(df.columns) == 1 and 'domains' not in df.columns:
             df.columns = ['domains']
         
-        if source_type == 'ss-tld':
-            # Only include domains marked for_sale=True
-            df = df[df['for_sale'] == True]
-        
         # Determine domain column name
         domain_col = None
         if 'name' in df.columns:
@@ -125,12 +118,12 @@ def process_csv(filepath, auto_email='', include_all=False):
             return domains
         
         # Determine source for marketplace linking
-        if source_type.startswith('ss'):
-            link_source = 'ss'
-        elif source_type.startswith('nb'):
+        if source_type.startswith('nb'):
             link_source = 'nb'
         elif source_type == 'fw':
             link_source = 'fw'
+        elif source_type == 'hsd':
+            link_source = 'hsd'
         elif source_type.startswith('bob'):
             link_source = 'bob'
         else:
@@ -188,8 +181,8 @@ def process_csv(filepath, auto_email='', include_all=False):
                         # No '+' in email, use it as-is (plain email)
                         email = auto_email
             
-            # For Bob/FW: skip domains without price (unless include_all=True)
-            if link_source in ['bob', 'fw']:
+            # For Bob/FW/HSD: skip domains without price (unless include_all=True)
+            if link_source in ['bob', 'fw', 'hsd']:
                 if not include_all and not price:
                     continue
             
@@ -269,14 +262,11 @@ def format_domain_link(domain, include_descriptions=False):
         display_name = name
     
     # Determine marketplace URL or contact display
-    if source == 'ss':
-        base_url = f"https://shakestation.io/domain/{name}"
-        link_html = f'<a href="{base_url}" target="_blank" rel="noreferrer">{display_name}</a>'
-    elif source == 'nb':
+    if source == 'nb':
         base_url = f"https://www.namebase.io/domains/{name}"
         link_html = f'<a href="{base_url}" target="_blank" rel="noreferrer">{display_name}</a>'
-    elif source in ['bob', 'fw']:
-        # Bob/Firewallet: No marketplace link, show contact info
+    elif source in ['bob', 'fw', 'hsd']:
+        # Bob/Firewallet/HSD: No marketplace link, show contact info
         link_html = f'<span class="domain-name-only">{display_name}</span>'
     else:
         # Default to Namebase
@@ -303,8 +293,8 @@ def format_domain_link(domain, include_descriptions=False):
     
     # Add contact info
     contact_parts = []
-    # Only add @eml button for Bob/FW (non-marketplace) domains with email template ('+' present)
-    if source in ['bob', 'fw'] and email and '+' in email:
+    # Only add @eml button for Bob/FW/HSD (non-marketplace) domains with email template ('+' present)
+    if source in ['bob', 'fw', 'hsd'] and email and '+' in email:
         copy_btn = f'<button class="copy-email-btn" onclick="copyEmail(event, \'{email}\')" title="Copy {email}">@eml</button>'
         contact_parts.append(copy_btn)
     # Price goes to the right of email button
@@ -333,7 +323,7 @@ HNS PORTFOLIO MAKER - HELP
 
 DESCRIPTION:
     CLI tool for generating HNS portfolio HTML pages with timax.al site integration.
-    Supports Namebase, Shakestation, Bob Wallet, and Firewallet CSV exports.
+    Supports Namebase, HSD Sales Truth, Bob Wallet, and Firewallet CSV exports.
 
 USAGE:
     python hns-portfolio-maker.py [csv_files_or_directories...]
@@ -355,14 +345,12 @@ EXAMPLES:
 SUPPORTED CSV FORMATS:
     - Namebase TLD exports (name, unicode, tags, price, email)
     - Namebase Transactions (extra.domain)
-    - Shakestation TLD (domain, for_sale, unicode, tags)
-    - Shakestation Transactions (domain, coin)
+    - HSD Sales Truth (domains, wallet_id, ownership_status)
     - Bob Wallet TLD (domains column or single-column format)
     - Firewallet exports (expiry column)
 
 CSV REQUIREMENTS (if not using "all": true):
-    - Bob/Firewallet domains require email OR price column
-    - Shakestation TLD only includes for_sale=TRUE domains
+    - Bob/Firewallet/HSD domains require email OR price column
     - Optional columns: unicode, descript-IDNA, translate-IDNA, tags
 
 SETTINGS FILE (portfolio-settings.json):
@@ -378,8 +366,8 @@ SETTINGS FILE (portfolio-settings.json):
     }
     
 FEATURES:
-    Auto-detects CSV format (nb, ss, bob, fw)
-    Marketplace linking (Namebase, Shakestation)
+    Auto-detects CSV format (nb, bob, fw, hsd)
+    Marketplace linking (Namebase)
     Contact info display (price, email with copy button)
     Auto-email append for domains with price
     Search & filter (text, price range, tags)
@@ -459,14 +447,14 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
         # Plain email without '+' - show email in banner, no copy buttons
         info_banner = f'''
         <div class="info-banner">
-            <p>Namebase/Shakestation domains have marketplace links. For other domains, email <a href="mailto:{plain_email}">{plain_email}</a> with queries or offers.</p>
+            <p>Namebase domains have marketplace links. For other domains, email <a href="mailto:{plain_email}">{plain_email}</a> with queries or offers.</p>
         </div>
         '''
     elif has_email:
         # Email with '+' - show copy buttons, explain non-custodial domains
         info_banner = '''
         <div class="info-banner">
-            <p>Namebase/Shakestation domains have marketplace links. Non-custodial domains show email for queries or offers.</p>
+            <p>Namebase domains have marketplace links. Non-custodial domains show email for queries or offers.</p>
         </div>
         '''
     
@@ -1103,7 +1091,6 @@ def generate_html(domains, output_filename="portfolio.html", title="HNS Portfoli
                 <a href="https://shakeshift.com/names" target="_blank" rel="noreferrer">ShakeShift</a>
                 <a href="https://bobwallet.io" target="_blank" rel="noreferrer">Bob Wallet</a>
                 <a href="https://www.namebase.io" target="_blank" rel="noreferrer">Namebase</a>
-                <a href="https://shakestation.io" target="_blank" rel="noreferrer">ShakeStation</a>
                 <a href="https://impervious.com/fingertip" target="_blank" rel="noreferrer">Fingertip</a>
                 <a href="https://git.woodburn.au/nathanwoodburn/firewalletbrowser" target="_blank" rel="noreferrer">FireWallet</a>
             </div>

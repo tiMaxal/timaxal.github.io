@@ -52,10 +52,9 @@ python donation-manager.py --list
 # With crypto domain
 python donation-manager.py --add-crypto "Solana (SOL)" "◎" "SolAddressHere123..." --domain "timaxal.crypto"
 
-# With handle/username
-python donation-manager.py --add-crypto "Handshake (HNS)" "🤝" "hs1q..." --handle "@timaxal.shakestation"
-
 # Basic (address only)
+python donation-manager.py --add-crypto "Handshake (HNS)" "🤝" "hs1q..."
+
 python donation-manager.py --add-crypto "Litecoin (LTC)" "Ł" "LTC_address_here"
 ```
 
