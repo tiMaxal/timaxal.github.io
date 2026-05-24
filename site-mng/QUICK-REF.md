@@ -3,13 +3,17 @@
 ## Common Tasks
 
 ### Build Everything
+
 ```bash
 cd site-mng
 build-site.bat        # Windows
 ./build-site.sh       # Linux/Mac
 ```
 
+Includes: helper path normalization + favicon normalization + menu + sitemap + markdown conversion.
+
 ### Edit Navigation Menu
+
 ```bash
 1. Edit: site-helpers/md/menu.md
 2. Run: cd site-mng && node menu-builder.js
@@ -17,6 +21,7 @@ build-site.bat        # Windows
 ```
 
 ### Add Page to Sitemap
+
 ```bash
 1. Edit: site-helpers/md/site.md
 2. Add: - [Page Title](./path/to/page.html) | 0.8 | weekly
@@ -25,6 +30,7 @@ build-site.bat        # Windows
 ```
 
 ### Create New Page (Markdown)
+
 ```bash
 1. Create: site-helpers/md/md-new/mypage.md
 2. Add frontmatter:
@@ -38,6 +44,7 @@ build-site.bat        # Windows
 ```
 
 ### Convert Existing Page
+
 ```bash
 1. Copy: site-helpers/md/md-bak/page.md → site-helpers/md/md-new/
 2. Edit: site-helpers/md/md-new/page.md
@@ -74,7 +81,8 @@ build-site.bat        # Windows
   - [Sub Item](HTML/folder/sub.html)      # Indent = sub-item
 ```
 
-**Important:** 
+**Important:**
+
 - NO `./` prefix
 - Paths relative to site root
 - `HTML/` for pages in HTML folder
@@ -117,6 +125,7 @@ New page needed?
 ## No-JS Users
 
 **Navigation Options:**
+
 1. ✅ **Footer Sitemap Link** (current)
    - Always visible
    - Link: `🗺️ Site Map`
@@ -132,6 +141,7 @@ New page needed?
 ## Generated Files
 
 **DO NOT EDIT THESE:**
+
 - site-helpers/site-nav.js
 - site-helpers/footer-loader.js  
 - site-helpers/sitemap.xml
@@ -145,24 +155,29 @@ New page needed?
 ## Troubleshooting
 
 **Navigation links broken?**
+
 - Check menu.md paths (no `./` prefix)
 - Run: `node menu-builder.js`
 
 **Page not in sitemap?**
+
 - Add to site.md
 - Run: `node sitemap-builder.js`
 
 **Markdown not converting?**
+
 - Check .md file in site-helpers/md/ (not md-bak/)
 - Verify frontmatter syntax
 - Run: `node md-to-html.js --all`
 
 **HTML edits disappeared?**
+
 - Check if .md file exists for that page
 - Markdown overwrites HTML on build
 - Solution: Edit .md file instead
 
 **Path duplication (/HTML/HTML/)?**
+
 - Check menu.md for `./` prefixes
 - Should be: `HTML/page.html`
 - Not: `./HTML/page.html`
@@ -179,9 +194,10 @@ When making multiple changes:
 3. Run: build-site.bat (does all at once)
 
 OR individually:
-1. node menu-builder.js      # Navigation
-2. node sitemap-builder.js   # Sitemap
-3. node md-to-html.js --all  # Markdown pages
+1. node helper-paths-builder.js # Helper paths + favicon
+2. node menu-builder.js         # Navigation
+3. node sitemap-builder.js      # Sitemap
+4. node md-to-html.js --all     # Markdown pages
 ```
 
 ---
@@ -192,6 +208,7 @@ OR individually:
 cd site-mng
 
 npm run build           # Everything
+npm run build:helpers   # Helper paths + favicon only
 npm run build:menu      # Navigation only
 npm run build:sitemap   # Sitemap only
 npm run build:pages     # Markdown only
@@ -206,6 +223,7 @@ npm run build:pages     # Markdown only
 **Contains:** Converted versions of existing HTML pages
 
 **Usage:**
+
 ```bash
 # NOT processed by build
 # Copy to md/ to activate:
@@ -245,19 +263,23 @@ See: `LOW-BANDWIDTH-OPTIONS.md` for optimization ideas
 ## Key Concepts
 
 **Markdown = Source of Truth**
+
 - Edit .md → HTML regenerated
 - Never edit generated HTML
 
 **menu.md ≠ site.md**
+
 - menu.md = Navigation structure
 - site.md = Sitemap pages
 - Different purposes!
 
 **md/ vs md-bak/**
+
 - md/ = Processed by build
 - md-bak/ = Reference only
 
 **Paths**
+
 - Relative to site root
 - No `./` prefix
 - `HTML/` for pages

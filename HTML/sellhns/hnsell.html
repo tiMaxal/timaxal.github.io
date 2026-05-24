@@ -1,251 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HNSell - Acquire HNS Handshake TLD Names</title>
+    
+    <!-- ✏️ EDIT: Change the title -->
+    <title>Buy HNS TLDs - tiMaxal Hub</title>
+    
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      /* Light theme (default) */
-      body {
-        background-color: #ccffff;
-        color: #3404f4;
-        font-family: Arial, Helvetica, sans-serif;
-        line-height: 1.6;
-        padding: 20px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
-      
-      /* Dark theme */
-      body.dark-theme {
-        background-color: #003366;
-        color: #99ddff;
-      }
-      
-      /* Black theme */
-      body.black-theme {
-        background-color: #000000;
-        color: #ffffff;
-      }
-      
-      a:link { color: #0000ee; }
-      a:visited { color: #551a8b; }
-      a:active { color: #ee0000; }
-      a:hover { 
-        color: #3404f4;
-        text-decoration: underline;
-      }
-      
-      body.dark-theme a:link { color: #66bbff; }
-      body.dark-theme a:visited { color: #9988ff; }
-      body.dark-theme a:hover { color: #99ddff; }
-      
-      body.black-theme a:link { color: #66bbff; }
-      body.black-theme a:visited { color: #9999ff; }
-      body.black-theme a:hover { color: #ffffff; }
-      
-      .theme-switcher {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 10px 20px;
-        background-color: rgba(52, 4, 244, 0.8);
-        color: white;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 0.9em;
-        font-weight: bold;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease;
-        z-index: 1000;
-      }
-      
-      .theme-switcher:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-      }
-      
-      body.dark-theme .theme-switcher {
-        background-color: rgba(153, 221, 255, 0.8);
-        color: #003366;
-      }
-      
-      body.black-theme .theme-switcher {
-        background-color: rgba(255, 255, 255, 0.8);
-        color: #000000;
-      }
-      
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 30px;
-      }
-      
-      .header {
-        text-align: center;
-        margin-bottom: 40px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid currentColor;
-      }
-      
-      .header h1 {
-        font-size: 2.8em;
-        margin: 15px 0;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-      }
-      
-      .header h2 {
-        font-size: 1.5em;
-        margin: 20px 0;
-        font-weight: normal;
-      }
-      
-      .section-title {
-        margin: 30px 0 20px 0;
-        padding: 15px 0;
-        text-align: center;
-        background: linear-gradient(90deg, transparent, rgba(52, 4, 244, 0.1), transparent);
-        border-radius: 8px;
-      }
-      
-      body.dark-theme .section-title {
-        background: linear-gradient(90deg, transparent, rgba(153, 221, 255, 0.1), transparent);
-      }
-      
-      body.black-theme .section-title {
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      }
-      
-      .section-title h3 {
-        font-size: 1.4em;
-      }
-      
-      .site-link {
-        margin: 25px 0;
-        padding: 15px;
-        background-color: rgba(52, 4, 244, 0.05);
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        text-align: center;
-      }
-      
-      body.dark-theme .site-link {
-        background-color: rgba(153, 221, 255, 0.08);
-      }
-      
-      body.black-theme .site-link {
-        background-color: rgba(255, 255, 255, 0.05);
-      }
-      
-      .site-link:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      }
-      
-      .site-link h3 {
-        font-size: 1.3em;
-        margin-bottom: 8px;
-      }
-      
-      .footer {
-        text-align: center;
-        margin-top: 50px;
-        padding-top: 30px;
-        border-top: 2px solid currentColor;
-      }
-      
-      .footer img {
-        margin: 10px 5px;
-        transition: transform 0.3s ease;
-      }
-      
-      .footer img:hover {
-        transform: scale(1.1);
-      }
-      
-      .footer h6 {
-        margin-top: 20px;
-        font-size: 0.9em;
-        opacity: 0.8;
-      }
+        /* Base styles - consistent across all pages */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ccffff;
+            color: #3404f4;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark theme colors */
+        body.dark-theme {
+            background-color: #003366;
+            color: #99ddff;
+        }
+
+        /* Black theme colors */
+        body.black-theme {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Link colors for light theme */
+        a:link { color: #0000ee; }
+        a:visited { color: #551a8b; }
+        a:active { color: #ee0000; }
+        a:hover { 
+            color: #3404f4;
+            text-decoration: underline;
+        }
+
+        /* Link colors for dark theme */
+        body.dark-theme a:link { color: #66bbff; }
+        body.dark-theme a:visited { color: #9988ff; }
+        body.dark-theme a:hover { color: #99ddff; }
+
+        /* Link colors for black theme */
+        body.black-theme a:link { color: #66bbff; }
+        body.black-theme a:visited { color: #9999ff; }
+        body.black-theme a:hover { color: #ffffff; }
+
+        /* Main container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        /* Headings */
+        h1 {
+            font-size: 2.5em;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin: 30px 0 20px 0;
+            border-bottom: 2px solid currentColor;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+
+        /* Paragraphs */
+        p {
+            margin: 15px 0;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 40px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* Blockquotes */
+        blockquote {
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-left: 4px solid currentColor;
+            background-color: rgba(52, 4, 244, 0.05);
+        }
+
+        body.dark-theme blockquote {
+            background-color: rgba(153, 221, 255, 0.05);
+        }
+
+        body.black-theme blockquote {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Intro text */
+        .intro {
+            text-align: center;
+            margin: 20px 0 40px 0;
+            font-size: 1.1em;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background-color: rgba(52, 4, 244, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border-left: 4px solid currentColor;
+        }
+
+        body.dark-theme .info-box {
+            background-color: rgba(153, 221, 255, 0.1);
+        }
+
+        body.black-theme .info-box {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Content section */
+        .content-section {
+            margin: 25px 0;
+            padding: 15px;
+            background-color: rgba(52, 4, 244, 0.05);
+            border-radius: 8px;
+        }
+
+        body.dark-theme .content-section {
+            background-color: rgba(153, 221, 255, 0.08);
+        }
+
+        body.black-theme .content-section {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Theme switcher button */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: rgba(52, 4, 244, 0.8);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-switcher:hover {
+            transform: scale(1.05);
+        }
+
+        body.dark-theme .theme-switcher {
+            background-color: rgba(153, 221, 255, 0.8);
+            color: #003366;
+        }
+
+        body.black-theme .theme-switcher {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000000;
+        }
+
+        /* Footer styles */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid currentColor;
+        }
+
+        .footer img {
+            margin: 10px 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .footer img:hover {
+            transform: scale(1.1);
+        }
+
+        .footer h6 {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* ✏️ ADD YOUR CUSTOM STYLES BELOW THIS LINE */
+        
+        /* Example custom styles you might add:
+        
+        .my-special-box {
+            border: 2px solid currentColor;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        */
     </style>
+    
+    <!-- ⚙️ DO NOT EDIT: Shared site resources -->
+    <!-- ✏️ ADJUST PATHS: This template assumes the page is at the repo root (e.g. index.html) so it uses HTML/helpers/. If you place the page inside the HTML/ folder, change these to helpers/, ../helpers/, etc. based on the page's depth. -->
     <link rel="stylesheet" href="../helpers/site-nav.css?v=2">
     <script src="../helpers/theme-switcher.js?v=2"></script>
     <script src="../helpers/footer-loader.js?v=2"></script>
     <script src="../helpers/site-nav.js?v=2"></script>
 
-  <link rel="icon" type="image/png" href="../imgs/TM.favicon.20260201.png">
-  </head>
-  <body>
+<link rel="icon" type="image/png" href="../HTML/imgs/TM.favicon.20260201.png">
+</head>
+<body>
+    <!-- Theme switcher button (top right) -->
     <button id="themeBtn" class="theme-switcher" onclick="cycleTheme()">☀️ Light</button>
     
+    <!-- Main content container -->
     <div class="container">
-      <div class="header">
-        <h1><u>HNSell</u></h1>
-        <h2>Acquire HNS <strong>Handshake</strong> TLD Names</h2>
-      </div>
+        
+        <!-- ✏️ EDIT: Add your main content below -->
 
-      <!-- Marketplace Links -->
-      <div style="text-align: center; margin: 25px 0; padding: 15px; background-color: rgba(52, 4, 244, 0.05); border-radius: 8px;">
-        <div class="marketplace-links" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; align-items: center;">
-          <span style="font-weight: bold; margin-right: 10px;">Access <a href="https://handshake.org/" target="_blank" rel="noreferrer">Handshake</a>:</span>
-          <a href="https://shakeshift.com/names" target="_blank" rel="noreferrer" style="padding: 5px 10px; background-color: rgba(52, 4, 244, 0.1); border-radius: 4px; text-decoration: none;">ShakeShift</a>
-          <a href="https://bobwallet.io" target="_blank" rel="noreferrer" style="padding: 5px 10px; background-color: rgba(52, 4, 244, 0.1); border-radius: 4px; text-decoration: none;">Bob Wallet</a>
-          <a href="https://impervious.com/fingertip" target="_blank" rel="noreferrer" style="padding: 5px 10px; background-color: rgba(52, 4, 244, 0.1); border-radius: 4px; text-decoration: none;">Fingertip</a>
-          <a href="https://www.namebase.io" target="_blank" rel="noreferrer" style="padding: 5px 10px; background-color: rgba(52, 4, 244, 0.1); border-radius: 4px; text-decoration: none;">Namebase</a>
-          <a href="https://git.woodburn.au/nathanwoodburn/firewalletbrowser" target="_blank" rel="noreferrer" style="padding: 5px 10px; background-color: rgba(52, 4, 244, 0.1); border-radius: 4px; text-decoration: none;">FireWallet</a>
-        </div>
-      </div>
+<h1><u>HNSell</u></h1>
+<h2>Acquire HNS <strong>Handshake</strong> TLD Names</h2>
+<pre><code>      Access [Handshake](https://handshake.org/):
+      [Bob Wallet](https://bobwallet.io)
+      [Fingertip](https://impervious.com/fingertip)
+      [ShakeStation](https://shakestation.io)
+      [Namebase](https://www.namebase.io)
+      [ShakeShift](https://shakeshift.com/names)
+      [FireWallet](https://git.woodburn.au/nathanwoodburn/firewalletbrowser)
+    
 
-      <div class="section-title">
-        <h3>TLD Collections for Sale</h3>
-      </div>
+  
 
-      <div class="site-link">
-        <h3><a href="./hns-tld/hns-pf.html">tiMaxal's names for sale</a></h3>
-      </div>
 
-      <div class="site-link">
-        <h3><a href="./hns-tld/hmartld.html">Other private TLD collections</a></h3>
-      </div>
+  
 
-      <div class="section-title">
-        <h3>HNS Merchandise</h3>
-      </div>
+    
+</code></pre>
+<h3>TLD Collections for Sale</h3>
+<h3><a href="./hns-tld/hns-pf.html">tiMaxal&#39;s names for sale</a></h3>
+<h3><a href="./hns-tld/hmartld.html">Other private TLD collections</a></h3>
+<h3>HNS Merchandise</h3>
+<h3><a href="hns-merch/merchns.html">HNS Merch</a></h3>
 
-      <div class="site-link">
-        <h3><a href="hns-merch/merchns.html">HNS Merch</a></h3>
-      </div>
 
-      <div id="footer-container"></div>
+        <!-- ⚙️ DO NOT EDIT: Footer container (auto-populated) -->
+        <div id="footer-container"></div>
     </div>
-    <script>
-      // Randomize marketplace links on page load
-      function randomizeMarketplaceLinks() {
-        const container = document.querySelector('.marketplace-links');
-        if (!container) return;
-        
-        const links = Array.from(container.querySelectorAll('a')).filter(a => a.href && !a.textContent.includes('Handshake'));
-        for (let i = links.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [links[i], links[j]] = [links[j], links[i]];
-        }
-        
-        // Keep the label, add randomized links
-        const label = container.querySelector('span');
-        container.innerHTML = '';
-        container.appendChild(label);
-        links.forEach(link => container.appendChild(link));
-      }
-      
-      document.addEventListener('DOMContentLoaded', randomizeMarketplaceLinks);
-    </script>
-  </body>
+
+    <!-- ✏️ ADD YOUR CUSTOM SCRIPTS BELOW THIS LINE (if needed) -->
+    
+</body>
 </html>
+
+<!-- 
+═══════════════════════════════════════════════════════════════════
+📝 HOW TO USE THIS TEMPLATE
+═══════════════════════════════════════════════════════════════════
+
+1. COPY THIS FILE
+   - Save a copy with your new page name (e.g., mypage.html)
+   - Put it in the appropriate folder
+
+2. ADJUST FILE PATHS (if in a subfolder)
+   - Root folder:     href="../helpers/site-nav.css"
+   - 1 level deep:    href="helpers/site-nav.css"
+   - 2 levels deep:   href="../helpers/site-nav.css"
+   
+   Update these paths:
+   - HTML/helpers/site-nav.css (or helpers/ or ../helpers/)
+   - HTML/helpers/theme-switcher.js
+   - HTML/helpers/footer-loader.js
+   - HTML/helpers/site-nav.js
+
+3. EDIT THE CONTENT
+   Look for "✏️ EDIT" comments and change:
+   - Page title
+   - Headings (h1, h2, h3)
+   - Paragraphs and text
+   - Add your custom HTML
+
+4. ADD CUSTOM STYLES (optional)
+   Add your own CSS in the marked section
+
+5. UPDATE SITE NAVIGATION
+   After creating your page:
+   - Add it to menu.md (if it should appear in menu)
+   - Add it to site.md (to include in sitemap)
+   - Run: build-site.bat
+
+═══════════════════════════════════════════════════════════════════
+✨ AUTOMATIC FEATURES
+═══════════════════════════════════════════════════════════════════
+
+This template includes:
+✅ Navigation menu (hover over 🏠 Home button)
+✅ Theme switcher (Light/Dark/Black)
+✅ Responsive footer
+✅ Mobile-friendly design
+✅ Consistent styling across all themes
+
+═══════════════════════════════════════════════════════════════════
+-->

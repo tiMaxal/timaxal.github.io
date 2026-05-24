@@ -9,6 +9,7 @@ The site uses simple Markdown (`.md`) files that you can edit with any text edit
 ## 🗂️ File Structure
 
 **Markdown Sources (site-helpers/md/):**
+
 - **menu.md** - Define the site navigation menu
 - **site.md** - Define all pages for the sitemap
 - **md-new/** - New markdown files for page generation
@@ -17,13 +18,17 @@ The site uses simple Markdown (`.md`) files that you can edit with any text edit
 - **MARKDOWN-WORKFLOW.md** - How markdown processing works
 
 **Build Scripts (site-mng/):**
+
+- **helper-paths-builder.js** - Normalizes shared helper paths and favicon links across HTML pages
 - **menu-builder.js** - Script to generate site-nav.js and footer-loader.js
 - **sitemap-builder.js** - Script to generate sitemap.xml and site-map.html
 - **md-to-html.js** - Converts markdown to HTML
 - **template.html** - Template for new HTML pages
-- **build-site.bat** - Runs all builder scripts
+- **build-site.bat** - Runs all builder scripts (Windows)
+- **build-site.sh** - Runs all builder scripts (Linux/Mac)
 
 **Generated Files (site-helpers/):**
+
 - **site-nav.js** - Navigation menu (auto-generated)
 - **footer-loader.js** - Footer paths (auto-generated)
 - **sitemap.xml** - SEO sitemap (auto-generated)
@@ -31,6 +36,7 @@ The site uses simple Markdown (`.md`) files that you can edit with any text edit
 - **package.json** - Node.js dependencies
 
 **Content Structure:**
+
 - **HTML/** - All content pages go here (or in subdirectories)
   - HTML/aboutlife/, HTML/software/, HTML/sellhns/, HTML/varhns/
   - Up to 3 levels deep: HTML/varhns/FishingHowTo/page.html
@@ -51,10 +57,11 @@ Open `menu.md` in any text editor and make your changes:
 **Important:** All content page paths must start with `./HTML/`
 
 **Format Rules:**
+
 - `## Section Name` creates a category header
 - `- [Text](path)` creates a menu link
 - Add `{external}` for external links: `- [Text](https://url.com) {external}`
-- Indent with 2 spaces for sub-items: `  - [Sub Item](path)`
+- Indent with 2 spaces for sub-items: `- [Sub Item](path)`
 - Add description on the next line (no dash, but prefix with spaces)
 
 ### 2. Run the Builder Script
@@ -82,6 +89,7 @@ Open `site.md` in any text editor:
 ```
 
 **Format Rules:**
+
 - Each page on one line
 - Format: `- [Title](path) | priority | changefreq`
 - Priority: 0.0 to 1.0 (1.0 = most important)
@@ -95,33 +103,39 @@ node sitemap-builder.js
 ```
 
 This generates:
+
 - `sitemap.xml` - For search engines (SEO)
 - `site-map.html` - Human-readable site map page
 
 ### 3. Submit to Search Engines
 
 After generating sitemap.xml, submit it to search engines:
-- Google: https://search.google.com/search-console
-- Bing: https://www.bing.com/webmasters
+
+- Google: <https://search.google.com/search-console>
+- Bing: <https://www.bing.com/webmasters>
 
 ## 📝 Quick Reference
 
 ### Common Tasks
 
 **Add a new page to menu:**
+
 1. Create page in HTML/ directory (e.g., HTML/software/newpage.html)
 2. Open `menu.md`
 3. Add line: `- [New Page](./HTML/software/newpage.html)`
 4. Run: `node menu-builder.js`
 
 **Add new page to sitemap:**
+
 1. Open `site.md`
 2. Add line: `- [New Page](./HTML/software/newpage.html) | 0.7 | monthly`
 3. Run: `node sitemap-builder.js`
 
 **Update both at once:**
+
 ```powershell
-node menu-builder.js; node sitemap-builder.js
+build-site.bat
+# Linux/Mac: ./build-site.sh
 ```
 
 ### Example menu.md Entry
@@ -147,11 +161,13 @@ node menu-builder.js; node sitemap-builder.js
 ## ❓ Troubleshooting
 
 **Menu not updating?**
+
 - Make sure you ran `node menu-builder.js`
 - Clear browser cache (Ctrl+F5)
 - Check console for errors (F12)
 
 **Links not working?**
+
 - Content pages must use `./HTML/` prefix: `./HTML/folder/page.html`
 - Use `./` prefix only: no `/HTML/` (without dot)
 - External links need full URL: `https://example.com`
@@ -159,6 +175,7 @@ node menu-builder.js; node sitemap-builder.js
 - Check your script references match depth (../, ../../, or ../../../)
 
 **Script errors?**
+
 - Make sure Node.js is installed: `node --version`
 - Check file paths are correct
 - Look for syntax errors in .md files

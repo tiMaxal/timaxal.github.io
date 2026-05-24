@@ -275,9 +275,10 @@ Content written in **Markdown**!
 - Same functionality as Windows version
 
 **Updated:** Both `build-site.bat` and `build-site.sh` now include:
-1. Menu builder (navigation)
-2. Sitemap builder (sitemap)
-3. **NEW:** Markdown converter (HTML from .md)
+1. Helper paths + favicon normalizer (`helper-paths-builder.js`)
+2. Menu builder (navigation)
+3. Sitemap builder (sitemap)
+4. **NEW:** Markdown converter (HTML from .md)
 
 ### 3. Package Management
 
@@ -287,6 +288,7 @@ Content written in **Markdown**!
 - Declares `marked` dependency for markdown parsing
 - npm scripts for common tasks:
   - `npm run build` - Full build
+  - `npm run build:helpers` - Helper paths + favicon only
   - `npm run build:menu` - Menu only
   - `npm run build:sitemap` - Sitemap only
   - `npm run build:pages` - Markdown only
