@@ -128,7 +128,7 @@ function injectFavicon(content, filePath) {
 }
 
 // ---------------------------------------------------------------------------
-// File collection (mirrors favicon-builder)
+// File collection
 // ---------------------------------------------------------------------------
 
 function collectHtmlFiles(targetPath, results) {
